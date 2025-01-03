@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet GeoJSON Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Display GeoJSON with Leaflet</h1>
+    <div id="map"></div>
+    
+    <!-- Include Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Include GeoJSON Example -->
+    <script>
+        const map = L.map('map').setView([15.5, 120.75], 8); // Center of Central Luzon
+
+        // Add base tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // GeoJSON data (Central Luzon sample)
+        const centralLuzonGeoJSON = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+            "type": "Feature",
+            "properties": {
+                "region": "Central Luzon",
+                "region_code": "03",
+                "capital": "San Fernando, Pampanga",
+                "population": 12200000,
+                "area_km2": 21814,
+                "density": 559.2
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                [
+                    [120.354, 15.764], [120.799, 15.547], [121.144, 15.672],
+                    [121.306, 15.352], [121.169, 14.888], [120.841, 14.531],
+                    [120.495, 14.541], [120.275, 14.921], [120.354, 15.764]
+                ]
+                ]
+            }
+            }
+        ]
+        };
+
+        // Add GeoJSON to the map
+        L.geoJSON(centralLuzonGeoJSON, {
+        style: function (feature) {
+            return {
+            color: "blue",
+            weight: 2,
+            fillColor: "blue",
+            fillOpacity: 0.5
+            };
+        },
+        onEachFeature: function (feature, layer) {
+            const popupContent = `
+            <strong>${feature.properties.region || feature.properties.province}</strong><br>
+            Capital: ${feature.properties.capital}<br>
+            Population: ${feature.properties.population.toLocaleString()}<br>
+            Area: ${feature.properties.area_km2} km²<br>
+            Density: ${feature.properties.density} people/km²
+            `;
+            layer.bindPopup(popupContent);
+        }
+        }).addTo(map);
+
+    </script>
+</body>
+</html>

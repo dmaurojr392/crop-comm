@@ -1,0 +1,9 @@
+body{
+    overflow-x: hidden;
+}
+.card{
+    transition: transform .3s;
+}
+.card:hover{
+    transform: scale(1.020);
+}
