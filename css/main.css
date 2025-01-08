@@ -7,3 +7,10 @@ body{
 .card:hover{
     transform: scale(1.020);
 }
+@media (min-width: 768px) {
+    .container-md-fluid {
+      width: auto;
+      max-width: 90vw;
+
+    }
+  }
