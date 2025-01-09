@@ -7,6 +7,21 @@ body{
 .card:hover{
     transform: scale(1.020);
 }
+#scrollbar1::-webkit-scrollbar {
+    width: 16px;
+}
+#scrollbar1::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: #e7e7e7;
+    border: 1px solid #cacaca;
+}
+
+#scrollbar1::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    background-clip: content-box;
+    background-color: #d55959;
+}
 @media (min-width: 768px) {
     .container-md-fluid {
       width: auto;
