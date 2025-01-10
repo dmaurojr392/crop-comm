@@ -11,19 +11,18 @@
     <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="shortcut icon" href="assets/icon/cropcomm-logo.ico" type="image/x-icon">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body style="overflow-x: hidden;">
     <div id="header">
         <div class="h-25 d-flex justify-content-between">
-            <div class="col inter-font inter-font-sm mt-2 ps-3">
+            <div class="col inter-font inter-font-sm mt-2">
                 <div class="d-none d-sm-flex align-items-center">
-                    <img src="assets/header/dot.svg" width="12px" alt="">
+                    <img src="assets/header/dot.svg" class="ms-2" width="12px" alt="">
                     <div class="ps-1">Holistic Smart Agriculture System</div>
                 </div>
             </div>
             <div class="col text-end">
-                <img id="department-logo" src="assets/header/logo-transparent.png" alt="">
+                <img id="department-logo" class="me-2" src="assets/header/logo-transparent.png" alt="">
             </div>
         </div>
         <div class="d-flex">
@@ -41,9 +40,9 @@
         </div>
     </div>
 
-    <div class="container-fluid py-2" style="background-color: rgb(16, 32, 48); color: rgb(236, 236, 236);">
-        <div class="text-center">
-            <h3 class="mt-2">GENERAL OBJECTIVE</h3>
+    <section class="container-fluid py-2 primary-color">
+        <div class="container">
+            <h1 class="my-2">Core Objectives</h1>
         </div>
         <div class="row mb-5">
             <div class="d-flex align-items-center justify-content-center mt-2">
@@ -59,7 +58,7 @@
                         <div class="card__content--container | flow">
                         <h3 class="card__title">Sustainability</h3>
                         <p class="card__description">
-                            Crop-Comm Analytics is dedicated to advancing sustainable agriculture through innovative, data-driven solutions. By harnessing the power of technology, we empower farmers to optimize their practices.
+                            Crop-Comm Analytics advances sustainable agriculture with data-driven solutions, empowering farmers to optimize their practices through technology.
                         </p>
                         </div>
                         <!-- <button class="card__button">Read more</button> -->
@@ -82,7 +81,7 @@
                         <!-- <button class="card__button">Read more</button> -->
                     </div>
                 </article>
-                <article class="card me-3">
+                <article class="card">
                     <img
                         class="card__background"
                         src="assets/img/analytics.jpeg"
@@ -101,7 +100,84 @@
                 </article>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section class="container-fluid py-2 secondary-color">
+        <div class="container pb-3">
+            <div class="row">
+                <h1 class="mt-2 mb-3">Activities</h1>
+            </div>
+
+            <div class="row d-flex mb-3">
+                <div class="col-3 d-flex justify-content-center">
+                    <img src="assets/img/data-gathering.jpeg" class="rounded" style="width: 300px; max-height: 200px; overflow: hidden; object-fit: cover;" alt="">
+                </div>
+                <div class="col d-flex align-items-start flex-column justify-content-center">
+                    <h3 class="mb-2 secondary-color">
+                        Smart Sensor Network and Technology Synchronization 
+                    </h3>
+                    <p class="secondary-color" style="text-align: justify;">
+                        Mapping the locations of pre-existing sensor networks within Region III and pinpointing the coordinates of data availability for soil moisture sensors, including Agromet stations, operated by State Universities and College (SUCs) and Local Government Units (LGUs). In instances where there are no existing sensors to retrieve data from in a certain location, the Department of Science and Technology Region III (DOST III) will work on establishing a sensor network, potentially through its GIA (Grants-in-Aid) project, to synchronize data and reference points uniformly in the map. 
+                    </p>
+                </div>
+            </div>
+
+            <div class="row d-flex mb-3">
+                <div class="col d-flex align-items-end flex-column justify-content-center text-end">
+                    <h3 class="mb-2 secondary-color">
+                        Development of a Data Analytics Platform
+                    </h3>
+                    <p class="secondary-color" style="text-align: justify;">
+                        After identifying and structuring the sources of valuable data from sensors and different existing smart technologies, the next step involves the creation of a Data Analytics Platform. This phase encompasses the integration of essential technical components required for the project, including the establishment of a Data warehouse, the selection of appropriate data techniques, and the assembly of an expert team. The team's primary role is to provide substantial insights and recommendations regarding the development of the data analytics
+                        platform, enabling the conversion of raw data into useful information. The team will also evaluate and propose the optimal platform options for adoption by the Department of Science and Technology (DOST). These options will cover the necessary platforms for machine and deep learning, modeling and analysis, dashboard and visualization, data mining, management, and engineering. 
+                    </p>
+                </div>
+                <div class="col-3 d-flex justify-content-center">
+                    <img src="https://webdashboard.com/wp-content/uploads/2024/08/Power-BI-report-dashboard-sharing-Webdashboard-Screenshot.png" class="rounded" style="width: 300px; max-height: 210px; overflow: hidden; object-fit: cover;" alt="">
+                </div>
+            </div>
+
+            <div class="row d-flex mb-3">
+                <div class="col-3 d-flex justify-content-center">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0VpIDaies-ZTkCojLL8t0V6H3L9sNX8dLGw&s" style="width: 300px; max-height: 210px; overflow: hidden; object-fit: cover;" class="rounded" alt="">
+                </div>
+                <div class="col d-flex align-items-start flex-column justify-content-center">
+                    <h3 class="mb-2 secondary-color">
+                        Development of Commodities Analytics System
+                    </h3>
+                    <p class="secondary-color" style="text-align: justify;">
+                        Data related to commodity information will be mined from various sources and will be filtered before storing to the data warehouse. Subsequently, the data will undergo a comprehensive analysis through a designed desired data analytics model; with a focus on key performance indicators (KPIs) such as crop commodity distribution in an area,
+                        agroclimatic conditions, along with its distinct agroeconomic indicators. An online dashboard will then be developed to present these KPIs, along with visual, easy to understand reports generated through descriptive analytics. The data analytics model will undergo continuous improvement throughout the project's duration. 
+                    </p>
+                </div>
+            </div>
+
+            <div class="row d-flex mb-3">
+                <div class="col d-flex align-items-end flex-column justify-content-center text-end">
+                    <h3 class="mb-2 secondary-color">
+                        Establishing a Commodity Forecast Analytics System
+                    </h3>
+                    <p class="secondary-color" style="text-align: justify;">
+                        Incorporating the dataset results from both Activity 1 (comprising data derived from sensors and identified existing technologies within Region III) and Activity 3 (comprising data on the conducive environment for a given commodity and its performance in terms of agroeconomic contribution) a data analytics model will be developed integrating both datasets to come up with a commodity forecast. Prescriptive and predictive analytics will be performed to offer advisory, and commodity forecasts, whereas AI algorithms will be utilized to come up with crop-specific recommendations.
+                    </p>
+                </div>
+                <div class="col-3 d-flex justify-content-center">
+                    <img src="https://www.cabi.org/wp-content/uploads/IMG_9710-1024pxwide.jpg" class="rounded" style="width: 300px; max-height: 210px; overflow: hidden; object-fit: cover;" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-fluid primary-color">
+        <footer class="container d-flex flex-wrap justify-content-between align-items-center py-4">
+            <div class="col d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <img src="assets/header/logo-transparent.png" style="width: 120px;" alt="" srcset="">
+                </a>
+                <span >Project Funded by DOST - Region III<br>Developed at Philippine-Sino Center for Agriculture & Technology</span>
+            </div>
+        </footer>
+    </section>
 
     <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="javascripts/script.js"></script>

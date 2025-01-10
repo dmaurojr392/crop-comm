@@ -1,6 +1,14 @@
 body{
     overflow-x: hidden;
 }
+.primary-color{
+    background-color: rgb(16, 32, 48);
+    color: rgb(236, 236, 236);
+}
+.secondary-color{
+    color: rgb(16, 32, 48);
+    background-color: rgb(236, 236, 236);
+}
 /* for card design */
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap");
@@ -25,7 +33,6 @@ body{
 }
 
 /* Remove default margin */
-body,
 h2,
 p {
   margin: 0;
