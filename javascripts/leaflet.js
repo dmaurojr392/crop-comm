@@ -1,10 +1,8 @@
-// Initialize the map
-const map = L.map('map').setView([12.8797, 121.7740], 6); // Center at the Philippines
+const map = L.map('map').setView([12.8797, 121.7740], 6);
 
-// Set max bounds for the Philippines
 const bounds = [
-    [4.2158, 116.7017],  // Southwest corner (latitude, longitude)
-    [21.3213, 126.6052]  // Northeast corner (latitude, longitude)
+    [4.2158, 116.7017],
+    [21.3213, 126.6052]
 ];
 
 map.setMaxBounds(bounds);
@@ -12,7 +10,6 @@ map.on('drag', function() {
     map.panInsideBounds(bounds, { animate: true });
 });
 
-// Add a basemap (e.g., OpenStreetMap)
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
@@ -131,7 +128,6 @@ fetch('./data/top one commodity - region 3.json')
                     const englishContent = document.getElementById('english-content');
                     const tagalogContent = document.getElementById('tagalog-content');
 
-                    // Default to English content
                     languageSelect.value = 'english';
                     englishContent.style.display = 'block';
                     tagalogContent.style.display = 'none';
@@ -150,10 +146,10 @@ fetch('./data/top one commodity - region 3.json')
                     const onionProductionChart = new Chart(ctx, {
                         type: 'bar',
                         data: {
-                            labels: ['2018', '2019', '2020', '2021', '2022'], // years
+                            labels: ['2018', '2019', '2020', '2021', '2022'],
                             datasets: [{
                                 label: 'Onion Production (metric tons)',
-                                data: [143266, 143221, 136273, 128432, 130280], // production data
+                                data: [143266, 143221, 136273, 128432, 130280],
                                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                                 borderColor: 'rgba(54, 162, 235, 1)',
                                 borderWidth: 1
@@ -172,10 +168,10 @@ fetch('./data/top one commodity - region 3.json')
                     const onionProductionChartForTagalog = new Chart(ctxForTagalog, {
                         type: 'bar',
                         data: {
-                            labels: ['2018', '2019', '2020', '2021', '2022'], // years
+                            labels: ['2018', '2019', '2020', '2021', '2022'],
                             datasets: [{
                                 label: 'Onion Production (metric tons)',
-                                data: [143266, 143221, 136273, 128432, 130280], // production data
+                                data: [143266, 143221, 136273, 128432, 130280],
                                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                                 borderColor: 'rgba(54, 162, 235, 1)',
                                 borderWidth: 1
@@ -193,43 +189,9 @@ fetch('./data/top one commodity - region 3.json')
                     provinceContainer.innerHTML = "";
                 }
             });
-            layerMap[feature.id] = layer;
-            // console.log(layerMap[feature.id] = layer);
         }
     }).addTo(map);
 })
 .catch(error => {
     console.error("Error fetching the JSON file:", error);
 });
-// const linkContainer = document.getElementById('nueva-ecija-onion'); 
-// const link = document.createElement('a');
-// link.href = ""; 
-// // link.className = "menu-title";
-// // link.setAttribute("data-bs-toggle", "offcanvas");
-// // link.setAttribute("data-bs-target", "#offcanvasRight");
-// // link.setAttribute("aria-controls", "offcanvasRight");
-// link.textContent = "ONION";
-
-// link.addEventListener('click', (e) => {
-//   e.preventDefault();
-//   const layer = layerMap[304900000]; 
-//   if (layer) {
-//     // Zoom to the feature's bounds on the map
-//     const bounds = layer.getBounds();
-//     map.fitBounds(bounds);
-
-//     const detailsContent = document.getElementById('sidebar-content');
-//     const sidebarTitle = document.getElementById('sidebar-title');
-//         sidebarTitle.innerHTML = `${layer.feature.properties.adm2_en || "Not set"}`;
-//         detailsContent.innerHTML = `
-//         <p>
-//             <strong>Top 1 Crop Commodity:</strong> ${feature.properties.Top1_Commodities || "No data found"}<br>
-//             <strong>Production:</strong> ${feature.properties["Yield(MT)"] + "MT"} || "No data found"} MT
-//         </p>
-//         `;
-//   } else {
-//     console.error("Layer not found for ID 304900000");
-//   }
-// });
-
-// linkContainer.appendChild(link);
