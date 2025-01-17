@@ -12,8 +12,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="css/leaflet.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    localStorage.removeItem("Province");
+  </script>
 </head>
 <body>
   <div class="layout has-sidebar fixed-sidebar fixed-header">
@@ -326,8 +330,44 @@
         <a id="btn-toggle" href="#" class="sidebar-toggler break-point-sm">
           <i class="ri-menu-line ri-xl"></i>
         </a>
-        <div id="map"></div>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="container-fluid">
+          <div class="row d-flex align-items-center justify-content-between">
+            <h2 class="col mt-2">TOP CROP SUITABILITY MAP</h2>
+            <div class="col text-end">
+              <label>Filter: </label>
+              <select class="rounded w-25" style="border-color: gray; color: gray;">
+                <option value="1">Top 1 Crop</option>
+                <option value="2">Top 2 Crop</option>
+                <option value="3">Top 3 Crop</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div id="map-view" class="col-7">
+              <div id="map"></div>
+            </div>
+            <div class="col-5 animate__animated animate__fadeIn" style="height: 90vh; overflow-y: auto;" id="map-details">
+              <div>
+                  <h4 id="sidebar-title" style="margin-bottom: 0px;"></h4>
+                  <p id="sidebar-content" style="margin-bottom: 4px;"></p>
+                  <div id="province-data"></div>
+              </div>
+              <div id="map-hint">
+              </div>
+              <script>
+                console.log(document.getElementById('sidebar-title').innerHTML);
+                if(document.getElementById('sidebar-title').innerHTML === ""){
+                  document.getElementById('map-hint').innerHTML = `<div class="d-flex align-items-center justify-content-center w-100" style="height: 89vh;">
+                    Click the color-coded tile on the map to view details.
+                  </div>`;
+                }
+              </script>
+              
+            </div>
+          </div>
+        </div>
+        
+        <!-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
           <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel">DETAILS</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -336,7 +376,7 @@
               <h3 id="sidebar-title">Feature Details</h3>
               <p id="sidebar-content">Click on a map tile or link to see details here.</p>
           </div>
-        </div>
+        </div> -->
       </main>
       <div class="overlay"></div>
     </div>
@@ -346,5 +386,6 @@
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="javascripts/dashboard.js"></script>
   <script src="javascripts/leaflet.js"></script>
+  
 </body>
 </html>
