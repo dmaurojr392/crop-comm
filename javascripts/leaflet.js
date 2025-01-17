@@ -1,4 +1,4 @@
-const map = L.map('map').setView([12.8797, 121.7740], 6);
+const map = L.map('map').setView([15.48, 120.75], 8);
 
 const bounds = [
     [4.2158, 116.7017],
@@ -27,29 +27,27 @@ fetch('./data/top one commodity - region 3.json')
 .then(data => {
     L.geoJSON(data, {
         style: function (feature) {
-            if (feature.geometry.type === "MultiPolygon") {
                 if (feature.properties.ADM2_EN == "Aurora") {
-                    return { color: "#A3FFB2", fillColor: "#A3FFB2", fillOpacity: 1 };
+                    return { color: "gray", fillColor: "#A3FFB2", fillOpacity: 1, weight: 1 };
                 }
                 if (feature.properties.ADM2_EN == "Bataan") {
-                    return { color: "#A3FFFF", fillColor: "#A3FFFF", fillOpacity: 1 }; 
+                    return { color: "gray", fillColor: "#A3FFFF", fillOpacity: 1, weight: 1 }; 
                 }
                 if (feature.properties.ADM2_EN == "Bulacan") {
-                    return { color: "#FFFFA3", fillColor: "#FFFFA3", fillOpacity: 1 };
+                    return { color: "gray", fillColor: "#FFFFA3", fillOpacity: 1, weight: 1 };
                 }
                 if (feature.properties.ADM2_EN == "Nueva Ecija") {
-                    return { color: "#CDAAFD", fillColor: "#CDAAFD", fillOpacity: 1 };
+                    return { color: "gray", fillColor: "#CDAAFD", fillOpacity: 1, weight: 1 };
                 }
                 if (feature.properties.ADM2_EN == "Pampanga") {
-                    return { color: "#FFD1A3", fillColor: "#FFD1A3", fillOpacity: 1 };
+                    return { color: "gray", fillColor: "#FFD1A3", fillOpacity: 1, weight: 1 };
                 }
                 if (feature.properties.ADM2_EN == "Tarlac") {
-                    return { color: "#FFD1A3", fillColor: "#FFD1A3", fillOpacity: 1 };
+                    return { color: "gray", fillColor: "#FFD1A3", fillOpacity: 1, weight: 1 };
                 }
                 if (feature.properties.ADM2_EN == "Zambales") {
-                    return { color: "#A3FFFF", fillColor: "#A3FFFF", fillOpacity: 1 };
+                    return { color: "gray", fillColor: "#A3FFFF", fillOpacity: 1, weight: 1 };
                 }
-            }
         },
         onEachFeature: function (feature, layer) {
             layer.on('click', () => {
