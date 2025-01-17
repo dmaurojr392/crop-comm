@@ -332,13 +332,13 @@
         </a>
         <div class="container-fluid">
           <div class="row d-flex align-items-center justify-content-between">
-            <h2 class="col mt-2">TOP CROPS SUITABILITY MAP</h2>
+            <h3 class="col mt-2">TOP CROPS PER PROVINCE IN REGION III</h3>
             <div class="col text-end">
-              <label>Filter: </label>
+              <label>Filter by: </label>
               <select class="rounded w-25" style="border-color: gray; color: gray;">
-                <option value="1">Top 1 Crop</option>
-                <option value="2">Top 2 Crop</option>
-                <option value="3">Top 3 Crop</option>
+                <option value="1">Top 1  Crop Commodities per Province</option>
+                <option value="2">Top 2 Crop Commodities per Province</option>
+                <option value="3">Top 3 Crop Commodities per Province</option>
               </select>
             </div>
           </div>
@@ -358,7 +358,7 @@
                 console.log(document.getElementById('sidebar-title').innerHTML);
                 if(document.getElementById('sidebar-title').innerHTML === ""){
                   document.getElementById('map-hint').innerHTML = `<div class="d-flex align-items-center justify-content-center w-100" style="height: 89vh;">
-                    Click the color-coded tile on the map to view details.
+                    Click the color-coded tile on the map to view crop details.
                   </div>`;
                 }
               </script>

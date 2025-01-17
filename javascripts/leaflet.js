@@ -31,7 +31,6 @@ fetch('./data/top one commodity - region 3.json')
     L.geoJSON(data, {
         style: function (feature) {
             if (feature.geometry.type === "MultiPolygon") {
-                console.log(feature.properties);
                 if (feature.properties.ADM2_EN == "Aurora") {
                     return { color: "#A3FFB2", fillColor: "#A3FFB2", fillOpacity: 1 };
                 }
