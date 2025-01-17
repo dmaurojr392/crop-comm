@@ -104,7 +104,7 @@ fetch('./data/top one commodity - region 3.json')
                     <div id="tagalog-content" class="animate__animated animate__fadeIn">
                         <h5 class="mt-3" style="margin-bottom: 4px;">Produksyon ng Sibuyas sa Mga Nakaraang Taon</h5>
                         <canvas id="onionProductionChartForTagalog" width="400" height="200" class="mb-1 rounded" style="border: 1px solid gray;"></canvas>
-                        <h5>Prediksyon ng Produksyon ng Sibuyas sa Susunod na 5 Taon</h5>
+                        <h5 class="mt-3" style="margin-bottom: 4px;">Prediksyon ng Produksyon ng Sibuyas sa Susunod na 5 Taon</h5>
                         <img src="./assets/graphs/sample-graph-onion-ne.png" style="width: 100%; margin: auto; border: 1px solid gray;" class="mb-1 rounded"></img>
                         <ul>
                             <li><b>2023</b>: 124,066 metric tons</li>
