@@ -1,3 +1,37 @@
-#map {
+#map-view {
     height: 90vh;
+}
+#map{
+    height: inherit;
+}
+#map-details{
+    height: 90vh; 
+    overflow-y: auto;
+}
+#map-hint{
+    height: 89vh;
+    align-items: center;
+}
+@media  screen and (max-width: 991px) {
+    #page-title{
+        font-size: 1.2rem;
+        text-align: center;
+    }
+    #map-view{
+        height: 45dvh;
+    }
+    #map-details{
+        height: 45dvh;
+        margin-top: 4px;
+        align-items: start;
+    }
+    #map-hint{
+        height: 39dvh;
+    }
+}
+@media  screen and (max-width: 420px){
+    #page-title{
+        font-size: 1rem;
+        text-align: center;
+    }
 }

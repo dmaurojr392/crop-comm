@@ -70,7 +70,7 @@ fetch('./data/top one commodity - region 3.json')
                         <option value="tagalog">Tagalog</option>
                     </select>
 
-                    <div id="english-content" class="animate__animated animate__fadeIn">
+                    <div id="english-content" class="animate__animated animate__fadeIn pb-4">
                         <h5 class="mt-3" style="margin-bottom: 4px;">Onion Production in Previous Years</h5>
                         <canvas id="onionProductionChart" width="400" height="200" class="mb-1 rounded" style="border: 1px solid gray;"></canvas>
                         <h5 class="mt-3" style="margin-bottom: 4px;">Prediction of Onion Production for the Next 5 Years</h5>
@@ -95,7 +95,7 @@ fetch('./data/top one commodity - region 3.json')
                         <p>By implementing these practices, onion production can stabilize or improve, ensuring long-term sustainability for farmers and the region.</p>
                     </div>
 
-                    <div id="tagalog-content" class="animate__animated animate__fadeIn">
+                    <div id="tagalog-content" class="animate__animated animate__fadeIn pb-4">
                         <h5 class="mt-3" style="margin-bottom: 4px;">Produksyon ng Sibuyas sa Mga Nakaraang Taon</h5>
                         <canvas id="onionProductionChartForTagalog" width="400" height="200" class="mb-1 rounded" style="border: 1px solid gray;"></canvas>
                         <h5 class="mt-3" style="margin-bottom: 4px;">Prediksyon ng Produksyon ng Sibuyas sa Susunod na 5 Taon</h5>
@@ -183,6 +183,13 @@ fetch('./data/top one commodity - region 3.json')
                             }
                         }
                     });
+                    if(document.getElementById('sidebar-title').innerHTML === ""){
+                        document.getElementById('map-hint').innerHTML = `<div class="d-flex justify-content-center w-100">
+                            Click the color-coded tile on the map to view crop details.
+                        </div>`;
+                    }else{
+                        document.getElementById('map-hint').style.display = "none";
+                    }
                 }else{
                     provinceContainer.innerHTML = "";
                 }

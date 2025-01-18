@@ -332,8 +332,8 @@
         </a>
         <div class="container-fluid">
           <div class="row d-flex align-items-center justify-content-between">
-            <h3 class="col mt-2">TOP CROPS PER PROVINCE IN REGION III</h3>
-            <div class="col text-end">
+            <h3 class="col-12 col-lg-8 mt-2" id="page-title">TOP CROPS PER PROVINCE IN REGION III</h3>
+            <div class="col-12 col-lg-4 mb-2 text-lg-end">
               <label>Filter by: </label>
               <select class="rounded w-25" style="border-color: gray; color: gray;">
                 <option value="1">Top 1  Crop Commodities per Province</option>
@@ -342,11 +342,11 @@
               </select>
             </div>
           </div>
-          <div class="row">
-            <div id="map-view" class="col-7">
+          <div class="row d-flex align-items-center justify-content-center">
+            <div id="map-view" class="col-12 col-lg-7">
               <div id="map"></div>
             </div>
-            <div class="col-5 animate__animated animate__fadeIn" style="height: 90vh; overflow-y: auto;" id="map-details">
+            <div class="col-12 col-lg-5 animate__animated animate__fadeIn" id="map-details">
               <div>
                   <h4 id="sidebar-title" style="margin-bottom: 0px;"></h4>
                   <p id="sidebar-content" style="margin-bottom: 4px;"></p>
@@ -357,9 +357,11 @@
               <script>
                 console.log(document.getElementById('sidebar-title').innerHTML);
                 if(document.getElementById('sidebar-title').innerHTML === ""){
-                  document.getElementById('map-hint').innerHTML = `<div class="d-flex align-items-center justify-content-center w-100" style="height: 89vh;">
+                  document.getElementById('map-hint').innerHTML = `<div class="d-flex justify-content-center w-100">
                     Click the color-coded tile on the map to view crop details.
                   </div>`;
+                }else{
+                  document.getElementById('map-hint').style.display = "none";
                 }
               </script>
               
@@ -386,6 +388,5 @@
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="javascripts/dashboard.js"></script>
   <script src="javascripts/leaflet.js"></script>
-  
 </body>
 </html>
