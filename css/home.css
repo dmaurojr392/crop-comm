@@ -1,0 +1,24 @@
+.primary-color{
+    background-color: rgb(16, 32, 48);
+    color: rgb(236, 236, 236);
+}
+.secondary-color{
+    color: rgb(16, 32, 48);
+    background-color: rgb(236, 236, 236);
+}
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.chart-container {
+
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+canvas {
+    width: 100% !important;
+    height: 30vh !important;
+}
