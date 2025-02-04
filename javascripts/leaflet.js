@@ -17,7 +17,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 const layerMap = {}; 
 const sidebarTitle = document.getElementById('sidebar-title');
 const sidebarContent = document.getElementById('sidebar-content');
-fetch('../data/cropData.json')
+fetch('data/cropData.json')
 .then(result => {
     if (!result.ok) {
         throw new Error(`HTTP error! status: ${result.status}`);

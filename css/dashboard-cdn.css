@@ -47,7 +47,7 @@
             width: 100% !important;
             -webkit-transition: none;
             transition: none; } }
-      @media (max-width: 576px) {
+      @media (max-width: 575px) {
         .layout .sidebar.break-point-sm {
           position: fixed;
           left: -280px;
