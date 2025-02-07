@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="css/leaflet.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body style="background-color: #f9f9f9">
+<body>
   <div class="layout has-sidebar fixed-sidebar fixed-header">
     <aside id="sidebar" class="sidebar break-point-sm has-bg-image">
       <a id="btn-collapse" class="sidebar-collapser"><i class="bi bi-caret-left-fill" style="font-size: 9pt;"></i></a>
@@ -91,10 +91,10 @@
         </a>
 
         <div id="main" class="page">
-          <div id="main-nav" style="background-color: #f9f9f9" class="py-1">
+          <div id="main-nav" class="py-1">
             <ul class="nav nav-tabs">
-              <li class="nav-item text-muted" >
-                  <a class="nav-link" style="background-color: #f9f9f9" id="overview-tab" aria-current="page" href="#">Overview</a>
+              <li class="nav-item text-muted">
+                  <a class="nav-link" id="overview-tab" aria-current="page" href="#">Overview</a>
               </li>
               <!-- <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Dropdown</a>
@@ -107,10 +107,10 @@
                   </ul>
               </li> -->
               <li class="nav-item text-muted">
-                  <a class="nav-link" style="background-color: #f9f9f9" id="production-summary-tab" href="#">Production Summary</a>
+                  <a class="nav-link" id="production-summary-tab" href="#">Production Summary</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link text-muted" id="news-tab" href="#" style="background-color: #f9f9f9;">News <span style="font-size: 10pt;" class="bg-danger text-light px-1 rounded text-center">3</span></a>
+                  <a class="nav-link text-muted" id="news-tab" href="#">News <span style="font-size: 10pt;" class="bg-danger text-light px-1 rounded text-center">3</span></a>
               </li>
             </ul>
           </div>
@@ -118,7 +118,7 @@
           <div id="overview" class="container-fluid d-none mt-2 justify-content-center animate__animated animate__fadeIn">
             <div class="row w-100">
               <h4>Top Produced Crop in Region III</h4>
-              <div class="col-lg-5 shadow bg-light rounded" style="max-height: 400px; ">
+              <div class="col-lg-7 shadow bg-light rounded" style="max-height: 500px; background-color: #f9f9f9;">
                 <canvas id="onionChart"></canvas>
               </div>
             </div>
@@ -135,10 +135,10 @@
               <div class="row">
                 <div class="col-lg-4 mb-2 mb-lg-auto">
                   <div class="card">
-                    <img src="https://cdn.britannica.com/64/198664-050-83CA9198/coconut-palm-tree-Christmas-Island-Kiribati.jpg" height="250px" style="max-height: 250px; object-fit: cover;" class="card-img-top" alt="...">
+                    <img src="https://images.gmanews.tv/regionaltv2023/content_images/article/armyworm-onions_2024_01_12_18_45_39.jpg" height="250px" style="max-height: 250px; object-fit: cover;" class="card-img-top" alt="...">
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <h5 class="card-title">Armyworms Attack</h5>
+                      <p class="card-text">In January 2024, onion farmers in Bongabon, Nueva Ecija were forced to harvest their onions early due to armyworms. </p>
                     </div>
                   </div>
                 </div>
