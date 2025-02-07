@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="css/leaflet.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body style="background-color: #f9f9f9">
   <div class="layout has-sidebar fixed-sidebar fixed-header">
     <aside id="sidebar" class="sidebar break-point-sm has-bg-image">
       <a id="btn-collapse" class="sidebar-collapser"><i class="bi bi-caret-left-fill" style="font-size: 9pt;"></i></a>
@@ -91,10 +91,10 @@
         </a>
 
         <div id="main" class="page">
-          <div id="main-nav" class="py-1">
+          <div id="main-nav" style="background-color: #f9f9f9" class="py-1">
             <ul class="nav nav-tabs">
-              <li class="nav-item text-muted">
-                  <a class="nav-link" id="overview-tab" aria-current="page" href="#">Overview</a>
+              <li class="nav-item text-muted" >
+                  <a class="nav-link" style="background-color: #f9f9f9" id="overview-tab" aria-current="page" href="#">Overview</a>
               </li>
               <!-- <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Dropdown</a>
@@ -107,17 +107,18 @@
                   </ul>
               </li> -->
               <li class="nav-item text-muted">
-                  <a class="nav-link" id="production-summary-tab" href="#">Production Summary</a>
+                  <a class="nav-link" style="background-color: #f9f9f9" id="production-summary-tab" href="#">Production Summary</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link text-muted" id="news-tab" href="#">News <span style="font-size: 10pt;" class="bg-danger text-light px-1 rounded text-center">3</span></a>
+                  <a class="nav-link text-muted" id="news-tab" href="#" style="background-color: #f9f9f9;">News <span style="font-size: 10pt;" class="bg-danger text-light px-1 rounded text-center">3</span></a>
               </li>
             </ul>
           </div>
           
           <div id="overview" class="container-fluid d-none mt-2 justify-content-center animate__animated animate__fadeIn">
             <div class="row w-100">
-              <div class="col-md-6" style="background-color:#CDAAFD; border: 1px solid gray;">
+              <h4>Top Produced Crop in Region III</h4>
+              <div class="col-lg-5 shadow bg-light rounded" style="max-height: 400px; ">
                 <canvas id="onionChart"></canvas>
               </div>
             </div>
@@ -258,18 +259,18 @@
     const productionData = [47000, 48000, 47500, 46500, 47600, 47000, 46600, 46000, 48000, 49500, 48700]; // Slight decrease
 
     new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: years,
             datasets: [{
                 label: 'Onion Production (Metric Tons)',
                 data: productionData,
-                borderColor: '#CDAAFD',
-                backgroundColor: 'rgba(205, 170, 253, 0.2)',
+                borderColor: '#FF9494',
+                backgroundColor: 'rgba(255, 209, 209, 0.8)',
                 borderWidth: 2,
                 fill: true,
                 pointRadius: 4,
-                pointBackgroundColor: 'rgba(205, 170, 253, 1)',
+                pointBackgroundColor: 'rgba(255, 148, 148, 1)',
                 pointBorderColor: '#fff',
             }]
         },
@@ -282,19 +283,19 @@
                     title: {
                         display: true,
                         text: 'Metric Tons'
-                    },
-                    ticks: {
-                        color: 'white' // Change axis label color
-                    } 
+                    }
+                    // ticks: {
+                    //     color: 'white' // Change axis label color
+                    // } 
                 },
                 x: {
                     title: {
                         display: true,
                         text: 'Year'
-                    },
-                    ticks: {
-                        color: 'white' // Change axis label color
                     }
+                    // ticks: {
+                    //     color: 'white' // Change axis label color
+                    // }
                 }
             },
             plugins: {

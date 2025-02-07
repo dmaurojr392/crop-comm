@@ -4,11 +4,11 @@ function navbarClick(id) {
 
     // Remove "active" class from all links
     navLinks.forEach(link => link.classList.remove("active"));
-
+    
     // Add "active" class to the clicked link if it exists
-    if (id) {
+    if(id){
         document.getElementById(id)?.classList.add("active");
-    } else {
+    }else{
         document.getElementById("dashboard-nav")?.classList.add("active");
     }
 }
