@@ -117,7 +117,6 @@
           </div>
           
           <div id="overview" class="container-fluid d-none mt-2 justify-content-center animate__animated animate__fadeIn">
-
             <!-- filter  -->
             <div class="row w-100">
                   <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
@@ -132,12 +131,11 @@
                             <span><i class="bi bi-calendar"></i></span>
                           </div>
                           <div>
-                            <select id="year" class="form-select form-select-sm me-2" onchange="" style="border: 1px solid #878787; border-radius: 0px; cursor: pointer;">
+                            <select id="year" class="form-select form-select-sm me-2" onchange="getSelectedYear()" style="border: 1px solid #878787; border-radius: 0px; cursor: pointer;">
                               <script>
-                                  for (i = 2023; i >= 2010; i--) {
+                                  for (i = 2023; i >= 2013; i--) {
                                       document.write(`<option value="${i}">${i}</option>`);
                                   }
-                                  console.log(i);
                               </script>
                             </select>
                           </div>  
@@ -154,7 +152,7 @@
                                   </button>
                                   <button class="btn btn-secondary btn-sm d-flex d-lg-none" style="border-radius: 0px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span><i class="bi bi-filter"></i></span>
-                                </button>
+                                  </button>
                                   <ul class="dropdown-menu">
                                       <li><a class="dropdown-item" href="#" onclick="updateFilter('Select')">Select</a></li>
                                       <li><a class="dropdown-item" href="#" onclick="updateFilter('Aurora')">Aurora</a></li>
@@ -168,7 +166,7 @@
                               </div>
                               <div class="form-control d-flex align-items-center" style="border: 1px solid #878787; border-radius: 0px; cursor: pointer; width: 140px;" data-bs-toggle="dropdown" id="filter-input">
                                   <span id="filter-badge" class="badge me-1 d-flex align-items-center">
-                                      <span id="filter-value">Select</span>
+                                      <span id="filter-value" onchange="getFilterLocation()">Select</span>
                                       <button type="button" class="btn-close btn-close-white ms-2" aria-label="Close" id="clear-button" style="display: none; padding: 0px;" onclick="clearFilter()"></button>
                                   </span>
                               </div>
@@ -176,9 +174,28 @@
                       </div>
                   </div>
             </div>
-
-            <!-- 2023 default -->
-             
+            <!-- 2023 default & provinces-->
+            <div class="d-none" id="2023-aurora">
+              2023 aurora
+            </div>
+            <div class="d-none" id="2023-bataan">
+              2023 bataan
+            </div>
+            <div class="d-none" id="2023-bulacan">
+              2023 bulacan
+            </div>
+            <div class="d-none" id="2023-nueva-ecija">
+              2023 nueva-ecija
+            </div>
+            <div class="d-none" id="2023-pampanga">
+              2023 pampanga
+            </div>
+            <div class="d-none" id="2023-tarlac">
+              2023 tarlac
+            </div>
+            <div class="d-none" id="2023-zambales">
+              2023 zambales
+            </div>
         </div>
 
           <div id="production-summary" class="container-fluid mt-2 d-none justify-content-center animate__animated animate__fadeIn">
@@ -278,7 +295,6 @@
                         </div>
                         <div id="map-hint"></div>
                         <script>
-                            console.log(document.getElementById('sidebar-title').innerHTML);
                             if (document.getElementById('sidebar-title').innerHTML === "") {
                                 document.getElementById('map-hint').innerHTML = `
                                     <div class="d-flex justify-content-center w-100">

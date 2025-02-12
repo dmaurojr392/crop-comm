@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Toggle section visibility
             sections[tab]?.classList.toggle('d-none', !isActive);
-            sections[tab]?.classList.toggle('d-flex', isActive);
+            sections[tab]?.classList.toggle('d-block', isActive);
 
             // Toggle tab styles
             tabs[tab]?.classList.toggle('active', isActive);
@@ -125,6 +125,8 @@ function updateFilter(value) {
     // Update the filter value
     document.getElementById('filter-value').innerText = value;
     document.getElementById('filter-badge').classList.add('bg-primary');
+    localStorage.setItem('filter-location', `${document.getElementById('filter-value').innerHTML}`);
+    console.log(localStorage.getItem('filter-location'));
 
     // Show or hide the "x" button based on the selected value
     const clearButton = document.getElementById('clear-button');
@@ -134,10 +136,19 @@ function updateFilter(value) {
         clearButton.style.display = 'inline-block'; // Show the "x" button for other values
     }
 }
+function getSelectedYear() {
+    selectedYear = document.getElementById("year").value;
+    localStorage.setItem("filter-year", selectedYear);
+}
+getSelectedYear();
+
 function clearFilter() {
     // Reset the filter to "Select"
-    
     updateFilter('Select');
     document.getElementById('filter-badge').classList.remove('bg-primary');
+    localStorage.setItem('filter-location', `${document.getElementById('filter-value').innerHTML}`);
 }
+clearFilter();
 
+var filterYear = localStorage.getItem('filter-year');
+var filterLocation = localStorage.getItem('filter-location');
