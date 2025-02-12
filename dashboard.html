@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap.css">
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -116,13 +117,69 @@
           </div>
           
           <div id="overview" class="container-fluid d-none mt-2 justify-content-center animate__animated animate__fadeIn">
+
+            <!-- filter  -->
             <div class="row w-100">
-              <h4>Top Produced Crop in Region III</h4>
-              <div class="col-lg-7 shadow bg-light rounded" style="max-height: 500px; background-color: #f9f9f9;">
-                <canvas id="onionChart"></canvas>
-              </div>
+                  <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                      <!-- Date Range Picker -->
+                      <div class="d-flex align-items-center">
+                        <div class="input-group input-group-sm me-2">
+                          <div class="d-none d-lg-flex bg-secondary text-light py-1 p-2">
+                            <span><i class="bi bi-calendar me-1"></i></span>
+                            <span class="me-2">Select Period</span>
+                          </div>
+                          <div class="d-flex d-lg-none bg-secondary text-light py-1 p-2">
+                            <span><i class="bi bi-calendar"></i></span>
+                          </div>
+                          <div>
+                            <select id="year" class="form-select form-select-sm me-2" onchange="" style="border: 1px solid #878787; border-radius: 0px; cursor: pointer;">
+                              <script>
+                                  for (i = 2023; i >= 2010; i--) {
+                                      document.write(`<option value="${i}">${i}</option>`);
+                                  }
+                                  console.log(i);
+                              </script>
+                            </select>
+                          </div>  
+                        </div>
+                      </div>
+
+                      <!-- Search and Filter -->
+                      <div class="d-flex align-items-center">
+                          <div class="input-group input-group-sm me-2">
+                              <div class="dropdown">
+                                  <button class="btn btn-secondary btn-sm d-none d-lg-flex" style="border-radius: 0px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <span><i class="bi bi-filter me-1"></i></span>
+                                      <span>Filter</span>
+                                  </button>
+                                  <button class="btn btn-secondary btn-sm d-flex d-lg-none" style="border-radius: 0px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span><i class="bi bi-filter"></i></span>
+                                </button>
+                                  <ul class="dropdown-menu">
+                                      <li><a class="dropdown-item" href="#" onclick="updateFilter('Select')">Select</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="updateFilter('Aurora')">Aurora</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="updateFilter('Bataan')">Bataan</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="updateFilter('Bulacan')">Bulacan</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="updateFilter('Nueva Ecija')">Nueva Ecija</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="updateFilter('Pampanga')">Pampanga</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="updateFilter('Tarlac')">Tarlac</a></li>
+                                      <li><a class="dropdown-item" href="#" onclick="updateFilter('Zambales')">Zambales</a></li>
+                                  </ul>
+                              </div>
+                              <div class="form-control d-flex align-items-center" style="border: 1px solid #878787; border-radius: 0px; cursor: pointer; width: 140px;" data-bs-toggle="dropdown" id="filter-input">
+                                  <span id="filter-badge" class="badge me-1 d-flex align-items-center">
+                                      <span id="filter-value">Select</span>
+                                      <button type="button" class="btn-close btn-close-white ms-2" aria-label="Close" id="clear-button" style="display: none; padding: 0px;" onclick="clearFilter()"></button>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
             </div>
-          </div>
+
+            <!-- 2023 default -->
+             
+        </div>
 
           <div id="production-summary" class="container-fluid mt-2 d-none justify-content-center animate__animated animate__fadeIn">
             <div>
@@ -250,62 +307,7 @@
   <script src="javascripts/global.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="javascripts/leaflet.js"></script>
+  <script src="javascripts/script.js"></script>
   <script src="javascripts/route.js"></script>
-  <script>
-    const ctx = document.getElementById('onionChart').getContext('2d');
-
-    // Sample decreasing onion production data
-    const years = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
-    const productionData = [47000, 48000, 47500, 46500, 47600, 47000, 46600, 46000, 48000, 49500, 48700]; // Slight decrease
-
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: years,
-            datasets: [{
-                label: 'Onion Production (Metric Tons)',
-                data: productionData,
-                borderColor: '#FF9494',
-                backgroundColor: 'rgba(255, 209, 209, 0.8)',
-                borderWidth: 2,
-                fill: true,
-                pointRadius: 4,
-                pointBackgroundColor: 'rgba(255, 148, 148, 1)',
-                pointBorderColor: '#fff',
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    title: {
-                        display: true,
-                        text: 'Metric Tons'
-                    }
-                    // ticks: {
-                    //     color: 'white' // Change axis label color
-                    // } 
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Year'
-                    }
-                    // ticks: {
-                    //     color: 'white' // Change axis label color
-                    // }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                }
-            }
-        }
-    });
-  </script>
 </body>
 </html>

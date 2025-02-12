@@ -1,3 +1,4 @@
+// for mobile navigation 
 function navbarClick(id) {
     // Get all navbar links
     const navLinks = document.querySelectorAll(".nav-link");
@@ -13,6 +14,56 @@ function navbarClick(id) {
     }
 }
 
+// for sidebar navigation 
+document.addEventListener("DOMContentLoaded", function () {
+    function showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll(".page").forEach(page => {
+            page.classList.add("collapse");
+        });
+
+        // Show the selected page
+        const activePage = document.getElementById(pageId);
+        if (activePage) {
+            activePage.classList.remove("collapse");
+        }
+
+        // Remove "active" class from all menu items
+        document.querySelectorAll(".menu-item").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        // Add "active" class to all matching menu items
+        document.querySelectorAll(`a[href="#${pageId}"]`).forEach(activeLink => {
+            activeLink.parentElement.classList.add("active");
+        });
+
+        // document.querySelectorAll("#dashboard-nav, #crop-map-nav").forEach(item => {
+        //     item.classList.remove("active");
+        // });
+
+        // Fix Leaflet Map Rendering Issue
+        if (pageId === "crop-map" && typeof map !== "undefined") {
+            setTimeout(() => {
+                map.invalidateSize(); // Ensure the map resizes properly
+            }, 300);
+        } 
+    }
+
+    function handleNavigation() {
+        // Get the hash (remove `#`) or default to "main"
+        const page = window.location.hash.replace("#", "") || "main";
+        showPage(page);
+    }
+
+    // Listen for hash changes
+    window.addEventListener("hashchange", handleNavigation);
+
+    // Run on page load
+    handleNavigation();
+});
+
+// for overview tab 
 document.addEventListener("DOMContentLoaded", function () {
     const sections = {
         overview: document.getElementById('overview'),
@@ -68,50 +119,25 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-document.addEventListener("DOMContentLoaded", function () {
-    function showPage(pageId) {
-        // Hide all pages
-        document.querySelectorAll(".page").forEach(page => {
-            page.classList.add("collapse");
-        });
 
-        // Show the selected page
-        const activePage = document.getElementById(pageId);
-        if (activePage) {
-            activePage.classList.remove("collapse");
-        }
+// for overview filter
+function updateFilter(value) {
+    // Update the filter value
+    document.getElementById('filter-value').innerText = value;
+    document.getElementById('filter-badge').classList.add('bg-primary');
 
-        // Remove "active" class from all menu items
-        document.querySelectorAll(".menu-item").forEach(item => {
-            item.classList.remove("active");
-        });
-
-        // Add "active" class to all matching menu items
-        document.querySelectorAll(`a[href="#${pageId}"]`).forEach(activeLink => {
-            activeLink.parentElement.classList.add("active");
-        });
-
-        // document.querySelectorAll("#dashboard-nav, #crop-map-nav").forEach(item => {
-        //     item.classList.remove("active");
-        // });
-
-        // Fix Leaflet Map Rendering Issue
-        if (pageId === "crop-map" && typeof map !== "undefined") {
-            setTimeout(() => {
-                map.invalidateSize(); // Ensure the map resizes properly
-            }, 300);
-        } 
+    // Show or hide the "x" button based on the selected value
+    const clearButton = document.getElementById('clear-button');
+    if (value === 'Select') {
+        clearButton.style.display = 'none'; // Hide the "x" button for "Select"
+    } else {
+        clearButton.style.display = 'inline-block'; // Show the "x" button for other values
     }
+}
+function clearFilter() {
+    // Reset the filter to "Select"
+    
+    updateFilter('Select');
+    document.getElementById('filter-badge').classList.remove('bg-primary');
+}
 
-    function handleNavigation() {
-        // Get the hash (remove `#`) or default to "main"
-        const page = window.location.hash.replace("#", "") || "main";
-        showPage(page);
-    }
-
-    // Listen for hash changes
-    window.addEventListener("hashchange", handleNavigation);
-
-    // Run on page load
-    handleNavigation();
-});
