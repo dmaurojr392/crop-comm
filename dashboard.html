@@ -180,7 +180,7 @@
               <h3 class="mt-2">Region III's Production 2023</h3>
               <div class="container my-4">
                 <!-- Top Summary Cards -->
-                <div class="row mb-3">
+                <div class="row mb-md-2">
                     <div class="mb-2 mb-md-auto col-md-4">
                         <div class="card px-2 py-1">
                             <h6 class="w-100">Corn Production</h6>
@@ -200,26 +200,10 @@
                       </div>
                     </div>
                 </div>
-            
-                <!-- Charts -->
+
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <h6>Inquiry Breakdown</h6>
-                            <canvas id="inquiryBreakdown"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                            <h6>Income per Quarter</h6>
-                            <canvas id="incomeQuarter"></canvas>
-                        </div>
-                    </div>
-                </div>
-            
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <div class="card">
+                    <div class="mb-2 mb-md-auto col-md-6">
+                        <div class="card px-2 py-1">
                             <h6>Inquiries per Month</h6>
                             <canvas id="inquiriesMonth"></canvas>
                         </div>
@@ -645,30 +629,6 @@
     </div>
   </div>
   <script>
-    // Inquiry Breakdown (Pie Chart)
-    new Chart(document.getElementById("inquiryBreakdown"), {
-        type: 'pie',
-        data: {
-            labels: ["Proposed", "Booked"],
-            datasets: [{
-                data: [65, 35],
-                backgroundColor: ["#907ad6", "#6b48ff"]
-            }]
-        }
-    });
-
-    // Income per Quarter (Pie Chart)
-    new Chart(document.getElementById("incomeQuarter"), {
-        type: 'pie',
-        data: {
-            labels: ["Q1", "Q2", "Q3", "Q4"],
-            datasets: [{
-                data: [15, 25, 20, 30],
-                backgroundColor: ["#6b48ff", "#907ad6", "#b6a0ff", "#d1c4ff"]
-            }]
-        }
-    });
-
     // Inquiries per Month (Bar Chart)
     new Chart(document.getElementById("inquiriesMonth"), {
         type: 'bar',
