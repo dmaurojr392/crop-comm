@@ -12,8 +12,34 @@
     z-index: 1000; 
     background: white;
 }
-@media  screen and (max-width: 575px) {
+#overview-filter{
+    position: sticky; 
+    top: 45px;
+    z-index: 999; 
+    background: white;
+}
+@media  screen and (max-width: 767px) {
+    #btn-collapse{
+        display: none;
+    }
     #main-nav{
         top: 55px; 
     }
+    #overview-filter{
+        top: 101px;
+    }
+    .content{
+        margin-top: 55px;
+    }
   }
+/* @media  screen and (max-width: 575px) {
+    #main-nav{
+        top: 55px; 
+    }
+    #overview-filter{
+        top: 100px;
+    }
+    .content{
+        margin-top: 55px;
+    }
+  } */

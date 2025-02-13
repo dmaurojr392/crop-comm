@@ -9,6 +9,7 @@ function navbarClick(id) {
     // Add "active" class to the clicked link if it exists
     if(id){
         document.getElementById(id)?.classList.add("active");
+        // localStorage.setItem('currentTab', 'overview');
     }else{
         document.getElementById("dashboard-nav")?.classList.add("active");
     }
@@ -141,19 +142,27 @@ setInterval(() => {
 
 // read filter
 function readFilter(){
-    const locations = ["aurora", "bataan", "bulacan", "nueva-ecija", "pampanga", "tarlac", "zambales"];
-    locations.forEach((loc) => {
-        const element = document.getElementById(`2023-${loc}`);
-        if (element) {
-            element.classList.add("d-none");
-            element.classList.remove("d-block");
-        }
-    });
+    const locations = ["select", "aurora", "bataan", "bulacan", "nueva-ecija", "pampanga", "tarlac", "zambales"];
+    const years = ["2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"]; // Add more years if needed
 
-    const selectedElement = document.getElementById(`2023-${updatedLocation.toLowerCase()}`);
-    if (selectedElement) {
-        selectedElement.classList.remove("d-none");
-        selectedElement.classList.add("d-block");
+    if (updatedYear) {
+        // Hide all elements for all years
+        years.forEach(year => {
+            locations.forEach(loc => {
+                const element = document.getElementById(`${year}-${loc}`);
+                if (element) {
+                    element.classList.add("d-none");
+                    element.classList.remove("d-block");
+                }
+            });
+        });
+
+        // Show only the selected year & location
+        const selectedElement = document.getElementById(`${updatedYear}-${updatedLocation.toLowerCase()}`);
+        if (selectedElement) {
+            selectedElement.classList.remove("d-none");
+            selectedElement.classList.add("d-block");
+        }
     }
 }
 
