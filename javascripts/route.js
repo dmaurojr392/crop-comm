@@ -120,13 +120,49 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
+let currentYear = localStorage.getItem('filter-year');
+let currentLocation = localStorage.getItem("filter-location");
+let updatedYear = "";
+let updatedLocation = "";
+
+
+setInterval(() => {
+    updatedLocation = localStorage.getItem("filter-location");
+    updatedYear = localStorage.getItem("filter-year");
+    if (updatedLocation !== currentLocation || updatedYear !== currentYear) {
+        console.log("LocalStorage changed:", updatedLocation);
+        console.log("LocalStorage changed:", updatedYear);
+        localStorage.setItem('filter-location', updatedLocation);
+        localStorage.setItem('filter-year', updatedYear);
+    }
+    readFilter();
+}, 500); // Check every 500ms
+
+// read filter
+function readFilter(){
+    const locations = ["aurora", "bataan", "bulacan", "nueva-ecija", "pampanga", "tarlac", "zambales"];
+    locations.forEach((loc) => {
+        const element = document.getElementById(`2023-${loc}`);
+        if (element) {
+            element.classList.add("d-none");
+            element.classList.remove("d-block");
+        }
+    });
+
+    const selectedElement = document.getElementById(`2023-${updatedLocation.toLowerCase()}`);
+    if (selectedElement) {
+        selectedElement.classList.remove("d-none");
+        selectedElement.classList.add("d-block");
+    }
+}
+
 // for overview filter
 function updateFilter(value) {
     // Update the filter value
     document.getElementById('filter-value').innerText = value;
     document.getElementById('filter-badge').classList.add('bg-primary');
     localStorage.setItem('filter-location', `${document.getElementById('filter-value').innerHTML}`);
-    console.log(localStorage.getItem('filter-location'));
 
     // Show or hide the "x" button based on the selected value
     const clearButton = document.getElementById('clear-button');
@@ -149,6 +185,3 @@ function clearFilter() {
     localStorage.setItem('filter-location', `${document.getElementById('filter-value').innerHTML}`);
 }
 clearFilter();
-
-var filterYear = localStorage.getItem('filter-year');
-var filterLocation = localStorage.getItem('filter-location');
