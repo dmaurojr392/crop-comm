@@ -215,7 +215,7 @@ p {
 /* Small screens (≥576px) */
 @media (min-width: 480px) and (max-width: 767px) {
   .card-container{
-    width:  95%;
+    width:  98%;
   }
   .card__title{
     bottom: 2rem;
