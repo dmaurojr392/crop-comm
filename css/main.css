@@ -213,7 +213,7 @@ p {
   height: 240px;
 }
 /* Small screens (≥576px) */
-@media (min-width: 480px) and (max-width: 767px) {
+@media (max-width: 767px) {
   .card-container{
     width:  98%;
   }
