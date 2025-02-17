@@ -177,56 +177,77 @@
 
             <!-- year & default -->
             <div class="d-none animate__animated animate__fadeIn" id="2023-select">
-              <h3 class="mt-2">Region III's Production 2023</h3>
+              <h3 class="mt-2">Nueva Ecija's Crop Productions in 2023</h3>
               <div class="container my-4">
                 <!-- Top Summary Cards -->
                 <div class="row mb-md-2">
                     <div class="mb-2 mb-md-auto col-md-4">
-                        <div class="card px-2 py-1 shadow">
-                            <h6 class="w-100">Corn Production</h6>
-                            <h4 class="text-center">139,000.3 mt</h4>
+                        <div class="card px-2 pt-2 shadow">
+                            <h6 class="w-100">Onion (Mature Bulb)</h6>
+                            <h4 class="text-center">129,838.86 MT</h4>
+                            <p class="text-center">9,628.10 ha</p>
                         </div>
                     </div>
                     <div class="mb-2 mb-md-auto col-md-4">
-                      <div class="card px-2 py-1 shadow">
-                          <h6 class="w-100">Harvested Area</h6>
-                          <h4 class="text-center">4,9710.18 ha</h4>
+                      <div class="card px-2 pt-2 shadow">
+                          <h6 class="w-100">Squash Fruit</h6>
+                          <h4 class="text-center">16,879.52 MT</h4>
+                          <p class="text-center">825.92 ha</p>
                       </div>
+                  </div>
+                  <div class="mb-2 mb-md-auto col-md-4">
+                    <div class="card px-2 pt-2 shadow">
+                        <h6 class="w-100">Tomato</h6>
+                        <h4 class="text-center">21,173.46 MT</h4>
+                        <p class="text-center">1,573.56 ha</p>
                     </div>
-                    <div class="mb-2 mb-md-auto col-md-4">
-                      <div class="card px-2 py-1 shadow">
-                          <h6 class="w-100">Yield per Hectare</h6>
-                          <h4 class="text-center">3.42 mt/ha</h4>
-                      </div>
-                    </div>
+                  </div>
                 </div>
 
                 <div class="row">
-                    <div class="mb-2 mb-md-auto col-md-6">
-                        <div class="card px-2 py-1 shadow">
-                            <h6>Inquiries per Month</h6>
-                            <canvas id="inquiriesMonth"></canvas>
+                    <div class="mb-2 mb-lg-auto col-lg-6">
+                        <div class="card px-3 py-2 shadow">
+                            <h6>Onion's Previous Year Production (MT)</h6>
+                            <canvas id="onion-histogram-2023"></canvas>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="card shadow">
-                            <h6>Inquiry Source Breakdown</h6>
-                            <canvas id="inquirySource"></canvas>
+                    <div class="col-lg-6">
+                        <div class="card px-3 py-2 shadow">
+                            <h6>Squash's Previous Year Production (MT)</h6>
+                            <canvas id="squash-histogram-2023"></canvas>
                         </div>
                     </div>
                 </div>
             
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <div class="card shadow">
-                            <h6>Income per Month</h6>
-                            <canvas id="incomeMonth"></canvas>
+                <div class="row mt-2">
+                    <div class="mb-2 mb-lg-auto col-lg-6">
+                        <div class="card px-3 py-2 shadow">
+                            <h6>Tomato's Previous Year Production (MT)</h6>
+                            <canvas id="tomato-histogram-2023"></canvas>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="card shadow">
-                            <h6>Income Source per Month</h6>
-                            <canvas id="incomeSource"></canvas>
+                    <div class="col-lg-6">
+                        <div class="card px-3 py-2 shadow h-100">
+                            <h6>Top 3 Crops Production</h6>
+                            <div class="d-flex align-items-center justify-content-center">
+                              <div class="w-50">
+                                <div class="d-flex align-items-center justify-content-center mb-2">
+                                  <div style="height: 16px; width: 24px; background-color: #CDAAFD;"></div>
+                                  <div style="font-size: 11pt;">&nbsp;Onion: 129,838.86 MT</div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center mb-2">
+                                  <div style="height: 16px; width: 24px; background-color: #FFD28F;"></div>
+                                  <div style="font-size: 11pt;">&nbsp;Squash: 16,879.52 MT</div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                  <div style="height: 16px; width: 24px; background-color: #FFA3A3;"></div>
+                                  <div style="font-size: 11pt;">&nbsp;Tomato: 21,173.46 MT</div>
+                                </div>
+                              </div>
+                              <div class="w-50 d-flex align-items-center justify-content-center">
+                                <canvas id="crop-summary-2023"></canvas>
+                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -628,73 +649,7 @@
       <div class="overlay"></div>
     </div>
   </div>
-  <script>
-    // Inquiries per Month (Bar Chart)
-    new Chart(document.getElementById("inquiriesMonth"), {
-        type: 'bar',
-        data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [{
-                label: "Inquiries",
-                data: [5, 10, 8, 12, 15, 18, 22, 25, 20, 23, 19, 30],
-                backgroundColor: "#907ad6"
-            }]
-        }
-    });
-
-    // Inquiry Source Breakdown (Stacked Bar Chart)
-    new Chart(document.getElementById("inquirySource"), {
-        type: 'bar',
-        data: {
-            labels: ["Web", "Email", "Instagram", "TikTok", "Pinterest"],
-            datasets: [{
-                label: "Sources",
-                data: [70, 40, 30, 20, 15],
-                backgroundColor: ["#6b48ff", "#907ad6", "#b6a0ff", "#d1c4ff", "#f2e9ff"]
-            }]
-        },
-        options: {
-            plugins: {
-                legend: { display: false }
-            }
-        }
-    });
-
-    // Income per Month (Bar Chart)
-    new Chart(document.getElementById("incomeMonth"), {
-        type: 'bar',
-        data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [{
-                label: "Income",
-                data: [10000, 20000, 25000, 30000, 35000, 40000, 38000, 36000, 33000, 31000, 29000, 27000],
-                backgroundColor: "#6b48ff"
-            }]
-        }
-    });
-
-    // Income Source per Month (Stacked Bar Chart)
-    new Chart(document.getElementById("incomeSource"), {
-        type: 'bar',
-        data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [
-                { label: "Web", data: [5000, 10000, 12000, 14000, 15000, 16000, 18000, 20000, 21000, 23000, 22000, 24000], backgroundColor: "#6b48ff" },
-                { label: "Email", data: [2000, 4000, 5000, 6000, 7000, 7500, 7700, 8000, 9000, 9500, 9700, 10000], backgroundColor: "#907ad6" }
-            ]
-        },
-        options: {
-            plugins: {
-                legend: { display: true }
-            },
-            scales: {
-                x: { stacked: true },
-                y: { stacked: true }
-            }
-        }
-    });
-
-</script>
+  <script src="javascripts/chart-data.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="javascripts/dashboard.js"></script>
