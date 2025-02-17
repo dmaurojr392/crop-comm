@@ -208,23 +208,41 @@ p {
 .card-container{
   height: 500px;
 }
+#activities-image-1, #activities-image-2, #activities-image-3, #activities-image-4, #activities-image-5{
+  width: 100vw;
+  height: 240px;
+}
 /* Small screens (≥576px) */
-@media (min-width: 480px) and (max-width: 599px) {
+@media (min-width: 480px) and (max-width: 767px) {
   .card-container{
     width:  95%;
   }
-}
-/* Small screens (≥576px) */
-@media (min-width: 600px) and (max-width: 767px) {
-  .card-container{
-    width:  430px;
+  .card__title{
+    bottom: 1.25rem;
+  }
+  #activities-image-1, #activities-image-2, #activities-image-3, #activities-image-4, #activities-image-5{
+    width: 60vw;
+    height: 280px;
   }
 }
+/* Small screens (≥576px) */
+/* @media (min-width: 576px) and (max-width: 767px) {
+  .card-container{
+    width:  95%;
+  }
+  .card__title{
+    bottom: 1.25rem;
+  }
+} */
 
 /* Medium screens (≥768px) */
 @media (min-width: 768px) {
   .card-container{
     height: 400px;
+  }
+  #activities-image-1, #activities-image-2, #activities-image-3, #activities-image-4, #activities-image-5{
+    width: 60vw;
+    height: 280px;
   }
 }
 
@@ -234,6 +252,10 @@ p {
     height: 450px;
     padding: 0rem 1rem;
   }
+  #activities-image-1, #activities-image-2, #activities-image-3, #activities-image-4, #activities-image-5{
+    width: 100vw;
+    height: 200px;
+  }
 }
 
 /* Extra Large screens (≥1200px) */
@@ -241,6 +263,7 @@ p {
   .card{
     width:  340px;
   }
+  
 }
 
 @media (min-width: 1400px) {
