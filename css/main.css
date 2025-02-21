@@ -221,8 +221,8 @@ p {
     bottom: 2rem;
   }
   #activities-image-1, #activities-image-2, #activities-image-3, #activities-image-4, #activities-image-5{
-    width: 70vw;
-    height: 280px;
+    width: 80vw;
+    height: 250px;
   }
 }
 /* Small screens (≥576px) */
