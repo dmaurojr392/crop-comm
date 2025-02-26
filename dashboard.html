@@ -122,7 +122,7 @@
                   <div class="d-flex justify-content-between align-items-center border-bottom pb-2 border-2">
                       <!-- Date Range Picker -->
                       <div class="d-flex align-items-center">
-                        <div class="input-group input-group-sm me-2">
+                        <!-- <div class="input-group input-group-sm me-2">
                           <div class="d-none d-lg-flex bg-secondary text-light py-1 p-2">
                             <span><i class="bi bi-calendar me-1"></i></span>
                             <span class="me-2">Select Period</span>
@@ -139,7 +139,7 @@
                               </script>
                             </select>
                           </div>  
-                        </div>
+                        </div> -->
                       </div>
 
                       <!-- Search and Filter -->
@@ -176,29 +176,29 @@
             </div>
 
             <!-- year & default -->
-            <div class="d-none animate__animated animate__fadeIn" id="2023-select">
-              <h3 class="mt-2">Nueva Ecija's Crop Productions in 2023</h3>
+            <div class="animate__animated animate__fadeIn" id="">
+              <h3 class="mt-2"><label id="selectedLocation"></label> CROP PRODUCTIONS (<label id="cropping-year"></label>)</h3>
               <div class="container my-4">
                 <!-- Top Summary Cards -->
                 <div class="row gx-2 mb-md-2">
                     <div class="mb-2 mb-md-auto col-md-4">
                         <div class="card px-2 pt-2 shadow">
-                            <h6 class="w-100">Onion (Mature Bulb)</h6>
-                            <h4 class="text-center">129,838.86 MT</h4>
+                            <h6 class="w-100"><label class="top-crop-label"></label></h6>
+                            <h4 class="text-center"><label class="top-crop-volume"></label></h4>
                             <p class="text-center">9,628.10 ha</p>
                         </div>
                     </div>
                     <div class="mb-2 mb-md-auto col-md-4">
                       <div class="card px-2 pt-2 shadow">
-                          <h6 class="w-100">Squash Fruit</h6>
-                          <h4 class="text-center">16,879.52 MT</h4>
+                          <h6 class="w-100"><label class="second-crop-label"></label></h6>
+                          <h4 class="text-center"><label class="second-crop-volume"></label></h4>
                           <p class="text-center">825.92 ha</p>
                       </div>
                   </div>
                   <div class="mb-2 mb-md-auto col-md-4">
                     <div class="card px-2 pt-2 shadow">
-                        <h6 class="w-100">Tomato</h6>
-                        <h4 class="text-center">21,173.46 MT</h4>
+                        <h6 class="w-100"><label class="third-crop-label"></label></h6>
+                        <h4 class="text-center"><label class="third-crop-volume"></label></h4>
                         <p class="text-center">1,573.56 ha</p>
                     </div>
                   </div>
@@ -206,15 +206,15 @@
 
                 <div class="row gx-2">
                     <div class="mb-2 mb-lg-auto col-lg-6">
-                        <div class="card p-2 shadow">
-                            <h6>Onion's Previous Year Production (MT)</h6>
-                            <canvas id="onion-histogram-2023"></canvas>
+                        <div id="top-histogram-container" class="card p-2 shadow">
+                            <h6><label class="top-crop-label"></label>'s Previous Year Production (MT)</h6>
+                            <canvas id="top-histogram"></canvas>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="card p-2 shadow">
-                            <h6>Squash's Previous Year Production (MT)</h6>
-                            <canvas id="squash-histogram-2023"></canvas>
+                            <h6><label class="second-crop-label"></label>'s Previous Year Production (MT)</h6>
+                            <canvas id="second-histogram"></canvas>
                         </div>
                     </div>
                 </div>
@@ -222,8 +222,8 @@
                 <div class="row gx-2 mt-2">
                     <div class="mb-2 mb-lg-auto col-lg-6">
                         <div class="card p-2 shadow">
-                            <h6>Tomato's Previous Year Production (MT)</h6>
-                            <canvas id="tomato-histogram-2023"></canvas>
+                            <h6><label class="third-crop-label"></label>'s Previous Year Production (MT)</h6>
+                            <canvas id="third-histogram"></canvas>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -233,301 +233,26 @@
                               <div class="w-50">
                                 <div class="d-flex align-items-center justify-content-center mb-2">
                                   <div style="height: 16px; width: 24px; background-color: #CDAAFD;"></div>
-                                  <div style="font-size: 10pt;">&nbsp;Onion: 129,838.86 MT</div>
+                                  <div style="font-size: 10pt;">&nbsp;<label class="top-crop-label"></label> : <label class="top-crop-volume"></label> MT</div>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-2">
                                   <div style="height: 16px; width: 24px; background-color: #FFD28F;"></div>
-                                  <div style="font-size: 10pt;">&nbsp;Squash: 16,879.52 MT</div>
+                                  <div style="font-size: 10pt;">&nbsp;<label class="second-crop-label"></label>: <label class="second-crop-volume"></label> MT</div>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center">
                                   <div style="height: 16px; width: 24px; background-color: #FFA3A3;"></div>
-                                  <div style="font-size: 10pt;">&nbsp;Tomato: 21,173.46 MT</div>
+                                  <div style="font-size: 10pt;">&nbsp;<label class="third-crop-label"></label>: <label class="third-crop-volume"></label> MT</div>
                                 </div>
                               </div>
                               <div class="w-50 d-flex align-items-center justify-content-center">
-                                <canvas id="crop-summary-2023"></canvas>
+                                <canvas id="crop-summary"></canvas>
                               </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2022-select">
-              2022 default
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2021-select">
-              2021 default
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2020-select">
-              2020 default
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2019-select">
-              2019 default
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2018-select">
-              2018 default
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2017-select">
-              2017 default
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2016-select">
-              2016 default
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2015-select">
-              2015 default
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2014-select">
-              2014 default
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2013-select">
-              2013 default
-            </div>
-
-            <!-- aurora -->
-            <div class="d-none animate__animated animate__fadeIn" id="2023-aurora">
-              2023 aurora
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2022-aurora">
-              2022 aurora
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2021-aurora">
-              2021 aurora
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2020-aurora">
-              2020 aurora
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2019-aurora">
-              2019 aurora
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2018-aurora">
-              2018 aurora
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2017-aurora">
-              2017 aurora
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2016-aurora">
-              2016 aurora
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2015-aurora">
-              2015 aurora
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2014-aurora">
-              2014 aurora
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2013-aurora">
-              2013 aurora
-            </div>
-
-            <!-- bataan -->
-            <div class="d-none animate__animated animate__fadeIn" id="2023-bataan">
-              2023 bataan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2022-bataan">
-              2022 bataan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2021-bataan">
-              2021 bataan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2020-bataan">
-              2020 bataan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2019-bataan">
-              2019 bataan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2018-bataan">
-              2018 bataan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2017-bataan">
-              2017 bataan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2016-bataan">
-              2016 bataan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2015-bataan">
-              2015 bataan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2014-bataan">
-              2014 bataan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2013-bataan">
-              2013 bataan
-            </div>
-
-            <!-- bulacan -->
-            <div class="d-none animate__animated animate__fadeIn" id="2023-bulacan">
-              2023 bulacan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2022-bulacan">
-              2022 bulacan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2021-bulacan">
-              2021 bulacan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2020-bulacan">
-              2020 bulacan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2019-bulacan">
-              2019 bulacan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2018-bulacan">
-              2018 bulacan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2017-bulacan">
-              2017 bulacan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2016-bulacan">
-              2016 bulacan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2015-bulacan">
-              2015 bulacan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2014-bulacan">
-              2014 bulacan
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2013-bulacan">
-              2013 bulacan
-            </div>
-
-            <!-- nueva-ecija -->
-            <div class="d-none animate__animated animate__fadeIn" id="2023-nueva-ecija">
-              2023 nueva-ecija
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2022-nueva-ecija">
-              2022 nueva-ecija
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2021-nueva-ecija">
-              2021 nueva-ecija
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2020-nueva-ecija">
-              2020 nueva-ecija
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2019-nueva-ecija">
-              2019 nueva-ecija
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2018-nueva-ecija">
-              2018 nueva-ecija
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2017-nueva-ecija">
-              2017 nueva-ecija
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2016-nueva-ecija">
-              2016 nueva-ecija
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2015-nueva-ecija">
-              2015 nueva-ecija
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2014-nueva-ecija">
-              2014 nueva-ecija
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2013-nueva-ecija">
-              2013 nueva-ecija
-            </div>
-
-            <!-- pampanga -->
-            <div class="d-none animate__animated animate__fadeIn" id="2023-pampanga">
-              2023 pampanga
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2022-pampanga">
-              2022 pampanga
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2021-pampanga">
-              2021 pampanga
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2020-pampanga">
-              2020 pampanga
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2019-pampanga">
-              2019 pampanga
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2018-pampanga">
-              2018 pampanga
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2017-pampanga">
-              2017 pampanga
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2016-pampanga">
-              2016 pampanga
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2015-pampanga">
-              2015 pampanga
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2014-pampanga">
-              2014 pampanga
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2013-pampanga">
-              2013 pampanga
-            </div>
-
-            <!-- tarlac -->
-            <div class="d-none animate__animated animate__fadeIn" id="2023-tarlac">
-              2023 tarlac
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2022-tarlac">
-              2022 tarlac
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2021-tarlac">
-              2021 tarlac
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2020-tarlac">
-              2020 tarlac
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2019-tarlac">
-              2019 tarlac
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2018-tarlac">
-              2018 tarlac
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2017-tarlac">
-              2017 tarlac
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2016-tarlac">
-              2016 tarlac
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2015-tarlac">
-              2015 tarlac
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2014-tarlac">
-              2014 tarlac
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2013-tarlac">
-              2013 tarlac
-            </div>
-
-            <!-- zambales -->
-            <div class="d-none animate__animated animate__fadeIn" id="2023-zambales">
-              2023 zambales
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2022-zambales">
-              2022 zambales
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2021-zambales">
-              2021 zambales
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2020-zambales">
-              2020 zambales
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2019-zambales">
-              2019 zambales
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2018-zambales">
-              2018 zambales
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2017-zambales">
-              2017 zambales
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2016-zambales">
-              2016 zambales
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2015-zambales">
-              2015 zambales
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2014-zambales">
-              2014 zambales
-            </div>
-            <div class="d-none animate__animated animate__fadeIn" id="2013-zambales">
-              2013 zambales
-            </div>
+          </div>
         </div>
 
           <div id="production-summary" class="container-fluid mt-2 d-none justify-content-center animate__animated animate__fadeIn">
@@ -649,7 +374,6 @@
       <div class="overlay"></div>
     </div>
   </div>
-  <script src="javascripts/chart-data.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="javascripts/dashboard.js"></script>
@@ -657,6 +381,8 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="javascripts/leaflet.js"></script>
   <script src="javascripts/script.js"></script>
+  <script src="javascripts/chart-data.js"></script>
   <script src="javascripts/route.js"></script>
+  
 </body>
 </html>

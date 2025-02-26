@@ -3,78 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaflet GeoJSON Example</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-        #map {
-            height: 500px;
-            width: 100%;
-        }
-    </style>
+    <title>Fetch Onion Data</title>
 </head>
 <body>
-    <h1>Display GeoJSON with Leaflet</h1>
-    <div id="map"></div>
-    
-    <!-- Include Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Include GeoJSON Example -->
+    <h2>Onion Production Data</h2>
+    <div id="onion-data"></div>
+
     <script>
-        const map = L.map('map').setView([15.5, 120.75], 8); // Center of Central Luzon
+        const API_KEY = "AIzaSyC2K27qYEGDTm0-pZyrrTRM767D2M2Cu6A";  // Replace with your API key
+        const SHEET_ID = "1ZUfW6r4SaF01njB7_N3g1YeAgOcyO_Qcn5pYEF1jahU"; // Replace with your Sheet ID
+        const RANGE = "A1:M100";  // Adjust the range based on your data
 
-        // Add base tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        async function fetchSheetData() {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
 
-        // GeoJSON data (Central Luzon sample)
-        const centralLuzonGeoJSON = {
-        "type": "FeatureCollection",
-        "features": [
-            {
-            "type": "Feature",
-            "properties": {
-                "region": "Central Luzon",
-                "region_code": "03",
-                "capital": "San Fernando, Pampanga",
-                "population": 12200000,
-                "area_km2": 21814,
-                "density": 559.2
-            },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                [
-                    [120.354, 15.764], [120.799, 15.547], [121.144, 15.672],
-                    [121.306, 15.352], [121.169, 14.888], [120.841, 14.531],
-                    [120.495, 14.541], [120.275, 14.921], [120.354, 15.764]
-                ]
-                ]
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.values) {
+                    // Find the row containing "Onion"
+                    const onionRow = data.values.find(row => row[0] && row[0].toLowerCase().includes("onion"));
+
+                    if (onionRow) {
+                        let output = "<table border='1'><tr>";
+                        onionRow.forEach(value => {
+                            output += `<td>${value}</td>`;
+                        });
+                        output += "</tr></table>";
+                        document.getElementById("onion-data").innerHTML = output;
+                    } else {
+                        document.getElementById("onion-data").innerHTML = "No Onion data found.";
+                    }
+                } else {
+                    document.getElementById("onion-data").innerHTML = "No data found.";
+                }
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+                document.getElementById("onion-data").innerHTML = "Failed to load data.";
             }
-            }
-        ]
-        };
-
-        // Add GeoJSON to the map
-        L.geoJSON(centralLuzonGeoJSON, {
-        style: function (feature) {
-            return {
-            color: "blue",
-            weight: 2,
-            fillColor: "blue",
-            fillOpacity: 0.5
-            };
-        },
-        onEachFeature: function (feature, layer) {
-            const popupContent = `
-            <strong>${feature.properties.region || feature.properties.province}</strong><br>
-            Capital: ${feature.properties.capital}<br>
-            Population: ${feature.properties.population.toLocaleString()}<br>
-            Area: ${feature.properties.area_km2} km²<br>
-            Density: ${feature.properties.density} people/km²
-            `;
-            layer.bindPopup(popupContent);
         }
-        }).addTo(map);
 
+        fetchSheetData();
     </script>
 </body>
 </html>
