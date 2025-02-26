@@ -1,8 +1,9 @@
 let currentLocation = localStorage.getItem('filter-location');
 let updatedLocation = "";
-let topCropLabel = "";
-let secondCropLabel = "";
-let thirdCropLabel = "";
+
+let topCropLatestRecord;
+let secondCropLatestRecord;
+let thirdCropLatestRecord;
 
 setInterval(() => {
     updatedLocation = localStorage.getItem('filter-location');
@@ -71,7 +72,6 @@ function checkFilter() {
             thirdCropLatestRecord = thirdCropData.length > 2 ? Number(thirdCropData[thirdCropData.length - 1]).toLocaleString() : null;
             thirdCropPreviousYearRecord = thirdCropData.length > 2 ? Number(thirdCropData[thirdCropData.length - 2]).toLocaleString() : null;
 
-            console.log(topCropPreviousYearRecord);
             if (topCropLatestRecord > topCropPreviousYearRecord) {
                 var topVolumeBgColor = "bg-success";
                 var topVolumeIcon = "<i class='bi bi-caret-up-fill'></i>";
@@ -110,9 +110,13 @@ function checkFilter() {
             document.querySelectorAll('.second-crop-label').forEach(el => el.textContent = secondCropLabel);
             document.querySelectorAll('.third-crop-label').forEach(el => el.textContent = thirdCropLabel);
 
-            document.querySelectorAll('.top-crop-volume').forEach(el => el.innerHTML =`<div class='${topVolumeBgColor} text-light rounded px-3'>${topVolumeIcon} ${topCropLatestRecord}  MT</div>`);
-            document.querySelectorAll('.second-crop-volume').forEach(el => el.innerHTML = `<div class='${secondVolumeBgColor} text-light rounded px-3'>${secondVolumeIcon} ${secondCropLatestRecord}  MT</div>`);
-            document.querySelectorAll('.third-crop-volume').forEach(el => el.innerHTML = `<div class='${thirdVolumeBgColor} text-light rounded px-3'>${thirdVolumeIcon} ${thirdCropLatestRecord}  MT</div>`);
+            document.getElementsByClassName('top-crop-volume')[0].innerHTML = `<div class='${topVolumeBgColor} text-light rounded px-3'>${topVolumeIcon} ${topCropLatestRecord}  MT</div>`;
+            document.getElementsByClassName('second-crop-volume')[0].innerHTML = `<div class='${secondVolumeBgColor} text-light rounded px-3'>${secondVolumeIcon} ${secondCropLatestRecord}  MT</div>`;
+            document.getElementsByClassName('third-crop-volume')[0].innerHTML = `<div class='${thirdVolumeBgColor} text-light rounded px-3'>${thirdVolumeIcon} ${thirdCropLatestRecord}  MT</div>`;
+
+            document.getElementsByClassName('top-crop-volume')[1].innerHTML = ` ${topCropLatestRecord} `;
+            document.getElementsByClassName('second-crop-volume')[1].innerHTML = `${secondCropLatestRecord}`;
+            document.getElementsByClassName('third-crop-volume')[1].innerHTML = `${thirdCropLatestRecord}`;
 
             updateChart('top-histogram', topCropData, croppingYear, '#CDAAFD');
             updateChart('second-histogram', secondCropData, croppingYear, '#FFA3A3');
@@ -146,7 +150,7 @@ function updatePieChart(canvasId, data, colors) {
     }
     chartInstances[canvasId] = new Chart(canvas.getContext("2d"), {
         type: 'pie',
-        data: { labels: ["Top Crop", "Second Crop", "Third Crop"], datasets: [{ data: data, backgroundColor: colors }] },
+        data: { labels: [topCropLabel, secondCropLabel, thirdCropLabel], datasets: [{ data: data, backgroundColor: colors }] },
         options: { plugins: { legend: { display: false } } }
     });
 }
