@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/loader.css">
   <link rel="stylesheet" href="css/leaflet.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -178,28 +179,31 @@
             <!-- year & default -->
             <div class="animate__animated animate__fadeIn" id="">
               <h4 class="mt-2"><label id="selectedLocation"></label> CROP PRODUCTIONS <br class="d-sm-none">(<label id="cropping-year"></label>)</h4>
-              <div class="container my-4">
+              <div id="loader" class="d-none align-items-center justify-content-center mt-4">
+                <div class="loader"></div>
+              </div>
+              <div id="overview-content" class="container d-block my-4">
                 <!-- Top Summary Cards -->
                 <div class="row gx-2 mb-lg-2">
                     <div class="mb-2 mb-lg-auto col-lg-4">
                         <div class="card px-2 pt-2 shadow">
                             <h6 class="w-100"><label class="top-crop-label"></label></h6>
                             <h4 class="text-center"><label class="top-crop-volume"></label></h4>
-                            <p class="text-center">9,628.10 ha</p>
+                            <p class="text-center"><label class="top-crop-area"></label></p>
                         </div>
                     </div>
                     <div class="mb-2 mb-lg-auto col-lg-4">
                       <div class="card px-2 pt-2 shadow">
                           <h6 class="w-100"><label class="second-crop-label"></label></h6>
                           <h4 class="text-center"><label class="second-crop-volume"></label></h4>
-                          <p class="text-center">825.92 ha</p>
+                          <p class="text-center"><label class="second-crop-area"></p>
                       </div>
                   </div>
                   <div class="mb-2 mb-lg-auto col-lg-4">
                     <div class="card px-2 pt-2 shadow">
                         <h6 class="w-100"><label class="third-crop-label"></label></h6>
                         <h4 class="text-center"><label class="third-crop-volume"></label></h4>
-                        <p class="text-center">1,573.56 ha</p>
+                        <p class="text-center"><label class="third-crop-area"></p>
                     </div>
                   </div>
                 </div>

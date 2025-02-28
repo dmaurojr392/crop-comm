@@ -45,31 +45,48 @@ function checkFilter() {
         sheetName = 'ZAMBALES';
         selectedLocationElement.textContent = sheetName;
     }
-    const RANGE = `${sheetName}!A1:Z100`;
+    const RANGE = `${sheetName}`;
 
     async function fetchSheetData() {
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/1ZUfW6r4SaF01njB7_N3g1YeAgOcyO_Qcn5pYEF1jahU/values/${RANGE}?key=AIzaSyC2K27qYEGDTm0-pZyrrTRM767D2M2Cu6A`;
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/1ZUfW6r4SaF01njB7_N3g1YeAgOcyO_Qcn5pYEF1jahU/values:batchGet?ranges=${sheetName}!A1:Z100&ranges='${sheetName} HARVEST AREA'!A1:Z100&key=AIzaSyC2K27qYEGDTm0-pZyrrTRM767D2M2Cu6A`;
         try {
+            document.getElementById("loader").classList.remove("d-none");
+            document.getElementById("loader").classList.add("d-flex");
+            document.getElementById("overview-content").classList.remove("d-block");
+            document.getElementById("overview-content").classList.add("d-none");
             const response = await fetch(url);
             const data = await response.json();
-            if (!data.values) return;
+
+            let firstDataSheet = data.valueRanges[0];
+            let secondDataSheet = data.valueRanges[1];
+            if (!firstDataSheet.values || !secondDataSheet.values) return;
+            document.getElementById("loader").classList.remove("d-flex");
+            document.getElementById("loader").classList.add("d-none");
+            document.getElementById("overview-content").classList.remove("d-none");
+            document.getElementById("overview-content").classList.add("d-block");
+            let croppingYear = firstDataSheet.values[1].slice(1, -1);
             
-            let croppingYear = data.values[1].slice(1, -1);
-            let topCropData = data.values[2].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
-            let secondCropData = data.values[3].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
-            let thirdCropData = data.values[4].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
             let datedYearData = croppingYear ? croppingYear[croppingYear.length - 1] : null;
-
-            topCropLabel = data.values[2][0];
-            secondCropLabel = data.values[3][0];
-            thirdCropLabel = data.values[4][0];
-
+            
+            let topCropData = firstDataSheet.values[2].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
+            let topCropHarvestArea = secondDataSheet.values[2].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
+            topCropLabel = firstDataSheet.values[2][0];
             topCropLatestRecord = topCropData.length > 2 ? Number(topCropData[topCropData.length - 1]).toLocaleString() : null;
+            topCropLatestHarvestAreaRecord = topCropHarvestArea.length > 2 ? Number(topCropHarvestArea[topCropHarvestArea.length - 1]).toLocaleString() : null;
             topCropPreviousYearRecord = topCropData.length > 2 ? Number(topCropData[topCropData.length - 2]).toLocaleString() : null;
+
+            let secondCropData = firstDataSheet.values[3].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
+            let secondCropHarvestArea = secondDataSheet.values[3].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
+            secondCropLabel = firstDataSheet.values[3][0];
             secondCropLatestRecord = secondCropData.length > 2 ? Number(secondCropData[secondCropData.length - 1]).toLocaleString() : null;
+            secondCropLatestHarvestAreaRecord = secondCropHarvestArea.length > 2 ? Number(secondCropHarvestArea[secondCropHarvestArea.length - 1]).toLocaleString() : null;
             secondCropPreviousYearRecord = secondCropData.length > 2 ? Number(secondCropData[secondCropData.length - 2]).toLocaleString() : null;
 
+            let thirdCropData = firstDataSheet.values[4].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
+            let thirdCropHarvestArea = secondDataSheet.values[4].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
+            thirdCropLabel = firstDataSheet.values[4][0];
             thirdCropLatestRecord = thirdCropData.length > 2 ? Number(thirdCropData[thirdCropData.length - 1]).toLocaleString() : null;
+            thirdCropLatestHarvestAreaRecord = thirdCropHarvestArea.length > 2 ? Number(thirdCropHarvestArea[thirdCropHarvestArea.length - 1]).toLocaleString() : null;
             thirdCropPreviousYearRecord = thirdCropData.length > 2 ? Number(thirdCropData[thirdCropData.length - 2]).toLocaleString() : null;
 
             if (topCropLatestRecord > topCropPreviousYearRecord) {
@@ -109,6 +126,9 @@ function checkFilter() {
             document.querySelectorAll('.top-crop-label').forEach(el => el.textContent = topCropLabel);
             document.querySelectorAll('.second-crop-label').forEach(el => el.textContent = secondCropLabel);
             document.querySelectorAll('.third-crop-label').forEach(el => el.textContent = thirdCropLabel);
+            document.querySelectorAll('.top-crop-area').forEach(el => el.textContent = topCropLatestHarvestAreaRecord + " Hectares");
+            document.querySelectorAll('.second-crop-area').forEach(el => el.textContent = secondCropLatestHarvestAreaRecord + " Hectares");
+            document.querySelectorAll('.third-crop-area').forEach(el => el.textContent = thirdCropLatestHarvestAreaRecord + " Hectares");
 
             document.getElementsByClassName('top-crop-volume')[0].innerHTML = `<div class='${topVolumeBgColor} text-light rounded px-3'>${topVolumeIcon} ${topCropLatestRecord}  MT</div>`;
             document.getElementsByClassName('second-crop-volume')[0].innerHTML = `<div class='${secondVolumeBgColor} text-light rounded px-3'>${secondVolumeIcon} ${secondCropLatestRecord}  MT</div>`;
