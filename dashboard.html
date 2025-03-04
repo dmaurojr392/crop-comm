@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="css/loader.css">
   <link rel="stylesheet" href="css/leaflet.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <div class="layout has-sidebar fixed-sidebar fixed-header">
@@ -47,13 +48,35 @@
                   <span class="menu-title"></span>
                 </a>
               </li>
-              <li class="menu-item">
+              <!-- <li class="menu-item">
                 <a href="#crop-map">
                   <span class="menu-icon">
                     <i class="bi bi-geo-alt-fill"></i>
                   </span>
                   <span class="menu-title"></span>
                 </a>
+              </li> -->
+              <li class="menu-item sub-menu">
+                <a href="#">
+                  <span class="menu-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </span>
+                  <span class="menu-title">Maps</span>
+                </a>
+                <div class="sub-menu-list">
+                  <ul>
+                    <li class="menu-item ms-3">
+                      <a href="#crop-map">
+                        <span class="menu-title">Leading Crops</span>
+                      </a>
+                    </li>
+                    <li class="menu-item ms-3">
+                      <a href="#suitability-map">
+                        <span class="menu-title">Suitability Map</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </li>
             </ul>
           </nav>
@@ -123,6 +146,7 @@
                   <div class="d-flex justify-content-between align-items-center border-bottom pb-2 border-2">
                       <!-- Date Range Picker -->
                       <div class="d-flex align-items-center">
+                        <h4>CROP PRODUCTIONS</h4>
                         <!-- <div class="input-group input-group-sm me-2">
                           <div class="d-none d-lg-flex bg-secondary text-light py-1 p-2">
                             <span><i class="bi bi-calendar me-1"></i></span>
@@ -176,9 +200,9 @@
                   </div>
             </div>
 
-            <!-- year & default -->
+            <!-- year & default d-sm-none -->
             <div class="animate__animated animate__fadeIn" id="">
-              <h4 class="mt-2"><label id="selectedLocation"></label> CROP PRODUCTIONS <br class="d-sm-none">(<label id="cropping-year"></label>)</h4>
+              <h5 class="mt-2"><label id="selectedLocation"></label> (<label id="cropping-year"></label>)</h5>
               <div id="loader" class="d-none align-items-center justify-content-center mt-4">
                 <div class="loader"></div>
               </div>
@@ -186,10 +210,10 @@
                 <!-- Top Summary Cards -->
                 <div class="row gx-2 mb-lg-2">
                     <div class="mb-2 mb-lg-auto col-lg-4">
-                        <div class="card px-2 pt-2 shadow">
-                            <h6 class="w-100"><label class="top-crop-label"></label></h6>
-                            <h4 class="text-center"><label class="top-crop-volume"></label></h4>
-                            <p class="text-center"><label class="top-crop-area"></label></p>
+                        <div class="card px-2 pt-2 shadow" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <h6 class="w-100"><label class="top-crop-label" style="cursor: pointer;"></label></h6>
+                            <h4 class="text-center"><label class="top-crop-volume" style="cursor: pointer;"></label></h4>
+                            <p class="text-center"><label class="top-crop-area" style="cursor: pointer;"></label></p>
                         </div>
                     </div>
                     <div class="mb-2 mb-lg-auto col-lg-4">
@@ -283,74 +307,14 @@
           </div>
 
           <div id="news" class="container-fluid mt-2 d-none animate__animated animate__fadeIn animate__fadeIn">
-            <div>
-              <div class="row">
-                <div class="col-lg-4 mb-2 mb-lg-auto">
-                  <div class="card">
-                    <img src="https://images.gmanews.tv/regionaltv2023/content_images/article/armyworm-onions_2024_01_12_18_45_39.jpg" height="250px" style="max-height: 250px; object-fit: cover;" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Armyworms Attack</h5>
-                      <p class="card-text">In January 2024, onion farmers in Bongabon, Nueva Ecija were forced to harvest their onions early due to armyworms. </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 mb-2 mb-lg-auto">
-                  <div class="card">
-                    <img src="https://www.itfnet.org/v1/wp-content/uploads/2023/02/ph1.jpg" height="250px" style="max-height: 250px; object-fit: cover;" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="card">
-                    <img src="https://www.itfnet.org/v1/wp-content/uploads/2023/02/ph1.jpg" height="250px" style="max-height: 250px; object-fit: cover;" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-2">
-                <div class="col mb-2 mb-md-auto">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
-        <div id="crop-map" class="page collapse">
+        <div id="crop-map" class="page collapse" style="">
             <div class="container-fluid">
                 <div class="row d-flex align-items-center justify-content-between">
                     <h3 class="col-12 col-lg-8 mt-2" id="page-title">
-                        TOP CROPS PER PROVINCE IN REGION III
+                        TOP CROPS IN REGION III
                     </h3>
                     <div class="col-12 col-lg-4 mb-2 text-lg-end">
                         <label>Filter by: </label>
@@ -375,7 +339,7 @@
                         <script>
                             if (document.getElementById('sidebar-title').innerHTML === "") {
                                 document.getElementById('map-hint').innerHTML = `
-                                    <div class="d-flex justify-content-center w-100">
+                                    <div class="d-flex justify-content-center w-100 h-100">
                                         Click the color-coded tile on the map to view crop details.
                                     </div>`;
                             } else {
@@ -395,7 +359,47 @@
       <div class="overlay"></div>
     </div>
   </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBodyContent">
+                <!-- Content will be injected here via JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+  <!-- JavaScript -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      var exampleModal = document.getElementById("exampleModal");
+  
+      exampleModal.addEventListener("show.bs.modal", function () {
+          // Get data from the first occurrence of the class
+          let cropLabel = document.getElementsByClassName('top-crop-label')[0]?.innerText || "Unknown";
+          let cropVolume = document.getElementsByClassName('top-crop-volume')[0]?.innerText || "Unknown";
+  
+          // Set modal content
+          document.getElementById("exampleModalLabel").innerHTML = `${cropLabel} Production in Region III`;
+          document.getElementById("modalBodyContent").innerHTML = `
+              <h5 class="text-start">📈 Remarkable Growth</h5>
+              <img src="https://ispweb.pcaarrd.dost.gov.ph/wp-content/uploads/2021/10/GettyImages-528316683-0e1c6feafe874b7e94411b003c672153.jpg" height="250" width="100%" style="object-fit: cover; border-radius: 10px;">
+              <p style="text-align: justify;" class="mt-2">
+                  In <i>2023</i>, <strong>${cropLabel}</strong> production soared to <strong>${cropVolume}</strong>, marking an astonishing <strong>1,073.06%</strong> increase from <i>2022</i>’s output of <strong>357,825.57 MT</strong>. This translates to an impressive <strong>3,839,691.89 MT</strong> surge in production—demonstrating significant agricultural growth and improved yield performance compared to the previous year. <br><br>
+                  This remarkable rise could be attributed to advancements in farming techniques, favorable weather conditions, or increased cultivation efforts. Whatever the driving factors, this leap highlights the potential for further expansion in the ${cropLabel} industry.
+              </p>`;
+      });
+  });
+  </script>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="javascripts/dashboard.js"></script>
   <script src="javascripts/global.js"></script>
@@ -404,6 +408,5 @@
   <script src="javascripts/script.js"></script>
   <script src="javascripts/chart-data.js"></script>
   <script src="javascripts/route.js"></script>
-  
 </body>
 </html>
