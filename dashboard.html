@@ -210,10 +210,10 @@
                 <!-- Top Summary Cards -->
                 <div class="row gx-2 mb-lg-2">
                     <div class="mb-2 mb-lg-auto col-lg-4">
-                        <div class="card px-2 pt-2 shadow" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <h6 class="w-100"><label class="top-crop-label"></label></h6>
-                            <h4 class="text-center"><label class="top-crop-volume"></label></h4>
-                            <p class="text-center"><label class="top-crop-area"></label></p>
+                        <div class="card px-2 pt-2 shadow" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <h6 class="w-100"><label class="top-crop-label" style="cursor: pointer;"></label></h6>
+                            <h4 class="text-center"><label class="top-crop-volume" style="cursor: pointer;"></label></h4>
+                            <p class="text-center"><label class="top-crop-area" style="cursor: pointer;"></label></p>
                         </div>
                     </div>
                     <div class="mb-2 mb-lg-auto col-lg-4">
@@ -376,27 +376,7 @@
     </div>
   </div>
   <!-- JavaScript -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var exampleModal = document.getElementById("exampleModal");
-    
-        exampleModal.addEventListener("show.bs.modal", function () {
-            // Get data from the first occurrence of the class
-            let cropLabel = document.getElementsByClassName('top-crop-label')[0]?.innerText || "Unknown";
-            let cropVolume = document.getElementsByClassName('top-crop-volume')[0]?.innerText || "Unknown";
-    
-            // Set modal content
-            document.getElementById("exampleModalLabel").innerHTML = `${cropLabel} Production in Region III`;
-            document.getElementById("modalBodyContent").innerHTML = `
-                <h5 class="text-start">📈 Remarkable Growth</h5>
-                <img src="https://ispweb.pcaarrd.dost.gov.ph/wp-content/uploads/2021/10/GettyImages-528316683-0e1c6feafe874b7e94411b003c672153.jpg" height="250" width="100%" style="object-fit: cover; border-radius: 10px;">
-                <p style="text-align: justify;" class="mt-2">
-                    In <i>2023</i>, <strong>${cropLabel}</strong> production soared to <strong>${cropVolume}</strong>, marking an astonishing <strong>1,073.06%</strong> increase from <i>2022</i>’s output of <strong>357,825.57 MT</strong>. This translates to an impressive <strong>3,839,691.89 MT</strong> surge in production—demonstrating significant agricultural growth and improved yield performance compared to the previous year. <br><br>
-                    This remarkable rise could be attributed to advancements in farming techniques, favorable weather conditions, or increased cultivation efforts. Whatever the driving factors, this leap highlights the potential for further expansion in the ${cropLabel} industry.
-                </p>`;
-        });
-    });
-  </script>
+  
     
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
@@ -406,6 +386,39 @@
   <script src="javascripts/leaflet.js"></script>
   <script src="javascripts/script.js"></script>
   <script src="javascripts/chart-data.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var exampleModal = document.getElementById("exampleModal");
+    
+        exampleModal.addEventListener("show.bs.modal", function () {
+          console.log('latest', parseFloat(topCropLatestRecord.replace(/,/g, "")));
+          console.log(parseFloat(topCropPreviousYearRecord.replace(/,/g, "")));
+            // Get data from the first occurrence of the class
+            let cropLabel = document.getElementsByClassName('top-crop-label')[0]?.innerText || "Unknown";
+            let cropVolume = document.getElementsByClassName('top-crop-volume')[0]?.innerText || "Unknown";
+            let volumePercentageDifference = (((parseFloat(topCropLatestRecord.replace(/,/g, "")) - parseFloat(topCropPreviousYearRecord.replace(/,/g, ""))) / parseFloat(topCropPreviousYearRecord.replace(/,/g, ""))) * 100).toFixed(2);
+            // Set modal content
+            if (topCropLatestRecord > topCropPreviousYearRecord) {
+              console.log();
+              var volumeIndicator = "went up";
+              var volumeIndicator2 = "increase";
+            }else if(topCropLatestRecord < topCropPreviousYearRecord){
+              var volumeIndicator = "went down";
+              var volumeIndicator2 = "decrease";
+            }else{
+              var volumeIndicator = "remains the same";
+            }
+            document.getElementById("exampleModalLabel").innerHTML = `${cropLabel} Production in Region III`;
+            document.getElementById("modalBodyContent").innerHTML = `
+                <h5 class="text-start">📈 Remarkable Growth</h5>
+                <img src="https://ispweb.pcaarrd.dost.gov.ph/wp-content/uploads/2021/10/GettyImages-528316683-0e1c6feafe874b7e94411b003c672153.jpg" height="250" width="100%" style="object-fit: cover; border-radius: 10px;">
+                <p style="text-align: justify;" class="mt-2">
+                    In <i>2023</i>, <strong>${cropLabel}</strong> production ${volumeIndicator} to <strong>${cropVolume}</strong>, marking   <strong>${volumePercentageDifference}%</strong> ${volumeIndicator2} from <i>2022</i>’s output of <strong>${topCropPreviousYearRecord} MT</strong>. This translates to an impressive <strong>??? MT</strong> ${volumeIndicator2} in production—demonstrating significant agricultural growth and improved yield performance compared to the previous year. <br><br>
+                    This remarkable rise could be attributed to advancements in farming techniques, favorable weather conditions, or increased cultivation efforts. Whatever the driving factors, this leap highlights the potential for further expansion in the ${cropLabel} industry.
+                </p>`;
+        });
+    });
+  </script>
   <script src="javascripts/route.js"></script>
   
 </body>
