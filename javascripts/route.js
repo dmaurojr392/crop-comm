@@ -45,9 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Fix Leaflet Map Rendering Issue
         if (pageId === "crop-map" && typeof map !== "undefined") {
-            setTimeout(() => {
-                map.invalidateSize(); // Ensure the map resizes properly
-            }, 300);
+            getMap();
         } 
     }
 
@@ -184,11 +182,28 @@ function updateFilter(value) {
         clearButton.style.display = 'inline-block'; // Show the "x" button for other values
     }
 }
-// function getSelectedYear() {
-//     selectedYear = document.getElementById("year").value;
-//     localStorage.setItem("filter-year", selectedYear);
-// }
-// getSelectedYear();
+function getSelectedYearForLeadingCrop() {
+    selectedYear = document.getElementById("year-for-leading-crop-map").value;
+    localStorage.setItem("year-for-leading-crop-map", selectedYear);
+}
+getSelectedYearForLeadingCrop();
+
+function initialize(){
+    selectedCrop = document.getElementById("rank-for-leading-crop-map").value;
+    localStorage.setItem("rank-for-leading-crop-map", selectedCrop);
+    // test(feature);
+    document.getElementById('map-hint').style.display = "block";
+    // document.getElementById('map-details').style.display = "none";
+    document.getElementById('map-details').classList.add("d-none");
+    document.getElementById('map-details').classList.remove("d-block");
+}
+
+function getSelectedCropForLeadingCrop() {
+    selectedCrop = document.getElementById("rank-for-leading-crop-map").value;
+    localStorage.setItem("rank-for-leading-crop-map", selectedCrop);
+    // getMap();
+}
+getSelectedCropForLeadingCrop();
 
 function clearFilter() {
     // Reset the filter to "Select"

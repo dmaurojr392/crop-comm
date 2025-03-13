@@ -316,9 +316,9 @@
                         </div>
                     </div>
                 </div>
+              </div>
             </div>
           </div>
-        </div>
 
           <div id="production-summary" class="container-fluid mt-2 d-none justify-content-center animate__animated animate__fadeIn">
             <div>
@@ -330,40 +330,73 @@
           </div>
         </div>
 
-        <div id="crop-map" class="page collapse" style="">
+        <div id="crop-map" class="page collapse">
             <div class="container-fluid">
-                <div class="row d-flex align-items-center justify-content-between">
-                    <h3 class="col-12 col-lg-8 mt-2" id="page-title">
-                        TOP CROPS IN REGION III
-                    </h3>
-                    <div class="col-12 col-lg-4 mb-2 text-lg-end">
-                        <label>Filter by: </label>
-                        <select class="rounded w-25" style="border-color: gray; color: gray;">
-                            <option value="1">Top 1 Crop Commodities per Province</option>
-                            <option value="2">Top 2 Crop Commodities per Province</option>
-                            <option value="3">Top 3 Crop Commodities per Province</option>
-                        </select>
+                <div class="">
+                    <h4 class="mt-2" id="page-title">
+                        LEADING CROPS IN REGION III
+                    </h4>
+                    <div class="mb-2 d-flex" id="leading-crop-filter">
+                        <div>
+                          <div class="input-group input-group-sm me-2">
+                            <div class="d-none d-lg-flex bg-secondary text-light py-1 p-2">
+                              <span><i class="bi bi-calendar me-1"></i></span>
+                              <span class="me-2">Select Period</span>
+                            </div>
+                            <div class="d-flex d-lg-none bg-secondary text-light py-1 p-2">
+                              <span><i class="bi bi-calendar"></i></span>
+                            </div>
+                            <div>
+                              <select id="year-for-leading-crop-map" class="form-select form-select-sm" onchange="getSelectedYearForLeadingCrop()" style="border: 1px solid #878787; border-radius: 0px; cursor: pointer;">
+                                <script>
+                                    for (i = 2023; i >= 2019; i--) {
+                                        document.write(`<option value="${i}">${i}</option>`);
+                                    }
+                                </script>
+                              </select>
+                            </div>  
+                          </div>
+                        </div>
+                        <div>
+                          <div class="input-group input-group-sm me-2">
+                            <div class="d-none d-lg-flex bg-secondary text-light py-1 p-2">
+                              <span><i class="bi bi-filter me-1"></i></span>
+                              <span class="me-2">Filter by</span>
+                            </div>
+                            <div class="d-flex d-lg-none bg-secondary text-light py-1 p-2">
+                              <span><i class="bi bi-filter"></i></span>
+                            </div>
+                            <div>
+                              <select id="rank-for-leading-crop-map" class="form-select form-select-sm" onchange="initialize()" style="border: 1px solid #878787; border-radius: 0px; cursor: pointer;">
+                                <option value="TopCrop">Top 1 Crop Commodities</option>
+                                <option value="SecondCrop">Top 2 Crop Commodities</option>
+                                <option value="ThirdCrop">Top 3 Crop Commodities</option>
+                              </select>
+                            </div>  
+                          </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row d-flex align-items-center justify-content-center">
                     <div id="map-view" class="col-12 col-lg-7">
-                        <div id="map"></div>
+                        <div id="map" class="rounded"></div>
                     </div>
-                    <div class="col-12 col-lg-5 animate__animated animate__fadeIn" id="map-details">
-                        <div>
+                    <div class="col-12 col-lg-5 h-100 animate__animated animate__fadeIn">
+                        <div id="map-details" class="d-none">
                             <h4 id="sidebar-title" style="margin-bottom: 0px;"></h4>
                             <p id="sidebar-content" style="margin-bottom: 4px;"></p>
                             <div id="province-data"></div>
                         </div>
-                        <div id="map-hint"></div>
+                        <div id="map-hint" class="h-100"></div>
                         <script>
                             if (document.getElementById('sidebar-title').innerHTML === "") {
                                 document.getElementById('map-hint').innerHTML = `
-                                    <div class="d-flex justify-content-center w-100 h-100">
+                                    <div class="d-flex justify-content-center w-100">
                                         Click the color-coded tile on the map to view crop details.
                                     </div>`;
                             } else {
                                 document.getElementById('map-hint').style.display = "none";
+                                document.getElementById('map-hint').style.height = "0px";
                             }
                         </script>
                     </div>
