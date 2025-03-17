@@ -50,8 +50,10 @@ function getMap() {
         map.panInsideBounds(bounds, { animate: true });
     });
 
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tile Layer Source: Sentinel II identified by Holistic Smart Agriculture System'
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20
     }).addTo(map);
 
     let legend = L.control({ position: "topright" });
@@ -71,7 +73,7 @@ function getMap() {
             style: function (feature) {
                 return {
                     fillColor: "transparent",
-                    color: "white",
+                    color: "gray",
                     weight: 1,
                     interactive: true        
                 };
