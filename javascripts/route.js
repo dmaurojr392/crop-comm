@@ -188,15 +188,18 @@ function getSelectedYearForLeadingCrop() {
 }
 getSelectedYearForLeadingCrop();
 
-function initialize(){
-    selectedCrop = document.getElementById("rank-for-leading-crop-map").value;
-    localStorage.setItem("rank-for-leading-crop-map", selectedCrop);
-    // test(feature);
-    document.getElementById('map-hint').style.display = "block";
-    // document.getElementById('map-details').style.display = "none";
-    document.getElementById('map-details').classList.add("d-none");
-    document.getElementById('map-details').classList.remove("d-block");
-}
+// function initialize() {
+//     selectedCrop = document.getElementById("rank-for-leading-crop-map").value;
+//     localStorage.setItem("rank-for-leading-crop-map", selectedCrop);
+
+//     // Update the legend dynamically based on selection
+//     updateLegend(selectedCrop);
+
+//     document.getElementById('map-hint').style.display = "block";
+//     document.getElementById('map-details').classList.add("d-none");
+//     document.getElementById('map-details').classList.remove("d-block");
+// }
+
 
 function getSelectedCropForLeadingCrop() {
     selectedCrop = document.getElementById("rank-for-leading-crop-map").value;

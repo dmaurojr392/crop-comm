@@ -1,6 +1,45 @@
+let mapHint = document.getElementById('map-hint');
+let mapDetails = document.getElementById('map-details');
+
+
+function updateLegend(filterType) {
+    let legendDiv = document.getElementById("map-legend");
+    if (!legendDiv) return;
+    let legendHTML = "<h4>Crop Legend</h4>";
+    let legendData = {
+        "TopCrop": [
+            { "name": "Banana", "color": "#FFFFA3" },
+            { "name": "Coconut", "color": "#A3FFB2" },
+            { "name": "Corn", "color": "#FADA7A" },
+            { "name": "Mango", "color": "#A3FFFF" },
+            { "name": "Onion", "color": "#B7B1F2" },
+            { "name": "Sugarcane", "color": "#DEAA79" }
+        ],
+        "SecondCrop": [
+            { "name": "Cashew", "color": "#C7B7A3" },
+            { "name": "Cogon", "color": "#73A9AD" },
+            { "name": "Corn", "color": "#FADA7A" },
+            { "name": "Sitao", "color": "#A3D1A3" },
+            { "name": "Sugarcane", "color": "#DEAA79" }
+        ],
+        "ThirdCrop": [
+            { "name": "Banana", "color": "#FFFFA3" },
+            { "name": "Camote", "color": "#FFA3FF" },
+            { "name": "Cassava", "color": "#D1B38A" },
+            { "name": "Coconut", "color": "#A3FFB2" },
+            { "name": "Mango", "color": "#A3FFFF" },
+            { "name": "Tomato", "color": "#FFA3A3" }
+        ]
+    };
+    let selectedLegend = legendData[filterType] || [];
+    selectedLegend.forEach(item => {
+        legendHTML += `<i style="background:${item.color}; width: 15px; border: 1px solid gray; height: 15px; display: inline-block; margin-right: 5px;"></i> ${item.name}<br>`;
+    });
+    legendDiv.innerHTML = legendHTML;
+}
+
 function getMap() {
     const map = L.map('map').setView([15.48, 120.75], 8);
-
     const bounds = [
         [4.2158, 116.7017],
         [21.3213, 126.6052]
@@ -15,31 +54,42 @@ function getMap() {
         attribution: 'Tile Layer Source: Sentinel II identified by Holistic Smart Agriculture System'
     }).addTo(map);
 
-// Load province-level boundaries
-fetch('data/cropData.json')  // ✅ Load province boundaries
+    let legend = L.control({ position: "topright" });
+
+    legend.onAdd = function (map) {
+        const div = L.DomUtil.create("div", "info legend");
+        div.id = "map-legend";
+        return div;
+    };
+
+    legend.addTo(map);
+
+    fetch('data/cropData.json')
     .then(response => response.json())
     .then(provinceData => {
         const provinceLayer = L.geoJSON(provinceData, {
             style: function (feature) {
                 return {
-                    fillColor: "transparent",  // ✅ Keep it invisible
-                    color: "black",            // ✅ Thin boundary lines
-                    weight: 0,
-                    interactive: true          // ✅ Enable clicking
+                    fillColor: "transparent",
+                    color: "white",
+                    weight: 1,
+                    interactive: true        
                 };
             },
             onEachFeature: function (feature, layer) {
                 layer.on('click', () => {
-                    test(feature);
-                    document.getElementById('map-hint').style.display = "none";
-                    document.getElementById('map-details').classList.remove("d-none");
-                    document.getElementById('map-details').classList.add("d-block");
+                    sideContent(feature);
+                    mapHint.classList.remove("d-lg-flex");
+                    mapHint.classList.add("d-none");
+
+                    mapDetails.classList.remove("d-none");
+                    mapDetails.classList.add("d-block");
                 });
             }
         }).addTo(map);
     });
 
-    fetch('data/corn-pampanga-2023.geojson')
+    fetch('data/pampanga-2023.geojson')
     .then(result => {
         if (!result.ok) {
             throw new Error(`HTTP error! status: ${result.status}`);
@@ -48,21 +98,23 @@ fetch('data/cropData.json')  // ✅ Load province boundaries
     })
     .then(data => {
         L.geoJSON(data, {
-            renderer: L.canvas(),  // ✅ Use Canvas rendering (prevents re-render on zoom)
+            renderer: L.canvas(),
             style: function (feature) {
                 return {
-                    fillColor: "#FFF2A3",      // ✅ Fill color (red)
-                    fillOpacity: 1,      // ✅ Adjust transparency (0 = fully transparent, 1 = fully opaque)
-                    color: "#FFF2A3",  // ✅ Removes the border (set stroke color to "transparent")
-                    weight: 1              // ✅ Ensures no border (set stroke width to 0)
+                    fillColor: "#DEAA79", 
+                    fillOpacity: 1,
+                    color: "#DEAA79",
+                    weight: 1 
                 };
             },
             onEachFeature: function (feature, layer) {
                 layer.on('click', () => {
-                    test(feature);
-                    document.getElementById('map-hint').style.display = "none";
-                    document.getElementById('map-details').classList.remove("d-none");
-                    document.getElementById('map-details').classList.add("d-block");
+                    sideContent(feature);
+                    mapHint.classList.remove("d-lg-flex");
+                    mapHint.classList.add("d-none");
+
+                    mapDetails.classList.remove("d-none");
+                    mapDetails.classList.add("d-block");
                 });
             }
         }).addTo(map);
@@ -80,22 +132,24 @@ fetch('data/cropData.json')  // ✅ Load province boundaries
     })
     .then(data => {
         L.geoJSON(data, {
-            renderer: L.canvas(),  // ✅ Use Canvas rendering (prevents re-render on zoom)
+            renderer: L.canvas(),
             style: function (feature) {
                 return {
-                    fillColor: "#CDAAFD",      // ✅ Fill color (red)
-                    fillOpacity: 1,      // ✅ Adjust transparency (0 = fully transparent, 1 = fully opaque)
-                    color: "#CDAAFD",  // ✅ Removes the border (set stroke color to "transparent")
+                    fillColor: "#B7B1F2",
+                    fillOpacity: 1,
+                    color: "#B7B1F2",
                     weight: 1,
-                    interactive: true              // ✅ Ensures no border (set stroke width to 0)
+                    interactive: true
                 };
             },
             onEachFeature: function (feature, layer) {
                 layer.on('click', () => {
-                    test(feature);
-                    document.getElementById('map-hint').style.display = "none";
-                    document.getElementById('map-details').classList.remove("d-none");
-                    document.getElementById('map-details').classList.add("d-block");
+                    sideContent(feature);
+                    mapHint.classList.remove("d-lg-flex");
+                    mapHint.classList.add("d-none");
+
+                    mapDetails.classList.remove("d-none");
+                    mapDetails.classList.add("d-block");
                 });
             }
         }).addTo(map);
@@ -103,9 +157,11 @@ fetch('data/cropData.json')  // ✅ Load province boundaries
     .catch(error => {
         console.error("Error fetching the JSON file:", error);
     });
+
+    initialize();
 }
 
-function test(feature){
+function sideContent(feature){
     const sidebarTitle = document.getElementById('sidebar-title');
     const sidebarContent = document.getElementById('sidebar-content');
     if(localStorage.getItem('rank-for-leading-crop-map') == "TopCrop"){
@@ -114,8 +170,6 @@ function test(feature){
             <div class="animate__animated animate__fadeIn"><strong>Leading Crop:</strong> ${feature.properties.Top1_Commodities || "No data found"}</div>
             <div class="animate__animated animate__fadeIn"><strong>Production:</strong> ${feature.properties["Yield(MT)"] || "No data found"} Metric Tons</div>
             <div class="animate__animated animate__fadeIn"><strong>Harvest Year: </strong>2023</div>
-
-            <div></div>
         `;
     }
 
@@ -125,28 +179,15 @@ function test(feature){
             <div class="animate__animated animate__fadeIn"><strong>Leading Crop:</strong> ${feature.properties.Top2_Commodities || "No data found"}</div>
             <div class="animate__animated animate__fadeIn"><strong>Production:</strong> ${feature.properties["Yield(MT)_1"] || "No data found"} Metric Tons</div>
             <div class="animate__animated animate__fadeIn"><strong>Harvest Year: </strong>2023</div>
-
-            <div></div>
         `;
     }
 }
 
-// ✅ Function to highlight all red areas within a province
-function highlightProvince(provinceName) {
-    if (selectedProvince) {
-        selectedProvince.setStyle({ fillOpacity: 0.75, fillColor: "red" });
-    }
-
-    // Find the province layer
-    map.eachLayer(function (layer) {
-        if (layer.feature && layer.feature.properties.name === provinceName) {
-            selectedProvince = layer;
-            selectedProvince.setStyle({
-                fillOpacity: 0.8,  // Highlight province
-                fillColor: "blue"
-            });
-        }
-    });
-
-    alert("You clicked on: " + provinceName); // Example action
+function initialize() {
+    selectedCrop = document.getElementById("rank-for-leading-crop-map").value;
+    localStorage.setItem("rank-for-leading-crop-map", selectedCrop);
+    updateLegend(selectedCrop);
+    document.getElementById('map-hint').style.display = "block";
+    document.getElementById('map-details').classList.add("d-none");
+    document.getElementById('map-details').classList.remove("d-block");
 }

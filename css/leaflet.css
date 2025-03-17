@@ -13,6 +13,16 @@
     align-items: center; 
 }
 
+.info.legend {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+
 @media  screen and (min-width: 767px) {
     /* #page-title{
         font-size: 1.2rem;

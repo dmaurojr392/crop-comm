@@ -387,18 +387,11 @@
                             <p id="sidebar-content" style="margin-bottom: 4px;"></p>
                             <div id="province-data"></div>
                         </div>
-                        <div id="map-hint" class="h-100"></div>
-                        <script>
-                            if (document.getElementById('sidebar-title').innerHTML === "") {
-                                document.getElementById('map-hint').innerHTML = `
-                                    <div class="d-flex justify-content-center w-100">
-                                        Click the color-coded tile on the map to view crop details.
-                                    </div>`;
-                            } else {
-                                document.getElementById('map-hint').style.display = "none";
-                                document.getElementById('map-hint').style.height = "0px";
-                            }
-                        </script>
+                        <div id="map-hint" class="h-100">
+                          <div class="d-flex justify-content-center w-100">
+                            Click the color-coded tile on the map to view crop details.
+                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -469,7 +462,7 @@
   <script src="javascripts/dashboard.js"></script>
   <script src="javascripts/global.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="javascripts/leaflet.js"></script>
+  
   <script src="javascripts/script.js"></script>
   <script src="javascripts/chart-data.js"></script>
   <script>
@@ -574,6 +567,7 @@
     });
   </script>
   <script src="javascripts/route.js"></script>
+  <script src="javascripts/leaflet.js"></script>
   
 </body>
 </html>
