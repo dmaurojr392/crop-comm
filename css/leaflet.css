@@ -5,8 +5,9 @@
     height: inherit;
 }
 #map-details{
-    max-height: 85vh; 
+    height: 84vh;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 #map-hint{
     height: 89vh;
@@ -32,11 +33,11 @@
         margin-top: .5rem;
         height: calc(93vh - 60px) !important;
     }
-    #map-details{
+    /* #map-details{
         height: 45dvh;
         margin-top: 4px;
         align-items: start;
-    }
+    } */
     /* #map-hint{
         height: 39dvh;
     } */
@@ -51,12 +52,12 @@
         margin-top: .5rem;
         height: calc(85vh - 60px) ;
     }
-    #map-details{
+    /* #map-details{
         height: 45dvh;
         margin-top: 4px;
         align-items: start;
-    }
-}
+    /* } */
+} 
 @media  screen and (max-width: 420px){
     #page-title{
         font-size: 1rem;

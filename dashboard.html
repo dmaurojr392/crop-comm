@@ -385,7 +385,15 @@
                         <div id="map-details" class="d-none">
                             <h4 id="sidebar-title" style="margin-bottom: 0px;"></h4>
                             <p id="sidebar-content" style="margin-bottom: 4px;"></p>
-                            <div id="province-data"></div>
+                            <div id="province-data">
+                            </div>
+                            <div class="d-flex justify-content-center w-100">
+                              <div id="crop-data-loading" class="loader d-none"></div>
+                            </div>
+                            <div id="crop-data" class="d-none">
+                              <div id="prediction" class="mt-2"></div>
+                              <canvas id="onionChart" height="175px" class="rounded card shadow"></canvas>
+                            </div>
                         </div>
                         <div id="map-hint" class="h-100">
                           <div class="d-flex justify-content-center w-100">

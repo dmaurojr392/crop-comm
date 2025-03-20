@@ -79,15 +79,42 @@ function getMap() {
                 };
             },
             onEachFeature: function (feature, layer) {
-                layer.on('click', () => {
-                    sideContent(feature);
-                    mapHint.classList.remove("d-lg-flex");
-                    mapHint.classList.add("d-none");
-
-                    mapDetails.classList.remove("d-none");
-                    mapDetails.classList.add("d-block");
+                layer.on({
+                    click: function () {
+                        sideContent(feature);
+                        document.getElementById("crop-data-loading").classList.remove("d-none");
+                        document.getElementById("crop-data-loading").classList.add("d-flex");
+                        fetchPredictions(feature);
+                        mapHint.classList.remove("d-lg-flex");
+                        mapHint.classList.add("d-none");
+            
+                        mapDetails.classList.remove("d-none");
+                        mapDetails.classList.add("d-block");
+            
+                        // Zoom to the bounds of the selected layer
+                        if (layer.getBounds) {
+                            map.fitBounds(layer.getBounds());
+                        } else if (layer.getLatLng) {
+                            map.setView(layer.getLatLng(), map.getZoom() + 1);
+                        }
+                    },
+                    mouseover: function () {
+                        layer.setStyle({
+                            fillOpacity: 1,
+                            color: "#2c387e",  // Outline color on hover
+                            weight: 2         // Thicker border
+                        });
+                    },
+                    mouseout: function () {
+                        layer.setStyle({
+                            fillOpacity: 1,
+                            color: "gray",  // Reset to default color
+                            weight: 1       // Reset border thickness
+                        });
+                    }
                 });
             }
+            
         }).addTo(map);
     });
 
@@ -112,11 +139,6 @@ function getMap() {
             onEachFeature: function (feature, layer) {
                 layer.on('click', () => {
                     sideContent(feature);
-                    mapHint.classList.remove("d-lg-flex");
-                    mapHint.classList.add("d-none");
-
-                    mapDetails.classList.remove("d-none");
-                    mapDetails.classList.add("d-block");
                 });
             }
         }).addTo(map);
@@ -147,11 +169,6 @@ function getMap() {
             onEachFeature: function (feature, layer) {
                 layer.on('click', () => {
                     sideContent(feature);
-                    mapHint.classList.remove("d-lg-flex");
-                    mapHint.classList.add("d-none");
-
-                    mapDetails.classList.remove("d-none");
-                    mapDetails.classList.add("d-block");
                 });
             }
         }).addTo(map);
@@ -189,7 +206,90 @@ function initialize() {
     selectedCrop = document.getElementById("rank-for-leading-crop-map").value;
     localStorage.setItem("rank-for-leading-crop-map", selectedCrop);
     updateLegend(selectedCrop);
-    document.getElementById('map-hint').style.display = "block";
-    document.getElementById('map-details').classList.add("d-none");
-    document.getElementById('map-details').classList.remove("d-block");
+    mapHint.classList.remove("d-none");
+    mapHint.classList.add("d-lg-flex");
+    mapDetails.classList.add("d-none");
+    mapDetails.classList.remove("d-block");
+}
+
+async function fetchPredictions(feature) {
+    try {
+        const response = await fetch("https://fastapiserver-8aib.onrender.com/predict");
+        const data = await response.json();
+
+        
+        
+        // const resultsDiv = document.getElementById("results");
+        // resultsDiv.innerHTML = "";
+        const prediction = document.getElementById("prediction");
+        prediction.innerHTML = `<h5>PREDICTED YIELD FOR ${feature.properties.Top1_Commodities.toUpperCase() || "No data found"} (2023-2029)</h5>`;
+        if (data.error) {
+            prediction.innerHTML = `<p style='color: red;'>Error: ${data.error}</p>`;
+            
+        } else {
+            document.getElementById("crop-data-loading").classList.remove("d-block");
+            document.getElementById("crop-data-loading").classList.add("d-none");
+            document.getElementById("crop-data").classList.remove("d-none");
+            document.getElementById("crop-data").classList.add("d-block");
+            
+            if(localStorage.getItem('rank-for-leading-crop-map') == "TopCrop"){
+                result = (data.predictions[feature.properties.Top1_Commodities]);
+            }
+        
+            if(localStorage.getItem('rank-for-leading-crop-map') == "SecondCrop"){
+                result = (data.predictions[feature.properties.Top2_Commodities]);  
+            }
+            // for (const year in result) {
+            //     const listItem = document.createElement("div");
+            //     listItem.innerHTML = `
+            //     <strong>${year}</strong>: ${result[year].toLocaleString()} MT`;
+            //     prediction.appendChild(listItem);
+            // }
+
+            const years = Object.keys(result);
+                const values = Object.values(result);
+
+                // Create Chart.js Line Chart
+                const ctx = document.getElementById('onionChart').getContext('2d');
+                const onionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: years, // X-axis (years)
+                    datasets: [{
+                    data: values, // Y-axis (predictions)
+                    borderColor: '#B7B1F2', // Line color
+                    backgroundColor: '#B7B1F2', // Fill under line
+                    borderWidth: 1,
+                    fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: false,
+                            // text: `Predicted Yield of ${feature.properties.Top1_Commodities}`
+                        },
+                        legend: { 
+                            display: false 
+                            // 🔹 This hides the legend
+                        }
+                    },
+                    scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                    }
+                }
+                });
+            // console.log(feature);
+            
+
+            // Loop through the object and create list items
+            
+        }
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        document.getElementById("results").innerHTML = "<p style='color: red;'>Failed to fetch predictions.</p>";
+    }
 }
