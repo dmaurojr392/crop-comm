@@ -122,7 +122,7 @@ function checkFilter() {
                 var thirdVolumeIcon = "-";
             }
 
-            document.getElementById("cropping-year").textContent = datedYearData;
+            document.getElementById("cropping-year").textContent = "- " + datedYearData;
             document.querySelectorAll('.top-crop-label').forEach(el => el.textContent = topCropLabel);
             document.querySelectorAll('.second-crop-label').forEach(el => el.textContent = secondCropLabel);
             document.querySelectorAll('.third-crop-label').forEach(el => el.textContent = thirdCropLabel);

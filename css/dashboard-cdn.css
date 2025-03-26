@@ -23,8 +23,8 @@
       min-height: 64px;
       position: relative; }
     .layout .sidebar {
-      width: 280px;
-      min-width: 280px;
+      width: 300px;
+      min-width: 300px;
       -webkit-transition: width, left, right, 0.3s;
       transition: width, left, right, 0.3s; }
       .layout .sidebar.collapsed {
@@ -33,7 +33,7 @@
       @media (max-width: 480px) {
         .layout .sidebar.break-point-xs {
           position: fixed;
-          left: -280px;
+          left: -300px;
           height: 100%;
           top: 0;
           z-index: 100; }
@@ -50,7 +50,7 @@
       @media (max-width: 575px) {
         .layout .sidebar.break-point-sm {
           position: fixed;
-          left: -280px;
+          left: -300px;
           height: 100%;
           top: 0;
           z-index: 100; }
@@ -67,7 +67,7 @@
       @media (max-width: 768px) {
         .layout .sidebar.break-point-md {
           position: fixed;
-          left: -280px;
+          left: -300px;
           height: 100%;
           top: 0;
           z-index: 100; }
@@ -84,7 +84,7 @@
       @media (max-width: 992px) {
         .layout .sidebar.break-point-lg {
           position: fixed;
-          left: -280px;
+          left: -300px;
           height: 100%;
           top: 0;
           z-index: 100; }
@@ -101,7 +101,7 @@
       @media (max-width: 1200px) {
         .layout .sidebar.break-point-xl {
           position: fixed;
-          left: -280px;
+          left: -300px;
           height: 100%;
           top: 0;
           z-index: 100; }
@@ -118,7 +118,7 @@
       @media (max-width: 1600px) {
         .layout .sidebar.break-point-xxl {
           position: fixed;
-          left: -280px;
+          left: -300px;
           height: 100%;
           top: 0;
           z-index: 100; }
@@ -184,7 +184,7 @@
       .layout.fixed-header .header ~ .content {
         margin-top: 64px; }
     .layout.fixed-header.fixed-sidebar .header {
-      width: calc(100% - 280px); }
+      width: calc(100% - 300px); }
     .layout.fixed-header.fixed-sidebar .sidebar.collapsed ~ .layout .header {
       width: calc(100% - 80px); }
     .layout.rtl {
@@ -192,7 +192,7 @@
       @media (max-width: 480px) {
         .layout.rtl .sidebar.break-point-xs {
           left: auto;
-          right: -280px; }
+          right: -300px; }
           .layout.rtl .sidebar.break-point-xs.collapsed {
             left: auto;
             right: -80px; }
@@ -202,7 +202,7 @@
       @media (max-width: 576px) {
         .layout.rtl .sidebar.break-point-sm {
           left: auto;
-          right: -280px; }
+          right: -300px; }
           .layout.rtl .sidebar.break-point-sm.collapsed {
             left: auto;
             right: -80px; }
@@ -212,7 +212,7 @@
       @media (max-width: 768px) {
         .layout.rtl .sidebar.break-point-md {
           left: auto;
-          right: -280px; }
+          right: -300px; }
           .layout.rtl .sidebar.break-point-md.collapsed {
             left: auto;
             right: -80px; }
@@ -222,7 +222,7 @@
       @media (max-width: 992px) {
         .layout.rtl .sidebar.break-point-lg {
           left: auto;
-          right: -280px; }
+          right: -300px; }
           .layout.rtl .sidebar.break-point-lg.collapsed {
             left: auto;
             right: -80px; }
@@ -232,7 +232,7 @@
       @media (max-width: 1200px) {
         .layout.rtl .sidebar.break-point-xl {
           left: auto;
-          right: -280px; }
+          right: -300px; }
           .layout.rtl .sidebar.break-point-xl.collapsed {
             left: auto;
             right: -80px; }
@@ -242,7 +242,7 @@
       @media (max-width: 1600px) {
         .layout.rtl .sidebar.break-point-xxl {
           left: auto;
-          right: -280px; }
+          right: -300px; }
           .layout.rtl .sidebar.break-point-xxl.collapsed {
             left: auto;
             right: -80px; }

@@ -146,7 +146,7 @@
                   <div class="d-flex justify-content-between align-items-center border-bottom pb-2 border-2">
                       <!-- Date Range Picker -->
                       <div class="d-flex align-items-center">
-                        <h5 class="mt-2"><label id="selectedLocation"></label> (<label id="cropping-year"></label>)</h5>
+                        <h5 class="mt-2"><label id="selectedLocation"></label> <label id="cropping-year"></label></h5>
                         <!-- <div class="input-group input-group-sm me-2">
                           <div class="d-none d-lg-flex bg-secondary text-light py-1 p-2">
                             <span><i class="bi bi-calendar me-1"></i></span>
@@ -387,10 +387,12 @@
                             <p id="sidebar-content" style="margin-bottom: 4px;"></p>
                             <div id="province-data">
                             </div>
-                            <div class="d-flex justify-content-center w-100">
-                              <div id="crop-data-loading" class="loader d-none"></div>
+                            <div class="d-flex justify-content-center w-100 animate__animated animate__fadeIn">
+                              <div id="crop-data-loading" class="d-none">
+                                <div class="loader"></div>
+                              </div>
                             </div>
-                            <div id="crop-data" class="d-none">
+                            <div id="crop-data" class="d-none animate__animated animate__fadeIn">
                               <div id="prediction" class="mt-2"></div>
                               <canvas id="onionChart" height="175px" class="rounded card shadow"></canvas>
                             </div>

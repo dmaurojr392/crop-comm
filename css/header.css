@@ -6,6 +6,9 @@
     background-size: cover;
     background-position: center;
 }
+#clsu-logo{
+  height: 64px;
+}
 #department-logo{
   height: 75px;
 }
@@ -70,9 +73,9 @@ font-size: 16pt;
   }
 }
 @media  screen and (max-width: 530px) {
-  #department-logo{
+  /* #department-logo{
     height: 75px;
-  }
+  } */
   #header{
     height: 350px;
 }
