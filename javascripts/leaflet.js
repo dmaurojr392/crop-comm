@@ -1,5 +1,8 @@
+let map;
 let mapHint = document.getElementById('map-hint');
 let mapDetails = document.getElementById('map-details');
+let selectedCrop = null;
+let selectedYearFilter = localStorage.getItem("year-for-leading-crop-map") || "2023";
 
 let commodityColors = {
     "Banana": "#FFFFA3",
@@ -15,6 +18,13 @@ let commodityColors = {
     "Cassava": "#D1B38A",
     "Tomato": "#FFA3A3"
 };
+
+function updateCropYearFilter(){
+    selectedYearFilter = document.getElementById("year-for-leading-crop-map").value;
+    localStorage.setItem("year-for-leading-crop-map", selectedYearFilter);
+    
+    getMap();
+}
 
 // Function to get color based on commodity
 function getCommodityColor(commodity) {
@@ -58,7 +68,13 @@ function updateLegend(filterType) {
 }
 
 function getMap() {
-    const map = L.map('map').setView([15.48, 120.75], 8);
+    // If the map already exists, remove it
+    if (map !== undefined) {
+        map.remove(); // This properly removes the existing map instance
+    }
+
+    // Initialize a new map instance
+    map = L.map('map').setView([15.5, 120.5], 8);
     const bounds = [
         [4.2158, 116.7017],
         [21.3213, 126.6052]
@@ -141,52 +157,74 @@ function getMap() {
     });
 
     // Define configuration for each dataset
+    // console.log(selectedCrop);
+    initialize();
+    const auroraCommodity = getAuroraCommodity();
+    const bataanCommodity = getBataanCommodity();
+    const bulacanCommodity = getBulacanCommodity();
+    const nuevaEcijaCommodity = getNuevaEcijaCommodity();
+    const pampangaCommodity = getPampangaCommodity();
+    const tarlacCommodity = getTarlacCommodity();
+    const zambalesCommodity = getZambalesCommodity();
+
+    console.log(auroraCommodity, bataanCommodity, bulacanCommodity, nuevaEcijaCommodity, pampangaCommodity, tarlacCommodity, zambalesCommodity);
+
     const datasets = [
         {
-            url: 'data/aurora-coconut-2023.json',
+            url: `data/aurora-${auroraCommodity}-${selectedYearFilter}.json`,
             colorConfig: {
                 TopCrop: "Coconut",
                 SecondCrop: "Corn",
                 ThirdCrop: "Banana"
-            },
-            fixedColor: null
+            }
         },
         {
-            url: 'data/bataan-corn-2023.json',
+            url: `data/bataan-${bataanCommodity}-${selectedYearFilter}.json`,
             colorConfig: {
                 TopCrop: "Corn",
                 SecondCrop: "Cashew",
                 ThirdCrop: "Coconut"
-            },
-            fixedColor: null
+            }
         },
         {
-            url: 'data/pampanga-sugarcane-2023.geojson',
-            colorConfig: null,
-            fixedColor: "#DEAA79"
+            url: `data/bulacan-${bulacanCommodity}-${selectedYearFilter}.json`,
+            colorConfig: {
+                TopCrop: "Banana",
+                SecondCrop: "Sitao",
+                ThirdCrop: "Mango"
+            }
         },
         {
-            url: 'data/ne-onion-2023.json',
-            colorConfig: null,
-            fixedColor: "#B7B1F2"
+            url: `data/ne-${nuevaEcijaCommodity}-${selectedYearFilter}.json`,
+            colorConfig: {
+                TopCrop: "Onion",
+                SecondCrop: "Corn",
+                ThirdCrop: "Tomato"
+            }
         },
         {
-            url: 'data/tarlac-corn-2023.json',
+            url: `data/pampanga-${pampangaCommodity}-${selectedYearFilter}.json`,
+            colorConfig: {
+                TopCrop: "Sugarcane",
+                SecondCrop: "Corn",
+                ThirdCrop: "Cassava"
+            }
+        },
+        {
+            url: `data/tarlac-${tarlacCommodity}-${selectedYearFilter}.json`,
             colorConfig: {
                 TopCrop: "Corn",
                 SecondCrop: "Sugarcane",
                 ThirdCrop: "Camote"
-            },
-            fixedColor: null
+            }
         },
         {
-            url: 'data/zambales-mango-2023.json',
+            url: `data/zambales-${zambalesCommodity}-${selectedYearFilter}.json`,
             colorConfig: {
                 TopCrop: "Mango",
                 SecondCrop: "Cogon",
                 ThirdCrop: "Banana"
-            },
-            fixedColor: null
+            }
         }
     ];
 
@@ -301,8 +339,62 @@ function getMap() {
 
     // Start loading all datasets
     loadAllDatasets();
+    console.log(selectedCrop);
+}
+function getAuroraCommodity() {
+    const selectedCrop = localStorage.getItem('rank-for-leading-crop-map');
+    if (selectedCrop == "TopCrop") return "coconut";
+    if (selectedCrop == "SecondCrop") return "corn";
+    if (selectedCrop == "ThirdCrop") return "banana";
+    return "coconut"; // default
+}
 
-    initialize();
+function getBataanCommodity() {
+    const selectedCrop = localStorage.getItem('rank-for-leading-crop-map');
+    if (selectedCrop == "TopCrop") return "corn";
+    if (selectedCrop == "SecondCrop") return "cashew";
+    if (selectedCrop == "ThirdCrop") return "coconut";
+    return "coconut"; // default
+}
+
+function getBulacanCommodity() {
+    const selectedCrop = localStorage.getItem('rank-for-leading-crop-map');
+    if (selectedCrop == "TopCrop") return "banana";
+    if (selectedCrop == "SecondCrop") return "sitao";
+    if (selectedCrop == "ThirdCrop") return "mango";
+    return "banana"; // default
+}
+
+function getNuevaEcijaCommodity() {
+    const selectedCrop = localStorage.getItem('rank-for-leading-crop-map');
+    if (selectedCrop == "TopCrop") return "onion";
+    if (selectedCrop == "SecondCrop") return "corn";
+    if (selectedCrop == "ThirdCrop") return "tomato";
+    return "onion"; // default
+}
+
+function getPampangaCommodity() {
+    const selectedCrop = localStorage.getItem('rank-for-leading-crop-map');
+    if (selectedCrop == "TopCrop") return "sugarcane";
+    if (selectedCrop == "SecondCrop") return "corn";
+    if (selectedCrop == "ThirdCrop") return "cassava";
+    return "sugarcane"; // default
+}
+
+function getTarlacCommodity() {
+    const selectedCrop = localStorage.getItem('rank-for-leading-crop-map');
+    if (selectedCrop == "TopCrop") return "corn";
+    if (selectedCrop == "SecondCrop") return "sugarcane";
+    if (selectedCrop == "ThirdCrop") return "camote";
+    return "corn"; // default
+}
+
+function getZambalesCommodity() {
+    const selectedCrop = localStorage.getItem('rank-for-leading-crop-map');
+    if (selectedCrop == "TopCrop") return "mango";
+    if (selectedCrop == "SecondCrop") return "cogon";
+    if (selectedCrop == "ThirdCrop") return "banana";
+    return "mango"; // default
 }
 
 function sideContent(feature){
@@ -344,6 +436,12 @@ function initialize() {
     mapHint.classList.add("d-lg-flex");
     mapDetails.classList.add("d-none");
     mapDetails.classList.remove("d-block");
+    
+}
+
+function updateCropFilter(){
+    initialize();
+    getMap();
 }
 
 let onionChart = null; // Store chart instance globally

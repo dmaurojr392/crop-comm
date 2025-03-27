@@ -44,7 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // });
 
         // Fix Leaflet Map Rendering Issue
-        if (pageId === "crop-map" && typeof map !== "undefined") {
+        console.log(map);
+        if (pageId === "crop-map" && typeof map == "undefined") {
             getMap();
         } 
     }

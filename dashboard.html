@@ -347,7 +347,7 @@
                               <span><i class="bi bi-calendar"></i></span>
                             </div>
                             <div>
-                              <select id="year-for-leading-crop-map" class="form-select form-select-sm" onchange="getSelectedYearForLeadingCrop()" style="border: 1px solid #878787; border-radius: 0px; cursor: pointer;">
+                              <select id="year-for-leading-crop-map" class="form-select form-select-sm" onchange="updateCropYearFilter()" style="border: 1px solid #878787; border-radius: 0px; cursor: pointer;">
                                 <script>
                                     for (i = 2023; i >= 2019; i--) {
                                         document.write(`<option value="${i}">${i}</option>`);
@@ -367,7 +367,7 @@
                               <span><i class="bi bi-filter"></i></span>
                             </div>
                             <div>
-                              <select id="rank-for-leading-crop-map" class="form-select form-select-sm" onchange="initialize()" style="border: 1px solid #878787; border-radius: 0px; cursor: pointer;">
+                              <select id="rank-for-leading-crop-map" class="form-select form-select-sm" onchange="updateCropFilter()" style="border: 1px solid #878787; border-radius: 0px; cursor: pointer;">
                                 <option value="TopCrop">Top 1 Crop Commodities</option>
                                 <option value="SecondCrop">Top 2 Crop Commodities</option>
                                 <option value="ThirdCrop">Top 3 Crop Commodities</option>
