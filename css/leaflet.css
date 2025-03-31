@@ -1,17 +1,8 @@
 #map-view {
-    height: calc(85vh - 56px);
+    height: calc(88vh - 56px);
 }
 #map{
     height: inherit;
-}
-#map-details{
-    height: 84vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-#map-hint{
-    height: 89vh;
-    align-items: center; 
 }
 
 .info.legend {
@@ -31,7 +22,7 @@
     } */
     #map-view{
         margin-top: .5rem;
-        height: calc(93vh - 60px) !important;
+        height: calc(92.5vh - 60px) !important;
     }
     /* #map-details{
         height: 45dvh;

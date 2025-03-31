@@ -119,7 +119,7 @@
           <div id="main-nav" class="py-1">
             <ul class="nav nav-tabs">
               <li class="nav-item text-muted">
-                  <a class="nav-link" id="overview-tab" aria-current="page" href="#">Crop Productions</a>
+                  <a class="nav-link" id="overview-tab" aria-current="page" href="#">Crop Productions <label id="cropping-year"></label></a>
               </li>
               <!-- <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Dropdown</a>
@@ -146,7 +146,7 @@
                   <div class="d-flex justify-content-between align-items-center border-bottom pb-2 border-2">
                       <!-- Date Range Picker -->
                       <div class="d-flex align-items-center">
-                        <h5 class="mt-2"><label id="selectedLocation"></label> <label id="cropping-year"></label></h5>
+                        <h5 class="mt-2"><label id="selectedLocation"></label></h5>
                         <!-- <div class="input-group input-group-sm me-2">
                           <div class="d-none d-lg-flex bg-secondary text-light py-1 p-2">
                             <span><i class="bi bi-calendar me-1"></i></span>
@@ -209,7 +209,7 @@
                 <!-- Top Summary Cards -->
                 <div class="row gx-2 mb-lg-2">
                     <div class="mb-2 mb-lg-auto col-lg-4">
-                      <div class="card pt-2 px-2 shadow" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#previewTopCropModal">
+                      <div class="card pt-2 px-2 shadow" style="cursor: pointer;" data-bs-toggle="offcanvas" data-bs-target="#previewTopCropModal">
                         <div class="d-flex align-items-center justify-content-between">
                           <div class="w-100">
                             <h6 class=""><label class="top-crop-label" style="cursor: pointer;"></label></h6>
@@ -223,7 +223,7 @@
                       </div>
                   </div>
                   <div class="mb-2 mb-lg-auto col-lg-4">
-                    <div class="card px-2 pt-2 shadow" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#previewSecondCropModal">
+                    <div class="card px-2 pt-2 shadow" style="cursor: pointer;" data-bs-toggle="offcanvas" data-bs-target="#previewSecondCropModal">
                       <div class="d-flex align-items-center justify-content-between">
                         <div class="w-100">
                           <h6 class=""><label class="second-crop-label" style="cursor: pointer;"></label></h6>
@@ -237,7 +237,7 @@
                     </div>
                   </div>
                   <div class="mb-2 mb-lg-auto col-lg-4">
-                    <div class="card px-2 pt-2 shadow" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#previewThirdCropModal">
+                    <div class="card px-2 pt-2 shadow" style="cursor: pointer;" data-bs-toggle="offcanvas" data-bs-target="#previewThirdCropModal">
                       <div class="d-flex align-items-center justify-content-between">
                         <div class="w-100">
                           <h6 class=""><label class="third-crop-label" style="cursor: pointer;"></label></h6>
@@ -334,7 +334,7 @@
             <div class="container-fluid">
                 <div class="">
                     <h4 class="mt-2" id="page-title">
-                        LEADING CROPS IN REGION III
+                        LEADING CROPS IN CENTRAL LUZON
                     </h4>
                     <div class="mb-2 d-flex" id="leading-crop-filter">
                         <div>
@@ -377,31 +377,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="row d-flex align-items-center justify-content-center">
-                    <div id="map-view" class="col-12 col-lg-7">
+                <div class="d-flex align-items-center justify-content-center ">
+                    <div id="map-view" class="col-12">
                         <div id="map" class="rounded"></div>
-                    </div>
-                    <div class="col-12 col-lg-5 h-100 animate__animated animate__fadeIn">
-                        <div id="map-details" class="d-none">
-                            <h4 id="sidebar-title" style="margin-bottom: 0px;"></h4>
-                            <p id="sidebar-content" style="margin-bottom: 4px;"></p>
-                            <div id="province-data">
-                            </div>
-                            <div class="d-flex justify-content-center w-100 animate__animated animate__fadeIn">
-                              <div id="crop-data-loading" class="d-none">
-                                <div class="loader"></div>
-                              </div>
-                            </div>
-                            <div id="crop-data" class="d-none animate__animated animate__fadeIn">
-                              <div id="prediction" class="mt-2"></div>
-                              <canvas id="onionChart" height="175px" class="rounded card shadow"></canvas>
-                            </div>
-                        </div>
-                        <div id="map-hint" class="h-100">
-                          <div class="d-flex justify-content-center w-100">
-                            Click the color-coded tile on the map to view crop details.
-                          </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -415,7 +393,54 @@
       <div class="overlay"></div>
     </div>
   </div>
-  <div class="modal fade" id="previewTopCropModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- modals  -->
+  <div class="offcanvas offcanvas-end" id="previewTopCropModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="exampleModalLabel"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body" id="modalBodyContent">
+          <!-- Content will be injected here via JavaScript -->
+      </div>
+  </div>
+  <div class="offcanvas offcanvas-end" id="previewSecondCropModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="secondCropModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" id="secondCropModalBodyContent">
+        <!-- Content will be injected here via JavaScript -->
+    </div>
+  </div>
+  <div class="offcanvas offcanvas-end" id="previewThirdCropModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="thirdCropModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" id="thirdCropModalBodyContent">
+        <!-- Content will be injected here via JavaScript -->
+    </div>
+  </div>
+  <div class="offcanvas offcanvas-end" id="sideContentOffcanvas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sideContentLabel"></h5>
+        <button type="button" class="btn-close" onclick="sideContentClose()" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Content will be injected here via JavaScript -->
+        <div id="sideContentBodyContent"></div>
+        <div class="d-flex justify-content-center w-100 animate__animated animate__fadeIn">
+          <div id="crop-data-loading" class="d-none">
+            <div class="loader"></div>
+          </div>
+        </div>
+        <div id="crop-data" class="d-none animate__animated animate__fadeIn">
+          <div id="prediction" class="mt-2"></div>
+          <canvas id="onionChart" height="175px" class="rounded card shadow"></canvas>
+        </div>
+    </div>
+  </div>
+  <!-- <div class="modal fade" id="previewTopCropModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -423,15 +448,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="modalBodyContent">
-                <!-- Content will be injected here via JavaScript -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-  </div>
-  <div class="modal fade" id="previewSecondCropModal" tabindex="-1" aria-labelledby="secondCropModalLabel" aria-hidden="true">
+  </div> -->
+  <!-- <div class="modal fade" id="previewSecondCropModal" tabindex="-1" aria-labelledby="secondCropModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -439,16 +463,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="secondCropModalBodyContent">
-                <!-- Content will be injected here via JavaScript -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-  </div>
-
-  <div class="modal fade" id="previewThirdCropModal" tabindex="-1" aria-labelledby="thirdCropModalLabel" aria-hidden="true">
+  </div> -->
+  <!-- <div class="modal fade" id="previewThirdCropModal" tabindex="-1" aria-labelledby="thirdCropModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -456,17 +478,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="thirdCropModalBodyContent">
-                <!-- Content will be injected here via JavaScript -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-  </div>
-  <!-- JavaScript -->
+  </div> -->
   
-    
+  <!-- JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="javascripts/dashboard.js"></script>
@@ -481,7 +501,7 @@
         var previewSecondCropModal = document.getElementById("previewSecondCropModal");
         var previewSecondCropModal = document.getElementById("previewSecondCropModal");
     
-        previewTopCropModal.addEventListener("show.bs.modal", function () {
+        previewTopCropModal.addEventListener("show.bs.offcanvas", function () {
           // Get data from the first occurrence of the class
           let cropLabel = document.getElementsByClassName('top-crop-label')[0]?.innerText || "Unknown";
           let cropVolume = document.getElementsByClassName('top-crop-volume')[0]?.innerText || "Unknown";
@@ -513,10 +533,11 @@
               <a href="">Would you like to expand for more insights?</a>`;
         });
 
-        previewSecondCropModal.addEventListener("show.bs.modal", function () {
+        previewSecondCropModal.addEventListener("show.bs.offcanvas", function () {
           // Get data from the first occurrence of the class
           let cropLabel = document.getElementsByClassName('second-crop-label')[0]?.innerText || "Unknown";
           let cropVolume = document.getElementsByClassName('second-crop-volume')[0]?.innerText || "Unknown";
+          console.log(cropLabel);
           let volumePercentageDifference = (((parseFloat(secondCropLatestRecord.replace(/,/g, "")) - parseFloat(secondCropPreviousYearRecord.replace(/,/g, ""))) / parseFloat(secondCropPreviousYearRecord.replace(/,/g, ""))) * 100).toFixed(2);
           let volumeDifference = (parseFloat(secondCropLatestRecord.replace(/,/g, "")) - parseFloat(secondCropPreviousYearRecord.replace(/,/g, ""))).toFixed(2);
 
@@ -545,7 +566,7 @@
               <a href="">Would you like to expand for more insights?</a>`;
         });
 
-        previewThirdCropModal.addEventListener("show.bs.modal", function () {
+        previewThirdCropModal.addEventListener("show.bs.offcanvas", function () {
           // Get data from the first occurrence of the class
           let cropLabel = document.getElementsByClassName('third-crop-label')[0]?.innerText || "Unknown";
           let cropVolume = document.getElementsByClassName('third-crop-volume')[0]?.innerText || "Unknown";

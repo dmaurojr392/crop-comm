@@ -1,6 +1,4 @@
 let map;
-let mapHint = document.getElementById('map-hint');
-let mapDetails = document.getElementById('map-details');
 let selectedCrop = null;
 let selectedYearFilter = localStorage.getItem("year-for-leading-crop-map") || "2023";
 
@@ -74,7 +72,7 @@ function getMap() {
     }
 
     // Initialize a new map instance
-    map = L.map('map').setView([15.5, 120.5], 8);
+    map = L.map('map').setView([15.5, 120.75], 7.5);
     const bounds = [
         [4.2158, 116.7017],
         [21.3213, 126.6052]
@@ -123,12 +121,7 @@ function getMap() {
                         document.getElementById("crop-data").classList.add("d-none");
                         
                         fetchPredictions(feature);
-                        mapHint.classList.remove("d-lg-flex");
-                        mapHint.classList.add("d-none");
-            
-                        mapDetails.classList.remove("d-none");
-                        mapDetails.classList.add("d-block");
-            
+
                         // Zoom to the bounds of the selected layer
                         if (layer.getBounds) {
                             map.fitBounds(layer.getBounds());
@@ -396,13 +389,36 @@ function getZambalesCommodity() {
     if (selectedCrop == "ThirdCrop") return "banana";
     return "mango"; // default
 }
+const sidebarTitle1 = document.getElementById('sideContentLabel');
+const sidebarContent1 = document.getElementById('sideContentBodyContent');
 
+function sideContentClose() {
+    sidebarContent1.innerText = "";
+    sidebarTitle1.innerText = "";
+}
 function sideContent(feature){
+    const offcanvas = new bootstrap.Offcanvas(document.getElementById('sideContentOffcanvas'),{backdrop: false});
+    offcanvas.show();
+
+    // Add event listener for when offcanvas is fully shown
+    document.getElementById('sideContentOffcanvas').addEventListener('shown.bs.offcanvas', function() {
+        // Now fetch predictions and create chart
+        // sidebarTitle1.innerText = `${feature.properties.ADM2_EN}`;
+        document.getElementById("crop-data-loading").classList.remove("d-none");
+        document.getElementById("crop-data-loading").classList.add("d-block");
+        // sidebarTitle1.innerHTML = `${feature.properties.ADM2_EN}`;
+        // sidebarContent1.innerHTML = `
+        //     <div class="animate__animated animate__fadeIn"><strong>Leading Crop:</strong> ${feature.properties.Top1_Commodities || "No data found"}</div>
+        //     <div class="animate__animated animate__fadeIn"><strong>Production:</strong> ${feature.properties["Yield(MT)"] || "No data found"} Metric Tons</div>
+        //     <div class="animate__animated animate__fadeIn"><strong>Harvest Year: </strong>2023</div>
+        // `;
+    });
+
     const sidebarTitle = document.getElementById('sidebar-title');
     const sidebarContent = document.getElementById('sidebar-content');
     if(localStorage.getItem('rank-for-leading-crop-map') == "TopCrop"){
-        sidebarTitle.innerHTML = `<div class="animate__animated animate__fadeIn"> ${feature.properties.ADM2_EN} </div>` || "Not set";
-        sidebarContent.innerHTML = `
+        sidebarTitle1.innerHTML = `<div class="animate__animated animate__fadeIn"> ${feature.properties.ADM2_EN} </div>` || "Not set";
+        sidebarContent1.innerHTML = `
             <div class="animate__animated animate__fadeIn"><strong>Leading Crop:</strong> ${feature.properties.Top1_Commodities || "No data found"}</div>
             <div class="animate__animated animate__fadeIn"><strong>Production:</strong> ${feature.properties["Yield(MT)"] || "No data found"} Metric Tons</div>
             <div class="animate__animated animate__fadeIn"><strong>Harvest Year: </strong>2023</div>
@@ -410,8 +426,8 @@ function sideContent(feature){
     }
 
     if(localStorage.getItem('rank-for-leading-crop-map') == "SecondCrop"){
-        sidebarTitle.innerHTML = `<div class="animate__animated animate__fadeIn"> ${feature.properties.ADM2_EN} </div>` || "Not set";
-        sidebarContent.innerHTML = `
+        sidebarTitle1.innerHTML = `<div class="animate__animated animate__fadeIn"> ${feature.properties.ADM2_EN} </div>` || "Not set";
+        sidebarContent1.innerHTML = `
             <div class="animate__animated animate__fadeIn"><strong>Second Leading Crop:</strong> ${feature.properties.Top2_Commodities || "No data found"}</div>
             <div class="animate__animated animate__fadeIn"><strong>Production:</strong> ${feature.properties["Yield(MT)_1"] || "No data found"} Metric Tons</div>
             <div class="animate__animated animate__fadeIn"><strong>Harvest Year: </strong>2023</div>
@@ -419,8 +435,8 @@ function sideContent(feature){
     }
 
     if(localStorage.getItem('rank-for-leading-crop-map') == "ThirdCrop"){
-        sidebarTitle.innerHTML = `<div class="animate__animated animate__fadeIn"> ${feature.properties.ADM2_EN} </div>` || "Not set";
-        sidebarContent.innerHTML = `
+        sidebarTitle1.innerHTML = `<div class="animate__animated animate__fadeIn"> ${feature.properties.ADM2_EN} </div>` || "Not set";
+        sidebarContent1.innerHTML = `
             <div class="animate__animated animate__fadeIn"><strong>Third Leading Crop:</strong> ${feature.properties.Top3_Commodities || "No data found"}</div>
             <div class="animate__animated animate__fadeIn"><strong>Production:</strong> ${feature.properties["Yield(MT)_2"] || "No data found"} Metric Tons</div>
             <div class="animate__animated animate__fadeIn"><strong>Harvest Year: </strong>2023</div>
@@ -432,11 +448,6 @@ function initialize() {
     selectedCrop = document.getElementById("rank-for-leading-crop-map").value;
     localStorage.setItem("rank-for-leading-crop-map", selectedCrop);
     updateLegend(selectedCrop);
-    mapHint.classList.remove("d-none");
-    mapHint.classList.add("d-lg-flex");
-    mapDetails.classList.add("d-none");
-    mapDetails.classList.remove("d-block");
-    
 }
 
 function updateCropFilter(){

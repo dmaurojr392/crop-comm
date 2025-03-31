@@ -22,7 +22,7 @@ function checkFilter() {
     // var selectedLocationElement = document.getElementById('selectedLocation');
     if (selectedLocation == 'Select') {
         sheetName = 'REGION III';
-        selectedLocationElement.textContent = `${sheetName}`;
+        selectedLocationElement.textContent = `Central Luzon`;
     } else if (selectedLocation == 'Aurora') {
         sheetName = 'AURORA';
         selectedLocationElement.textContent = `${sheetName}`;
@@ -122,7 +122,7 @@ function checkFilter() {
                 var thirdVolumeIcon = "-";
             }
 
-            document.getElementById("cropping-year").textContent = "- " + datedYearData;
+            document.getElementById("cropping-year").textContent = " " + datedYearData;
             document.querySelectorAll('.top-crop-label').forEach(el => el.textContent = topCropLabel);
             document.querySelectorAll('.second-crop-label').forEach(el => el.textContent = secondCropLabel);
             document.querySelectorAll('.third-crop-label').forEach(el => el.textContent = thirdCropLabel);
