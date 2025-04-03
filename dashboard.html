@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="css/leaflet.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+
 </head>
 <body>
   <div class="layout has-sidebar fixed-sidebar fixed-header">
@@ -41,7 +43,7 @@
             <ul>
               <li class="menu-header" style="padding-top: 20px"><span> GENERAL </span></li>
               <li class="menu-item active">
-                <a href="#main">
+                <a href="#main" class="other-link">
                   <span class="menu-icon">
                     <i class="bi bi-kanban-fill"></i>
                   </span>
@@ -57,7 +59,7 @@
                 </a>
               </li> -->
               <li class="menu-item sub-menu">
-                <a href="#crop-map">
+                <a href="#" id="cropMapLink">
                   <span class="menu-icon">
                     <i class="bi bi-geo-alt-fill"></i>
                   </span>
@@ -65,15 +67,121 @@
                 </a>
                 <div class="sub-menu-list">
                   <ul>
-                    <li class="menu-item ms-3">
+                    <li class="menu-item ms-4">
                       <a href="#crop-map">
                         <span class="menu-title">Leading Crops</span>
                       </a>
                     </li>
-                    <li class="menu-item ms-3">
+                    <!-- <li class="menu-item ms-3">
                       <a href="#suitability-map">
                         <span class="menu-title">Suitability Map</span>
                       </a>
+                    </li> -->
+                    <li class="menu-item sub-menu">
+                      <a href="#" id="suitabilityLink">
+                        <span class="menu-title ms-4">Suitability Map</span>
+                      </a>
+                      
+                      <div class="sub-menu-list">
+                        <ul>
+                          <li class="menu-item ms-3">
+                            <a href="#banana">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/banana.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Banana</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/camote.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Camote</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/cashew.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Cashew</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/cassava.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Cassava</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/coconut.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Coconut</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/cogon.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Cogon</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/corn.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Corn</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/mango.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Mango</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/onion.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Onion</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/sitao.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Sitao</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/sugarcane.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Sugarcane</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/tomato.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Tomato</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </li>
                   </ul>
                 </div>
@@ -82,8 +190,7 @@
           </nav>
         </div>
         <div class="sidebar-footer">
-          <div class="footer-box">
-            version 0.1.0-beta
+          <div class="footer-box version">
           </div>
         </div>
       </div>
@@ -386,9 +493,46 @@
             </div>
         </div>
 
-        <div id="suitability-map" class="page collapse">
-          <h4>SUITABILITY MAP - CENTRAL LUZON</h4>
-          <div id="suitMap" style="width: 100%; height: 90vh;"></div>
+        <div id="banana" class="page collapse">
+          
+          <style>
+              #container1 {
+                  width: 90%;
+                  height: 85vh;
+                  overflow: hidden;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  background: #eee;
+              }
+              .img1 {
+                  width: 100%;
+                  max-width: 1000px;
+                  min-width: 1000px;
+                  cursor: grab;
+              }
+          </style>
+          <div class="container">
+            <h4>SUITABILITY MAP - CENTRAL LUZON</h4>
+            <h5 style="margin-top: -.75rem;">BANANA</h5>
+          </div>
+          <!-- <div class="container-fluid">
+            <img class="img1" src="assets/crops-suitability-map/banana-2023.png"  alt="">
+          </div> -->
+          <div class="container d-flex align-items-center justify-content-center ">
+            <div id="container1">
+              <img id="zoom-img" src="assets/crops-suitability-map/banana-2023.png" alt="Zoomable Image">
+            </div>
+          </div>
+      
+          <script>
+              const zoomable = document.getElementById('zoom-img');
+              const panzoom = Panzoom(zoomable, {
+                  maxScale: 5,
+                  contain: 'outside'
+              });
+              zoomable.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
+          </script>
         </div>
 
       </main>
@@ -601,6 +745,36 @@
   </script>
   <script src="javascripts/route.js"></script>
   <script src="javascripts/leading-crops.js"></script>
-  <script src="javascripts/suitability-map.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const suitabilityLink = document.getElementById("suitabilityLink");
+        const otherLinks = document.querySelectorAll(".other-link");
+        
+        suitabilityLink.addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent default behavior
+            const currentHash = window.location.hash || "#main"; // Set a default hash if none exists
+            this.href = currentHash;
+            window.location.hash = currentHash; // Updates the URL hash
+            cropMapLink.href = "#";
+        });
+
+        const cropMapLink = document.getElementById("cropMapLink");
+        
+        cropMapLink.addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent default behavior
+            const currentHash = window.location.hash || "#main"; // Set a default hash if none exists
+            this.href = currentHash;
+            suitabilityLink.href = "#";
+            window.location.hash = currentHash; // Updates the URL hash
+        });
+
+        otherLinks.forEach(link => {
+            link.addEventListener("click", function() {
+                suitabilityLink.href = "#"; // Reset to default
+                cropMapLink.href = "#"; // Reset to default
+            });
+        });
+    });
+  </script>
 </body>
 </html>
