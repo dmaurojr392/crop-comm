@@ -2,6 +2,8 @@ let map;
 let selectedCrop = null;
 let selectedYearFilter = localStorage.getItem("year-for-leading-crop-map") || "2023";
 
+getMap();
+
 let commodityColors = {
     "Banana": "#FFFFA3",
     "Sugarcane": "#DEAA79",
@@ -506,13 +508,13 @@ async function fetchPredictions(feature) {
         let result = null;
         if (localStorage.getItem('rank-for-leading-crop-map') == "TopCrop") {
             result = data.predictions[feature.properties.Top1_Commodities];
-            prediction.innerHTML = `<h5>PREDICTED YIELD FOR ${feature.properties.Top1_Commodities.toUpperCase() || "No data found"} (2023-2029)</h5>`;
+            prediction.innerHTML = `<h5>PREDICTED YIELD FOR ${feature.properties.Top1_Commodities.toUpperCase() || "No data found"} (2023-2027)</h5>`;
         } else if (localStorage.getItem('rank-for-leading-crop-map') == "SecondCrop") {
             result = data.predictions[feature.properties.Top2_Commodities];
-            prediction.innerHTML = `<h5>PREDICTED YIELD FOR ${feature.properties.Top2_Commodities.toUpperCase() || "No data found"} (2023-2029)</h5>`;
+            prediction.innerHTML = `<h5>PREDICTED YIELD FOR ${feature.properties.Top2_Commodities.toUpperCase() || "No data found"} (2023-2027)</h5>`;
         } else if (localStorage.getItem('rank-for-leading-crop-map') == "ThirdCrop") {
             result = data.predictions[feature.properties.Top3_Commodities];
-            prediction.innerHTML = `<h5>PREDICTED YIELD FOR ${feature.properties.Top3_Commodities.toUpperCase() || "No data found"} (2023-2029)</h5>`;
+            prediction.innerHTML = `<h5>PREDICTED YIELD FOR ${feature.properties.Top3_Commodities.toUpperCase() || "No data found"} (2023-2027)</h5>`;
         }
 
         console.log("Result Data:", result); // Debugging

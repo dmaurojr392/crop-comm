@@ -22,7 +22,7 @@ function checkFilter() {
     // var selectedLocationElement = document.getElementById('selectedLocation');
     if (selectedLocation == 'Select') {
         sheetName = 'REGION III';
-        selectedLocationElement.textContent = `Central Luzon`;
+        selectedLocationElement.textContent = `CENTRAL LUZON`;
     } else if (selectedLocation == 'Aurora') {
         sheetName = 'AURORA';
         selectedLocationElement.textContent = `${sheetName}`;

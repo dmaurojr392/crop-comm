@@ -119,54 +119,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-// let currentYear = localStorage.getItem('filter-year');
-// let currentLocation = localStorage.getItem("filter-location");
-// // let updatedYear = "";
-// let updatedLocation = "";
-
-
-// setInterval(() => {
-//     updatedLocation = localStorage.getItem("filter-location");
-//     // updatedYear = localStorage.getItem("filter-year");
-//     // || updatedYear !== currentYear
-//     console.log("LocalStorage changed:", updatedLocation);
-//     if (updatedLocation !== currentLocation) {
-//         console.log("LocalStorage changed:", updatedLocation);
-//         // console.log("LocalStorage changed:", updatedYear);
-//         localStorage.setItem('filter-location', updatedLocation);
-//         // localStorage.setItem('filter-year', updatedYear);
-//     }
-//     // readFilter();
-    
-// }, 500); // Check every 500ms
-
-// read filter
-// function readFilter(){
-//     const locations = ["select", "aurora", "bataan", "bulacan", "nueva-ecija", "pampanga", "tarlac", "zambales"];
-//     // const years = ["2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"]; // Add more years if needed
-
-//     // if (updatedYear) {
-//     //     // Hide all elements for all years
-//     //     years.forEach(year => {
-//     //         locations.forEach(loc => {
-//     //             const element = document.getElementById(`${year}-${loc}`);
-//     //             if (element) {
-//     //                 element.classList.add("d-none");
-//     //                 element.classList.remove("d-block");
-//     //             }
-//     //         });
-//     //     });
-
-//     //     // Show only the selected year & location
-//     //     const selectedElement = document.getElementById(`${updatedYear}-${updatedLocation.toLowerCase()}`);
-//     //     if (selectedElement) {
-//     //         selectedElement.classList.remove("d-none");
-//     //         selectedElement.classList.add("d-block");
-//     //     }
-//     // }
-// }
-
 // for overview filter
 function updateFilter(value) {
     // Update the filter value
