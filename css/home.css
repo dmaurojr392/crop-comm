@@ -33,18 +33,16 @@
     }
   }
 @media  screen and (max-width: 767px) {
-    #btn-collapse{
+    /* #btn-collapse{
         display: none;
-    }
-    #main-nav{
+    } */
+    /* #main-nav{
         top: 55px; 
     }
     #overview-filter{
-        top: 101px;
-    }
-    .content{
-        margin-top: 55px;
-    }
+        top: 100px;
+    } */
+    
     #previewTopCropModal, #previewSecondCropModal, #previewThirdCropModal{
         width: 80vw;
     }
@@ -53,6 +51,18 @@
     #previewTopCropModal, #previewSecondCropModal, #previewThirdCropModal{
         width: 98vw;
     }
+    #main-nav{
+        top: 55px; 
+    }
+    #overview-filter{
+        top: 100px;
+    }
+    .content{
+        margin-top: 55px;
+    }
+    /* .content{
+        margin-top: 55px;
+    } */
   }
 /* @media  screen and (max-width: 575px) {
     #main-nav{

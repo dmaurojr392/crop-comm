@@ -13,6 +13,12 @@ setInterval(() => {
     }
 }, 1000);
 
+// document.getElementById('filter-value').addEventListener('change', () => {
+//     localStorage.setItem('filter-location', getElementById('filter-value').value);
+//     checkFilter();
+// });
+
+
 function checkFilter() {
     let selectedLocation = updatedLocation || 'Select';
     let selectedLocationElement = document.getElementById('selectedLocation');
@@ -33,8 +39,8 @@ function checkFilter() {
         sheetName = 'BULACAN';
         selectedLocationElement.textContent = sheetName;
     } else if (selectedLocation == 'Nueva-Ecija') {
-        sheetName = 'NUEVA ECIJA';
-        selectedLocationElement.textContent = sheetName;
+        sheetName = 'NUEVA-ECIJA';
+        selectedLocationElement.innerHTML = sheetName.replace("-", "&nbsp;")
     } else if (selectedLocation == 'Pampanga') {
         sheetName = 'PAMPANGA';
         selectedLocationElement.textContent = sheetName;
@@ -48,7 +54,8 @@ function checkFilter() {
     const RANGE = `${sheetName}`;
 
     async function fetchSheetData() {
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/1ZUfW6r4SaF01njB7_N3g1YeAgOcyO_Qcn5pYEF1jahU/values:batchGet?ranges=${sheetName}!A1:Z100&ranges='${sheetName} HARVEST AREA'!A1:Z100&key=AIzaSyC2K27qYEGDTm0-pZyrrTRM767D2M2Cu6A`;
+        const fixedSheetName = sheetName.replace("III", "3").toLowerCase().replace(/\s+/g, "-");
+        const url = `https://google-sheet-api-connector.onrender.com/sheet-data/${fixedSheetName}`;
         try {
             document.getElementById("loader").classList.remove("d-none");
             document.getElementById("loader").classList.add("d-flex");

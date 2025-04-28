@@ -1,18 +1,20 @@
 // for mobile navigation 
-function navbarClick(id) {
+function navbarClick(pageId) {
     // Get all navbar links
-    const navLinks = document.querySelectorAll(".nav-link");
+    // const navLinks = document.querySelectorAll(".nav-link");
 
-    // Remove "active" class from all links
-    navLinks.forEach(link => link.classList.remove("active"));
+    // // Remove "active" class from all links
+    // navLinks.forEach(link => link.classList.remove("active"));
+    // Remove "active" class from all menu items
+    document.querySelectorAll(".nav-link").forEach(item => {
+        item.classList.remove("active");
+    });
+   
+    // Add "active" class to all matching menu items
+    document.querySelectorAll(`a[href="#${pageId}"]`).forEach(activeLink => {
+        activeLink.parentElement.classList.add("active");
+    });
     
-    // Add "active" class to the clicked link if it exists
-    if(id){
-        document.getElementById(id)?.classList.add("active");
-        // localStorage.setItem('currentTab', 'overview');
-    }else{
-        document.getElementById("dashboard-nav")?.classList.add("active");
-    }
 }
 
 // for sidebar navigation 
@@ -44,15 +46,21 @@ document.addEventListener("DOMContentLoaded", function () {
         // });
 
         // Fix Leaflet Map Rendering Issue
-        if (pageId === "crop-map" && typeof map == "undefined") {
-            getMap();
-        } 
+        // if (pageId === "crop-map" && typeof map == "undefined") {
+        //     getMap();
+        // } 
     }
 
     function handleNavigation() {
         // Get the hash (remove `#`) or default to "main"
+        checkWidth();
         const page = window.location.hash.replace("#", "") || "main";
         showPage(page);
+        navbarClick(page);
+        if (window.innerWidth <= 576) {
+            document.getElementById("sidebar").classList.add("collapsed");
+        }
+        
     }
 
     // Listen for hash changes
@@ -167,3 +175,124 @@ function clearFilter() {
     localStorage.setItem('filter-location', `${document.getElementById('filter-value').innerHTML}`);
 }
 clearFilter();
+
+const mediaQuery = window.matchMedia('(max-width: 767.20px)');
+
+function handleBreakpointChange(e) {
+  const element = document.querySelector('#sidebar');
+  if (e.matches) {
+    // 700px and below
+    checkWidth();
+    element.classList.add('collapsed');
+    if (element && element.classList.contains('collapsed')){
+        document.querySelectorAll('.sub-menu-list .menu-item').forEach(item => {
+            item.classList.remove('ms-4','ms-3');
+            item.style.marginLeft = "-25px";
+        });
+
+        document.querySelectorAll('.menu-item .menu-title').forEach(item => {
+            item.classList.remove('ms-4');
+        });
+    }
+    // element.classList.remove('desktop-class');
+  } else {
+    // above 700px
+    // element.classList.add('desktop-class');
+    element.classList.remove('collapsed');
+        document.querySelectorAll('.sub-menu-list .menu-item').forEach(item => {
+            item.classList.remove('ms-4','ms-3');
+            item.removeAttribute('style');
+
+        });
+
+        document.querySelectorAll('.menu-item .menu-title').forEach(item => {
+            item.classList.remove('ms-4');
+        });
+  }
+}
+
+// Initial check
+handleBreakpointChange(mediaQuery);
+
+// Listen for changes
+mediaQuery.addEventListener('change', handleBreakpointChange);
+
+const main = document.getElementById('main');
+const cropMap = document.getElementById('crop-map');
+const aiAssistant = document.getElementById('ai-assistant');
+
+// setInterval(()=>{
+//     console.log(main.offsetWidth);
+// }, 50)
+function checkWidth() {
+    // Wait for the layout to finish
+    setTimeout(() => {
+        const currWidthMain = main.offsetWidth; // NOW it's the updated width
+        const currWidthCropMap = cropMap.offsetWidth; // NOW it's the updated width
+        const currWidthAiAssistant = aiAssistant.offsetWidth; // NOW it's the updated width
+
+        const hash = window.location.hash;
+        console.log(hash);
+        if(hash == "#main"){
+            if (currWidthMain < 300) {
+                main.style.opacity = "0";
+                main.style.transition = "opacity 0.3s ease";
+            } else {
+                main.style.opacity = "1";
+                main.style.transition = "opacity 0.3s ease";
+            }
+        }else if(hash == "#crop-map"){
+            if (currWidthCropMap < 300) {
+                cropMap.style.opacity = "0";
+                cropMap.style.transition = "opacity 0.3s ease";
+            } else {
+                cropMap.style.opacity = "1";
+                cropMap.style.transition = "opacity 0.3s ease";
+            }
+        }else if(hash == "#ai-assistant"){
+            if (currWidthAiAssistant < 300) {
+                aiAssistant.style.opacity = "0";
+                aiAssistant.style.transition = "opacity 0.3s ease";   
+            } else {
+                aiAssistant.style.opacity = "1";
+                aiAssistant.style.transition = "opacity 0.3s ease";
+            }
+        }else{
+            main.style.opacity = "0";
+            main.style.transition = "opacity 0.3s ease";
+            if (currWidthMain < 300) {
+                
+                // document.querySelectorAll('.sub-menu-list .menu-item').forEach(item => {
+                //     item.classList.remove('ms-4','ms-3');
+                //     item.removeAttribute('style');
+        
+                // });
+        
+                // document.querySelectorAll('.menu-item .menu-title').forEach(item => {
+                //     item.classList.remove('ms-4');
+                // });
+                
+            } else {
+                main.style.opacity = "1";
+                main.style.transition = "opacity 0.2s ease";
+                // document.querySelectorAll('.sub-menu-list .menu-item').forEach(item => {
+                //     item.classList.remove('ms-4','ms-3');
+                //     item.style.marginLeft = "-25px";
+                // });
+        
+                // document.querySelectorAll('.menu-item .menu-title').forEach(item => {
+                //     item.classList.remove('ms-4');
+                // });
+                
+            }
+        }
+        console.log(currWidthAiAssistant);
+        console.log(currWidthCropMap);
+        console.log(currWidthMain);
+
+        
+    }, 251); // small delay, usually 50ms is enough
+}
+
+document.getElementById("btn-toggle").addEventListener("click", checkWidth);
+document.getElementById("btn-collapse").addEventListener("click", checkWidth);

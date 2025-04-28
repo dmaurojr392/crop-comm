@@ -1,5 +1,5 @@
 #map-view {
-    height: calc(88vh - 56px);
+    height: calc(100vh - 70px);
 }
 #map{
     height: inherit;
