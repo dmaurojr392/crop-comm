@@ -7,10 +7,17 @@
     background-position: center;
 }
 #clsu-logo{
-  height: 64px;
+  height: 65px;
+  background-color: #fff;
+  border-radius: 50px;
+  box-shadow: 0 0 4px gray;
 }
 #department-logo{
-  height: 75px;
+  height: 62px;
+  /* border: 1px solid gray; */
+  background-color: #eaeaea;
+  border-radius: 50px;
+  box-shadow: 0 0 4px gray;
 }
 #header-border-left{
   margin-left: -5rem; 

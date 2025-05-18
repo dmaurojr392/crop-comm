@@ -1,0 +1,29 @@
+
+
+.top-section {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.temp {
+font-size: 48px;
+font-weight: bold;
+}
+
+.weather-desc {
+font-size: 18px;
+margin-top: -8px;
+color: #333;
+}
+
+.feels-like {
+font-size: 14px;
+color: #666;
+}
+
+.summary {
+margin: 16px 0;
+font-size: 14px;
+color: #444;
+}

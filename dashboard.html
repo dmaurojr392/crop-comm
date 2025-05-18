@@ -16,15 +16,27 @@
   <link rel="stylesheet" href="css/home.css">
   <link rel="stylesheet" href="css/loader.css">
   <link rel="stylesheet" href="css/leaflet.css">
+  <link rel="stylesheet" href="css/weather.css">
   <link rel="stylesheet" href="css/ai-speech-bubble.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/src/dom-to-image.min.js"></script>
+  <style>
+    @font-face {
+      font-family: "SF Pro Text";
+      font-style: normal;
+      font-weight: 400;
+      src: url("https://raw.githubusercontent.com/blaisck/sfwin/master/SFPro/TrueType/SFProText-Light.ttf");
+    }
+  </style>
 </head>
 <body>
   <div class="layout has-sidebar fixed-sidebar fixed-header">
-    <aside id="sidebar" class="sidebar">
+    <aside id="sidebar" class="sidebar d-none d-sm-block">
       <a id="btn-collapse" class="sidebar-collapser">
         <i class="bi bi-caret-left-fill d-none d-sm-flex" style="font-size: 8.5pt;"></i>
         <i class="bi bi-menu-button-wide d-sm-none"></i>
@@ -107,7 +119,7 @@
                             </a>
                           </li>
                           <li class="menu-item ms-3">
-                            <a href="#onion">
+                            <a href="#suitability-map-coconut">
                               <span class="menu-icon">
                                 <img src="assets/crops-icon/coconut.png" width="20px" alt="">
                               </span>
@@ -123,7 +135,178 @@
                             </a>
                           </li>
                           <li class="menu-item ms-3">
+                            <a href="#suitability-map-corn">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/corn.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Corn</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
                             <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/mango.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Mango</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/onion.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Onion</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/sitao.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Sitao</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/sugarcane.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Sugarcane</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/tomato.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Tomato</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="menu-header" style="padding-top: 20px"><span> EXTRA </span></li>
+              <li class="menu-item active">
+                <a href="#ai-assistant" class="other-link">
+                  <span class="menu-icon">
+                    <i class="bi bi-stars"></i>
+                  </span>
+                  <span class="menu-title"></span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="sidebar-footer">
+          <div class="footer-box version">
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <aside id="sidebar-mobile" class="sidebar collapsed d-sm-none">
+      <a id="btn-collapse-mbl" class="sidebar-collapser">
+        <i class="bi bi-caret-left-fill d-none d-sm-flex" style="font-size: 8.5pt;"></i>
+        <i class="bi bi-menu-button-wide d-sm-none"></i>
+      </a>
+      <div class="image-wrapper">
+        <!-- <img src="assets/img/advisories.svg" alt="sidebar background" /> -->
+      </div>
+      <div class="sidebar-layout">
+        <div class="sidebar-header">
+          <div class="pro-sidebar-logo">
+            <div>
+              <img src="assets/icon/analytics.png" style="width: 100%;" class="rounded" alt="">
+            </div>
+            <h5 class="anton-regular mt-2"><a href="index" class="appName" style="color: #9196b5;"></a></h5>
+          </div>
+        </div>
+        <div class="sidebar-content">
+          <nav class="menu open-current-submenu">
+            <ul>
+              <li class="menu-header" style="padding-top: 20px"><span> GENERAL </span></li>
+              <li class="menu-item active">
+                <a href="#main" class="other-link">
+                  <span class="menu-icon">
+                    <i class="bi bi-kanban-fill"></i>
+                  </span>
+                  <span class="menu-title"></span>
+                </a>
+              </li>
+              <li class="menu-item sub-menu">
+                <a href="#" id="cropMapLink">
+                  <span class="menu-icon">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </span>
+                  <span class="menu-title">Maps</span>
+                </a>
+                <div class="sub-menu-list">
+                  <ul>
+                    <li class="menu-item ms-4">
+                      <a href="#crop-map">
+                        <span class="menu-title">Leading Crops</span>
+                      </a>
+                    </li>
+                    <li class="menu-item sub-menu">
+                      <a href="#" id="suitabilityLink">
+                        <span class="menu-title ms-4">Suitability Maps</span>
+                      </a>
+                      
+                      <div class="sub-menu-list">
+                        <ul>
+                          <li class="menu-item ms-3">
+                            <a href="#suitability-map-banana">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/banana.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Banana</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/camote.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Camote</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/cashew.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Cashew</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/cassava.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Cassava</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#suitability-map-coconut">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/coconut.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Coconut</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#onion">
+                              <span class="menu-icon">
+                                <img src="assets/crops-icon/cogon.png" width="20px" alt="">
+                              </span>
+                              <span class="menu-title">Cogon</span>
+                            </a>
+                          </li>
+                          <li class="menu-item ms-3">
+                            <a href="#suitability-map-corn">
                               <span class="menu-icon">
                                 <img src="assets/crops-icon/corn.png" width="20px" alt="">
                               </span>
@@ -231,6 +414,9 @@
         <a id="btn-toggle" href="#" class="sidebar-toggler">
           <!-- <i class="bi bi-caret-left-fill" style="font-size: 8.5pt;"> -->
         </a>
+        <a id="btn-toggle-mbl" href="#" class="sidebar-toggler">
+          <!-- <i class="bi bi-caret-left-fill" style="font-size: 8.5pt;"> -->
+        </a>
 
         <div id="main" class="page" >
           <div class="d-flex d-sm-none fixed-top primary-color align-items-center justify-content-center" style="height: 55px;">
@@ -308,13 +494,36 @@
                       </div>
                   </div>
             </div>
-
             <!-- year & default d-sm-none -->
             <div class="animate__animated animate__fadeIn" id="">
               <div id="loader" class="d-none align-items-center justify-content-center mt-4">
                 <div class="loader"></div>
               </div>
               <div id="overview-content" class="container d-block my-1">
+                <!-- Weather -->
+                <div class="d-flex card shadow p-3 mb-2">
+                  <div class="top-section">
+                    <div>
+                      <div class="temp" id="temp">32°C</div>
+                      <div class="weather-desc" id="weather-desc">Mostly sunny</div>
+                      <div class="feels-like">Feels like <label id="weather-feels-like"></label></div>
+                    </div>
+                    <img id="weather-icon" style="filter: drop-shadow(6px 4px 2px rgba(0, 0, 0, 0.3));" alt="weather icon" width="94">
+                  </div>
+              
+                  <!-- <div class="summary">
+                    There will be mostly sunny skies. The high will reach 34° on this humid day.
+                  </div> -->
+                  <hr>
+              
+                  <div class="d-flex justify-content-start justify-content-lg-center row text-start">
+                    <div class="col-4 col-lg-2 d-flex flex-column"><span style="font-size: 9pt;">Wind</span><span id="weather-wind"></span></div>
+                    <div class="col-4 col-lg-2 d-flex flex-column"><span style="font-size: 9pt;">Humidity</span><span  id="weather-humidity"></span></div>
+                    <div class="col-4 col-lg-2 d-flex flex-column"><span style="font-size: 9pt;">Visibility</span><span id="weather-visibility"></span></div>
+                    <div class="col-4 col-lg-2 d-flex flex-column mt-2 mt-lg-auto"><span style="font-size: 9pt;">Pressure</span><span id="weather-pressure"></span></div>
+                    <div class="col-4 col-lg-2 d-flex flex-column mt-2 mt-lg-auto"><span style="font-size: 9pt;">Dew point</span><span id="weather-dew-point"></span></div>
+                  </div>
+                </div>
                 <!-- Top Summary Cards -->
                 <div class="row gx-2 mb-lg-2">
                     <div class="mb-2 mb-lg-auto col-lg-4">
@@ -324,7 +533,11 @@
                             <h6 class=""><label class="top-crop-label" style="cursor: pointer;"></label></h6>
                             <h4 class="text-center"><label class="top-crop-volume" style="cursor: pointer;"></label></h4>
                             <p class="text-center"><label class="top-crop-area" style="cursor: pointer;"></label></p>
+                            <div class="text-center text-muted" style="margin-top: -14px; margin-bottom: 4px; font-size: 10pt;">
+                              View More
+                            </div>
                           </div>
+                          
                           <!-- <div class="d-flex align-items-center justify-content-center">
                             <i class="bi bi-arrow-right-circle text-muted fs-4"></i>
                           </div> -->
@@ -338,6 +551,9 @@
                           <h6 class=""><label class="second-crop-label" style="cursor: pointer;"></label></h6>
                           <h4 class="text-center"><label class="second-crop-volume" style="cursor: pointer;"></label></h4>
                           <p class="text-center"><label class="second-crop-area" style="cursor: pointer;"></label></p>
+                          <div class="text-center text-muted" style="margin-top: -14px; margin-bottom: 4px; font-size: 10pt;">
+                            View More
+                          </div>
                         </div>
                         <!-- <div class="d-flex align-items-center justify-content-center">
                           <i class="bi bi-arrow-right-circle text-muted fs-4"></i>
@@ -352,6 +568,9 @@
                           <h6 class=""><label class="third-crop-label" style="cursor: pointer;"></label></h6>
                           <h4 class="text-center"><label class="third-crop-volume" style="cursor: pointer;"></label></h4>
                           <p class="text-center"><label class="third-crop-area" style="cursor: pointer;"></label></p>
+                          <div class="text-center text-muted" style="margin-top: -14px; margin-bottom: 4px; font-size: 10pt;">
+                            View More
+                          </div>
                         </div>
                         <!-- <div class="d-flex align-items-center justify-content-center">
                           <i class="bi bi-arrow-right-circle text-muted fs-4"></i>
@@ -390,7 +609,7 @@
                               <div class="w-50">
                                 <div class="d-flex align-items-end flex-column mb-2">
                                   <div class="d-flex align-items-center w-75 mb-2">
-                                    <div style="height: 16px; width: 24px; background-color: #CDAAFD;"></div>
+                                    <div style="height: 16px; width: 24px;" class="topCropColor"></div>
                                     <div class="ms-2">
                                       <div style="font-size: 10pt;"><label class="top-crop-label fw-bold"></label></div>
                                       <div><label class="top-crop-volume"></label> MT</div>
@@ -398,7 +617,7 @@
                                   </div>
 
                                   <div class="d-flex align-items-center w-75 mb-2">
-                                    <div style="height: 16px; width: 24px; background-color: #FFD28F;"></div>
+                                    <div style="height: 16px; width: 24px;" class="secondCropColor"></div>
                                     <div class="ms-2">
                                       <div style="font-size: 10pt;"><label class="second-crop-label fw-bold"></label></div>
                                       <div><label class="second-crop-volume"></label> MT</div>
@@ -406,7 +625,7 @@
                                   </div>
                                   
                                   <div class="d-flex align-items-center w-75">
-                                    <div style="height: 16px; width: 24px; background-color: #FFA3A3;"></div>
+                                    <div style="height: 16px; width: 24px;" class="thirdCropColor"></div>
                                     <div class="ms-2">
                                       <div style="font-size: 10pt;"><label class="third-crop-label fw-bold"></label></div>
                                       <div><label class="third-crop-volume"></label> MT</div>
@@ -425,6 +644,48 @@
                         </div>
                     </div>
                 </div>
+
+                <section class="container-fluid">
+                  <footer class="container py-4 ps-2 px-1">
+                      <div class="w-100">
+                          <center>
+                              <span>Data Courtesy:</span>
+                              <div class="mt-2">
+                                  <img height="40px" class="me-2" src="assets/logo/PSA-logo.png" alt="PSA logo">
+                                  <!-- <img height="40px" class="me-2" src="assets/logo/BSWM-logo.svg" alt="BSWM logo"> -->
+                              </div>
+                          </center>
+                      </div>
+          
+                      <div class="row w-100 d-flex justify-content-between align-items-center">
+                          <div class="col-6 col-md-10 d-flex align-items-center">
+                              <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                                  <img src="assets/header/logo-transparent.png" style="width: 120px;" alt="" srcset="">
+                              </a>
+                              <span style="font-size: 10pt;" class="d-none d-md-flex">Project Funded by DOST - Region III<br>Developed at Central Luzon State University</span>
+                          </div>
+                          <div class="col-6 col-md-2 text-end">
+                              <div style="font-size: 9pt;" class="mb-1">
+                                  Contact Us
+                              </div>
+                              <div>
+                                  <i class="bi bi-facebook me-2"></i>
+                                  <i class="bi bi-envelope-at-fill me-2"></i>
+                                  <i class="bi bi-messenger"></i>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="row d-flex d-md-none w-100">
+                          <div class="col">
+                              <span style="font-size: 10pt;"><strong>PROJECT FUNDED BY: </strong> <br>Department of Science and Technology - Region III
+                          </div>
+                          <div class="col">
+                              <span style="font-size: 10pt;"><strong>DEVELOPED AT: </strong> <br>Central Luzon State University</span>
+                          </div>
+                      </div>
+                  </footer>
+                </section>
               </div>
             </div>
           </div>
@@ -491,7 +752,7 @@
                       </div>
                   </div>
               </div>
-              <div class="d-flex align-items-center justify-content-center ">
+              <div class="d-flex align-items-center justify-content-center">
                   <div id="map-view" class="col-12">
                       <div id="map" class="rounded"></div>
                   </div>
@@ -541,6 +802,246 @@
           </script>
         </div>
 
+        <div id="suitability-map-coconut" class="page collapse">
+          <div class="container-fluid">
+            <div class="">
+              <h4 class="pt-2" style="margin-bottom: 0px;">
+                  SUITABILITY MAP IN CENTRAL LUZON - COCONUT
+              </h4>
+            </div>
+            <div class="d-flex align-items-center justify-content-center">
+              <div id="map-view" class="col-12">
+                <div class="rounded shadow-sm" id="coconut-map"></div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            
+
+            const mapCoconut = L.map('coconut-map', {
+              zoomControl: false,     // Hides the + / - buttons
+              scrollWheelZoom: false, // Disables zoom with mouse wheel
+              doubleClickZoom: false, // Disables zoom with double click
+              boxZoom: false,         // Disables zoom with mouse drag box
+              keyboard: false,        // Disables zoom via keyboard
+              touchZoom: false,       // Disables pinch zoom on mobile
+              dragging: false         // Optional: disables map dragging too
+            }).setView([15.5, 120.75], 8); // Adjust center and zoom
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+              attribution: 'Central Luzon Agri-Analytics | www.claa.ph',
+              subdomains: 'abcd',
+              // maxZoom: 20
+            }).addTo(mapCoconut);
+
+
+
+            // PNG overlay
+            const imageUrl = 'assets/crops-suitability-map/coconut.png';  // Path to your PNG
+            const imageBounds = [[14.1, 119.48], [16.99, 123.75]];  // SW and NE corners
+
+            L.imageOverlay(imageUrl, imageBounds).addTo(mapCoconut);
+
+            let legendSuitMapCoconut = L.control({ position: "topright" });
+
+            legendSuitMapCoconut.onAdd = function (mapCoconut) {
+                const div = L.DomUtil.create("div", "info legend");
+                // div.id = "map-legend";
+                div.innerHTML = `
+                  <div>Legends</div>
+                  <div class="d-flex align-items-center">
+                    <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #7db911;" class="me-1"></div>
+                    <div>High Suitable</div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #ebfe30;" class="me-1"></div>
+                    <div>Average Suitable</div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #f9a813;" class="me-1"></div>
+                    <div>Low Suitable</div>
+                  </div>
+                `;
+                return div;
+            };
+
+            legendSuitMapCoconut.addTo(mapCoconut);
+
+          </script>
+
+        </div>
+
+        <div id="suitability-map-corn" class="page collapse">
+          <div class="container-fluid">
+            <div style="margin-bottom: -8px;" class="d-flex justify-content-between align-items-center pt-2">
+                <div>
+                  <h5 style="margin-bottom: 8px;">CORN SUITABILITY MAP</h5>
+                  <h6 style="margin-top: -.75rem; font-weight: 400; font-size: 10pt;">CENTRAL LUZON</h6>
+                </div>
+                <button class="btn btn-primary" style="font-size: 9pt;" onclick="downloadSuitMap()"><i class="bi bi-download me-2"></i>Download</button>
+            </div>
+            <div id="map-view-container" class="d-flex align-items-center justify-content-center">
+              <div id="map-view" class="col-12">
+                <div class="rounded shadow-sm" id="corn-map"></div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            const mapCorn = L.map('corn-map', 
+            // {
+            //   zoomControl: false,     // Hides the + / - buttons
+            //   scrollWheelZoom: false, // Disables zoom with mouse wheel
+            //   doubleClickZoom: false, // Disables zoom with double click
+            //   boxZoom: false,         // Disables zoom with mouse drag box
+            //   keyboard: false,        // Disables zoom via keyboard
+            //   touchZoom: false,       // Disables pinch zoom on mobile
+            //   dragging: false   
+            // }      // Optional: disables map dragging too
+            ).setView([15.5, 121], 8); // Adjust center and zoom
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+              attribution: 'Central Luzon Agri-Analytics',
+              // subdomains: 'abcd',
+              // maxZoom: 20
+            }).addTo(mapCorn);
+            // PNG overlay
+            const cornImageUrl = 'assets/crops-suitability-map/corn.png';  // Path to your PNG
+            const cornImageBounds = [[14.1, 119.48], [16.99, 123.75]];  // SW and NE corners
+
+            mapCorn.createPane("imagePane");
+            mapCorn.getPane("imagePane").style.zIndex = 200; // lower than markers (which default to zIndex 400)
+
+
+            L.imageOverlay(cornImageUrl, imageBounds, {
+              pane: 'imagePane'
+            }).addTo(mapCorn);
+
+            const provinceLabels = [
+              { name: "Aurora", lat: 15.7338, lng: 121.5959 },
+              { name: "Bataan", lat: 14.616, lng: 120.5660 },
+              { name: "Bulacan", lat: 14.9500, lng: 121.199 },
+              { name: "Nueva Ecija", lat: 15.5975, lng: 121.07 },
+              { name: "Pampanga", lat: 15.0294, lng: 120.7190 },
+              { name: "Tarlac", lat: 15.4800, lng: 120.6000 },
+              { name: "Zambales", lat: 15.2333, lng: 120.2667 }
+            ];
+
+            provinceLabels.forEach(({ name, lat, lng }) => {
+              L.marker([lat, lng], {
+                icon: L.divIcon({
+                  className: 'province-label',
+                  html: '<div style="color: #000; text-shadow: 2px 2px 2px #dedede; font-size: 14px; font-weight:500; padding: 2px 5px; border-radius: 4px;">' + name + '</div>',
+                iconSize: [100, 30]
+                })
+              }).addTo(mapCorn);
+            });
+
+
+
+            let legendSuitMapCorn = L.control({ position: "topright" });
+
+            legendSuitMapCorn.onAdd = function (mapCorn) {
+                const div = L.DomUtil.create("div", "suitability-map");
+                // div.id = "map-legend";
+                div.innerHTML = `
+                  <div class="info legend  d-flex flex-column">
+                    <div style="border-bottom: .5px solid rgb(0,0,0,0.2);">
+                      <div class="d-flex align-items-center justify-content-center">
+                        <img src="assets/logo/DOST3-logo.png" width="50px" height="50px" alt="">
+                        <img src="assets/logo/CLSU-logo-new.png" width="37px" height="37px" alt="">
+                      </div>
+                      <div class="text-center">
+                        <p style="font-size: 9pt; margin-bottom: 8px;">Department of Science and Technology - Region III<br>
+                        Central Luzon State University</p>
+                      </div>
+                    </div>
+                    <div class="text-center mt-2"> 
+                      <h5 style="text-shadow: 2px 2px 8px #fff;">CORN SUITABILITY MAP</h5>
+                      <h6 style="text-shadow: 2px 2px 8px #fff;">CENTRAL LUZON</h6>
+                    </div>
+                  </div>
+                  <div class="info legend mt-2">
+                    <h6 class="text-center">LEGENDS</h6>
+                    <div class="d-flex align-items-center">
+                      <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #007206;" class="me-2"></div>
+                      <div>Highly Suitable</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #7DB810;" class="me-2"></div>
+                      <div>Suitable</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #F2FE1E;" class="me-2"></div>
+                      <div>Moderately Suitable</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #FFAC12" class="me-2"></div>
+                      <div>Low Suitable</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #FC3B09" class="me-2"></div>
+                      <div>Not Suitable</div>
+                    </div>
+                  </div>
+                `;
+                return div;
+            };
+
+            legendSuitMapCorn.addTo(mapCorn);
+
+            let legendSuitMapTitle = L.control({ position: "bottomright" });
+
+            legendSuitMapTitle.onAdd = function (mapCorn) {
+                const div = L.DomUtil.create("div", "suitability-map d-none flex-column h-100 justify-content-between");
+                // div.id = "map-legend";
+                div.innerHTML = `
+                  <div class="info legend">
+                    <h6 class="text-center">LEGENDS</h6>
+                    <div class="d-flex align-items-center">
+                      <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #007206;" class="me-2"></div>
+                      <div>Highly Suitable</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #7DB810;" class="me-2"></div>
+                      <div>Suitable</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #F2FE1E;" class="me-2"></div>
+                      <div>Moderately Suitable</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #FFAC12" class="me-2"></div>
+                      <div>Low Suitable</div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div style="width: 25px; height: 15px; border: 1px solid gray; background-color: #FC3B09" class="me-2"></div>
+                      <div>Not Suitable</div>
+                    </div>
+                  </div>
+
+                `;
+                return div;
+            };
+
+            legendSuitMapTitle.addTo(mapCorn);
+            
+            downloadSuitMap = () => {
+              domtoimage.toPng(document.getElementById('map-view-container'))
+              .then(function (dataUrl) {
+                const link = document.createElement('a');
+                link.download = 'my-image.png';
+                link.href = dataUrl;
+                link.click();
+              });
+
+            }
+
+          </script>
+
+        </div>
+
         <div id="ai-assistant" class="page collapse">
           <div class="d-flex d-sm-none fixed-top primary-color align-items-center justify-content-center" style="height: 55px;">
             <div class="primary-color">
@@ -569,7 +1070,7 @@
                                 <div id="first-prompt-loader" class="from-them prompt-loader ms-2 animate__animated animate__zoomIn animate__faster">
                                   <div class="iMessage-loader"></div>
                                 </div>
-                                <p id="second-prompt" class="from-them ms-2 animate__animated animate__zoomIn animate__faster">First, select a province that you wanted to explore. EXPLORE?!!</p>
+                                <p id="second-prompt" class="from-them ms-2 animate__animated animate__zoomIn animate__faster">First, select a province that you wanted to explore.</p>
                               </div>        
                             </div>
                           </div>
@@ -629,6 +1130,18 @@
                                 <button id="ai-top-crop-btn" onclick="topCropButtonOnClick()" class="ai-badge px-1" style="animation-delay: 0s;"></button>
                                 <button id="ai-second-crop-btn" class="ai-badge px-1" style="animation-delay: 0.1s;"></button>
                                 <button id="ai-third-crop-btn" class="ai-badge px-1" style="animation-delay: 0.2s;"></button>
+                              </div>
+                            </div>
+                            <div id="third-answer">
+                              <div class="d-flex align-items-center gap-1">
+                                <div>
+                                  What would you like to know more?
+                                </div>
+                                <div class="ms-2">
+                                  <button id="ai-crop-practices-btn" onclick="bestPracticesCropButtonOnClick()" class="ai-badge px-1" style="animation-delay: 0s;">Best Practices</button>
+                                  <button id="ai-crop-reset-btn" class="ai-badge px-1" style="animation-delay: 0.1s;">Reset</button>
+                                </div>
+                                <!-- <button id="ai-third-crop-btn" class="ai-badge px-1" style="animation-delay: 0.2s;"></button> -->
                               </div>
                             </div>
                             <i class="bi bi-send-fill text-primary" style="position: absolute; right: 1rem;"></i>
@@ -694,7 +1207,11 @@
         </div>
         <div id="crop-data" class="d-none animate__animated animate__fadeIn">
           <div id="prediction" class="mt-2"></div>
-          <canvas id="onionChart" height="175px" class="rounded card shadow"></canvas>
+          <center>
+            <div style="max-width: 95%;">
+              <canvas id="onionChart" height="175px" class="rounded card shadow"></canvas>
+            </div>
+          </center>
         </div>
     </div>
   </div>
@@ -704,8 +1221,7 @@
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="javascripts/dashboard.js"></script>
   <script src="javascripts/global.js"></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  
+  <script src="javascripts/weather.js"></script>
   <!-- <script src="javascripts/script.js"></script> -->
   <script src="javascripts/chart-data.js"></script>
   <script>

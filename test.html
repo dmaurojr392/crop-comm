@@ -1,181 +1,76 @@
 <!DOCTYPE html>
-<html>
-    <link rel="stylesheet" href="style.css">
-    <head></head>
-    <style>
-      /* Footer Styles */
-* {
-    magin: 0;
-    padding: 0;
-    background-color: #000;
-}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSV Merger</title>
+</head>
+<body>
+  <h2>CSV Merger Tool</h2>
+  <p>Select your CSV files:</p>
 
-.footer {
-    background-color: #000;
-    color: #fff;
-    padding: 4rem 2rem 1rem 2rem;
-    width: 100%;
-    position: relative;
-    bottom: 0;
-}
+  <label>Climate Data CSV:
+    <input type="file" id="climateInput" accept=".csv">
+  </label><br><br>
+  <label>Crop Data CSV:
+    <input type="file" id="cropInput" accept=".csv">
+  </label><br><br>
 
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
+  <button onclick="mergeCSVs()">Merge and Download</button>
 
-.footer-section h3 {
-    color: #fff;
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-    padding-bottom: 0.5rem;
-}
-
-/* Underline effect for section headers */
-.footer-section h3::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 50px;
-    height: 2px;
-    background-color: #fff;
-    transition: width 0.3s ease;
-}
-
-.footer-section:hover h3::after {
-    width: 75px;
-}
-
-.footer-section p {
-    line-height: 1.6;
-    color: #ccc;
-}
-
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-section ul li {
-    margin-bottom: 0.8rem;
-}
-
-.footer-section ul li a {
-    color: #ccc;
-    text-decoration: none;
-    transition: color 0.3s ease, padding-left 0.3s ease;
-    display: inline-block;
-}
-
-.footer-section ul li a:hover {
-    color: #fff;
-    padding-left: 5px;
-}
-
-/* Social Links */
-.social-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.social-link {
-    color: #ccc;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
-    border: 1px solid #333;
-    border-radius: 4px;
-}
-
-.social-link:hover {
-    color: #fff;
-    border-color: #fff;
-    transform: translateY(-2px);
-}
-
-/* Copyright Section */
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid #333;
-}
-
-.footer-bottom p {
-    color: #ccc;
-    font-size: 0.9rem;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .footer-content {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
+  <script>
+    function parseCSV(text) {
+      return text.trim().split('\n').map(line => line.split(','));
     }
 
-    .footer {
-        padding: 3rem 1rem 1rem 1rem;
+    function downloadCSV(content, filename) {
+      const blob = new Blob([content], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
     }
 
-    .social-links {
-        gap: 0.5rem;
-    }
+    async function mergeCSVs() {
+      const climateFile = document.getElementById('climateInput').files[0];
+      const cropFile = document.getElementById('cropInput').files[0];
+      if (!climateFile || !cropFile) {
+        alert("Please select both files.");
+        return;
+      }
 
-    .social-link {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
+      const [climateText, cropText] = await Promise.all([
+        climateFile.text(),
+        cropFile.text()
+      ]);
+
+      const climateRows = parseCSV(climateText);
+      const cropRows = parseCSV(cropText);
+      const cropHeader = cropRows[0];
+      const cropData = cropRows.slice(1);
+
+      // Create climate data map: { year: { var: value } }
+      const climateMap = {};
+      const variablesSet = new Set();
+
+      climateRows.forEach(([variable, year, value]) => {
+        if (!climateMap[year]) climateMap[year] = {};
+        climateMap[year][variable] = value;
+        variablesSet.add(variable);
+      });
+
+      const variables = Array.from(variablesSet);
+      const mergedHeader = [...cropHeader, ...variables];
+      const mergedData = [mergedHeader.join(',')];
+
+      cropData.forEach(([crop, year, production]) => {
+        const climateForYear = climateMap[year] || {};
+        const climateValues = variables.map(v => climateForYear[v] || '');
+        const row = [crop, year, production, ...climateValues];
+        mergedData.push(row.join(','));
+      });
+
+      downloadCSV(mergedData.join('\n'), 'merged.csv');
     }
-}
-    </style>
-    <body>
-        <footer class="footer">
-            <div class="footer-content">
-                <!-- Main Footer Content -->
-                <div class="footer-section">
-                    <h3>About Us</h3>
-                    <p>Hi I'm Tristan. I code whatever helps make my life easier. </p>
-                </div>
-        
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Portfolio</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-        
-                <div class="footer-section">
-                    <h3>Contact Info</h3>
-                    <ul>
-                        <li>Email: info@example.com</li>
-                        <li>Phone: (123) 456-7890</li>
-                        <li>Address: 123 Street Name, City</li>
-                    </ul>
-                </div>
-        
-                <div class="footer-section">
-                    <h3>Follow Us</h3>
-                    <div class="social-links">
-                        <a href="#" class="social-link">Twitter</a>
-                        <a href="#" class="social-link">Facebook</a>
-                        <a href="#" class="social-link">Instagram</a>
-                        <a href="#" class="social-link">LinkedIn</a>
-                    </div>
-                </div>
-            </div>
-        
-            <!-- Copyright Section -->
-            <div class="footer-bottom">
-                <p>&copy; 2024 Your Company. All rights reserved.</p>
-            </div>
-        </footer>
-    </body>
+  </script>
+</body>
 </html>

@@ -24,12 +24,12 @@
     z-index: 999; 
     background: white;
 }
-#previewTopCropModal, #previewSecondCropModal, #previewThirdCropModal{
-    width: 40vw;
+#previewTopCropModal, #previewSecondCropModal, #previewThirdCropModal, #sideContentOffcanvas{
+    width: 35vw;
 }
 @media  screen and (max-width: 992px) {
-    #previewTopCropModal, #previewSecondCropModal, #previewThirdCropModal{
-        width: 65vw;
+    #previewTopCropModal, #previewSecondCropModal, #previewThirdCropModal, #sideContentOffcanvas{
+        width: 55vw;
     }
   }
 @media  screen and (max-width: 767px) {
@@ -43,12 +43,12 @@
         top: 100px;
     } */
     
-    #previewTopCropModal, #previewSecondCropModal, #previewThirdCropModal{
+    #previewTopCropModal, #previewSecondCropModal, #previewThirdCropModal, #sideContentOffcanvas{
         width: 80vw;
     }
 }
 @media  screen and (max-width: 575px) {
-    #previewTopCropModal, #previewSecondCropModal, #previewThirdCropModal{
+    #previewTopCropModal, #previewSecondCropModal, #previewThirdCropModal, #sideContentOffcanvas{
         width: 98vw;
     }
     #main-nav{

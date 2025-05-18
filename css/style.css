@@ -1,0 +1,10 @@
+.button{
+    border: 0px;
+    border-radius: 7px;
+    background-color: rgb(20, 142, 235);
+    color: #fff;
+    font-weight: 500;
+}
+.mt-1{
+    margin-top: 12px !important;
+}

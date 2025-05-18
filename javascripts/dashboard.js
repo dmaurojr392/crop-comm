@@ -1,6 +1,7 @@
 const ANIMATION_DURATION = 300;
 
 const SIDEBAR_EL = document.getElementById("sidebar");
+const SIDEBAR_MBL = document.getElementById("sidebar-mobile");
 
 const SUB_MENU_ELS = document.querySelectorAll(
   ".menu > ul > .menu-item.sub-menu"
@@ -63,6 +64,14 @@ class PopperObject {
   clicker(event, popperTarget, reference) {
     if (
       SIDEBAR_EL.classList.contains("collapsed") &&
+      !popperTarget.contains(event.target) &&
+      !reference.contains(event.target)
+    ) {
+      this.hide();
+    }
+
+    if (
+      SIDEBAR_MBL.classList.contains("collapsed") &&
       !popperTarget.contains(event.target) &&
       !reference.contains(event.target)
     ) {
@@ -199,6 +208,17 @@ document.getElementById("btn-collapse").addEventListener("click", () => {
   updatePoppersTimeout();
 });
 
+document.getElementById("btn-collapse-mbl").addEventListener("click", () => {
+  SIDEBAR_MBL.classList.toggle("collapsed");
+  PoppersInstance.closePoppers();
+  if (SIDEBAR_MBL.classList.contains("collapsed"))
+    FIRST_SUB_MENUS_BTN.forEach((element) => {
+      element.parentElement.classList.remove("open");
+    });
+
+  updatePoppersTimeout();
+});
+
 /**
  * sidebar toggle handler (on break point )
  */
@@ -208,11 +228,17 @@ document.getElementById("btn-toggle").addEventListener("click", () => {
   updatePoppersTimeout();
 });
 
+document.getElementById("btn-toggle-mbl").addEventListener("click", () => {
+  SIDEBAR_MBL.classList.toggle("toggled");
+
+  updatePoppersTimeout();
+});
 /**
  * toggle sidebar on overlay click
  */
 document.getElementById("overlay").addEventListener("click", () => {
   SIDEBAR_EL.classList.toggle("toggled");
+  SIDEBAR_MBL.classList.toggle("toggled");
 });
 
 const defaultOpenMenus = document.querySelectorAll(".menu-item.sub-menu.open");
@@ -227,6 +253,25 @@ defaultOpenMenus.forEach((element) => {
 FIRST_SUB_MENUS_BTN.forEach((element) => {
   element.addEventListener("click", () => {
     if (SIDEBAR_EL.classList.contains("collapsed"))
+      PoppersInstance.togglePopper(element.nextElementSibling);
+    else {
+      const parentMenu = element.closest(".menu.open-current-submenu");
+      if (parentMenu)
+        parentMenu
+          .querySelectorAll(":scope > ul > .menu-item.sub-menu > a")
+          .forEach(
+            (el) =>
+              window.getComputedStyle(el.nextElementSibling).display !==
+                "none" && slideUp(el.nextElementSibling)
+          );
+      slideToggle(element.nextElementSibling);
+    }
+  });
+});
+
+FIRST_SUB_MENUS_BTN.forEach((element) => {
+  element.addEventListener("click", () => {
+    if (SIDEBAR_MBL.classList.contains("collapsed"))
       PoppersInstance.togglePopper(element.nextElementSibling);
     else {
       const parentMenu = element.closest(".menu.open-current-submenu");

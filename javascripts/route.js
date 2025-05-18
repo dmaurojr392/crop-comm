@@ -50,7 +50,8 @@ document.addEventListener("DOMContentLoaded", function () {
         //     getMap();
         // } 
     }
-
+    mapCoconut.invalidateSize();
+    mapCorn.invalidateSize();
     function handleNavigation() {
         // Get the hash (remove `#`) or default to "main"
         checkWidth();
@@ -60,7 +61,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (window.innerWidth <= 576) {
             document.getElementById("sidebar").classList.add("collapsed");
         }
-        
+        mapCorn.invalidateSize();
+        mapCoconut.invalidateSize();
     }
 
     // Listen for hash changes
@@ -115,12 +117,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // for mobile navbar auto-collapse
     const navLinks = document.querySelectorAll(".navbar-nav a"); // Select all nav links
-    const navbarToggler = document.querySelector(".navbar-toggler"); // The button
-    const navbarCollapse = document.querySelector("#navbarNav"); // The collapsible menu
+    const navbarToggler = document.querySelector("#btn-toggle-mbl"); // The button
+    const navbarCollapse = document.querySelector("#btn-collapse-mbl"); // The collapsible menu
 
     navLinks.forEach(link => {
         link.addEventListener("click", function () {
-            if (navbarCollapse.classList.contains("show")) {
+            if (navbarCollapse.classList.contains("collapsed")) {
                 navbarToggler.click(); // Simulate a click to close the menu
             }
         });
@@ -133,6 +135,7 @@ function updateFilter(value) {
     document.getElementById('filter-value').innerText = value;
     document.getElementById('filter-badge').classList.add('bg-primary');
     localStorage.setItem('filter-location', `${document.getElementById('filter-value').innerHTML}`);
+    updateWeather();
 
     // Show or hide the "x" button based on the selected value
     const clearButton = document.getElementById('clear-button');
@@ -294,5 +297,5 @@ function checkWidth() {
     }, 251); // small delay, usually 50ms is enough
 }
 
-document.getElementById("btn-toggle").addEventListener("click", checkWidth);
-document.getElementById("btn-collapse").addEventListener("click", checkWidth);
+document.getElementById("btn-toggle-mbl").addEventListener("click", checkWidth);
+document.getElementById("btn-collapse-mbl").addEventListener("click", checkWidth);

@@ -19,7 +19,7 @@ setInterval(() => {
 // });
 
 
-function checkFilter() {
+function checkFilter(commodity) {
     let selectedLocation = updatedLocation || 'Select';
     let selectedLocationElement = document.getElementById('selectedLocation');
     selectedLocationElement.textContent = selectedLocation;
@@ -55,7 +55,7 @@ function checkFilter() {
 
     async function fetchSheetData() {
         const fixedSheetName = sheetName.replace("III", "3").toLowerCase().replace(/\s+/g, "-");
-        const url = `https://google-sheet-api-connector.onrender.com/sheet-data/${fixedSheetName}`;
+        const url = `http://${developmentEnvironment}:8000/sheet-data/${fixedSheetName}`;
         try {
             document.getElementById("loader").classList.remove("d-none");
             document.getElementById("loader").classList.add("d-flex");
@@ -145,10 +145,26 @@ function checkFilter() {
             document.getElementsByClassName('second-crop-volume')[1].innerHTML = `${secondCropLatestRecord}`;
             document.getElementsByClassName('third-crop-volume')[1].innerHTML = `${thirdCropLatestRecord}`;
 
-            updateChart('top-histogram', topCropData, croppingYear, '#CDAAFD');
-            updateChart('second-histogram', secondCropData, croppingYear, '#FFA3A3');
-            updateChart('third-histogram', thirdCropData, croppingYear, '#FFD28F');
-            updatePieChart('crop-summary', [topCropData[0], secondCropData[0], thirdCropData[0]], ['#CDAAFD', '#FFA3A3', '#FFD28F']);
+            console.log("Top Crop Data", topCropData);
+            const cropColors = [topCropLabel, secondCropLabel, thirdCropLabel];
+
+            updateChart('top-histogram', topCropData, croppingYear, [topCropLabel].map(getCommodityColor));
+            updateChart('second-histogram', secondCropData, croppingYear, [secondCropLabel].map(getCommodityColor));
+            updateChart('third-histogram', thirdCropData, croppingYear, [thirdCropLabel].map(getCommodityColor));
+            updatePieChart('crop-summary', [topCropData[topCropData.length - 1], secondCropData[secondCropData.length - 1], thirdCropData[thirdCropData.length - 1]], cropColors.map(getCommodityColor));
+
+
+            document.querySelectorAll('.topCropColor').forEach(element => {
+                element.style.backgroundColor = getCommodityColor(document.getElementsByClassName('top-crop-label')[0].innerText);
+            });
+
+            document.querySelectorAll('.secondCropColor').forEach(element => {
+                element.style.backgroundColor = getCommodityColor(document.getElementsByClassName('second-crop-label')[0].innerText);
+            });
+
+            document.querySelectorAll('.thirdCropColor').forEach(element => {
+                element.style.backgroundColor = getCommodityColor(document.getElementsByClassName('third-crop-label')[0].innerText);
+            });
         } catch (error) {
             console.error("Error fetching data:", error);
         }

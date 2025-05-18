@@ -78,13 +78,13 @@
     left: 272.5px !important;
     top: 12px !important;
   }
-  .layout .header {
+  /* .layout .header {
     transition: width 0.5s;
   }
 
   .layout .sidebar {
     transition: width 0.5s, left 0.5s, right 0.5s;
-  } 
+  } */
 
   /* End manually added */
   .layout .sidebar.break-point-sm {

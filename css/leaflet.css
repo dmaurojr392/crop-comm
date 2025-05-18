@@ -5,15 +5,23 @@
     height: inherit;
 }
 
+#coconut-map, #corn-map{
+    height: calc(100vh - 60px);
+}
+
 .info.legend {
     background: white;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     font-family: Arial, sans-serif;
     font-size: 14px;
 }
 
+.suitability-map {
+    /* width: 300px; */
+    /* height: 80vh; */
+}
 
 @media  screen and (min-width: 767px) {
     /* #page-title{
