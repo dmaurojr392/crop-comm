@@ -81,7 +81,7 @@ function checkFilter(commodity) {
             topCropLatestRecord = topCropData.length > 2 ? Number(topCropData[topCropData.length - 1]).toLocaleString() : null;
             topCropLatestHarvestAreaRecord = topCropHarvestArea.length > 2 ? Number(topCropHarvestArea[topCropHarvestArea.length - 1]).toLocaleString() : null;
             topCropPreviousYearRecord = topCropData.length > 2 ? Number(topCropData[topCropData.length - 2]).toLocaleString() : null;
-
+            console.log(topCropData);
             let secondCropData = firstDataSheet.values[3].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
             let secondCropHarvestArea = secondDataSheet.values[3].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
             secondCropLabel = firstDataSheet.values[3][0];
@@ -145,7 +145,6 @@ function checkFilter(commodity) {
             document.getElementsByClassName('second-crop-volume')[1].innerHTML = `${secondCropLatestRecord}`;
             document.getElementsByClassName('third-crop-volume')[1].innerHTML = `${thirdCropLatestRecord}`;
 
-            console.log("Top Crop Data", topCropData);
             const cropColors = [topCropLabel, secondCropLabel, thirdCropLabel];
 
             updateChart('top-histogram', topCropData, croppingYear, [topCropLabel].map(getCommodityColor));

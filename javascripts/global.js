@@ -1,4 +1,4 @@
-const developmentEnvironment = "localhost"
+const developmentEnvironment = "192.168.0.106"
 document.documentElement.style.setProperty('--animate-duration', '.75s');
 document.querySelectorAll('.appName').forEach(element => {
     element.innerText = "CENTRAL LUZON AGRI-ANALYTICS";
@@ -38,16 +38,6 @@ let commodityColors = {
 function getCommodityColor(commodity) {
     return commodityColors[commodity] || "#000"; // Default to black if not found
 }
-
-// document.querySelector('a[href="#main"].nav-link').innerText = "Dashboard";
-
-// document.querySelector('a[href="#crop-map"].nav-link').innerText = "Crop Map";
-// document.querySelector('a[href="#crop-map"].dropdown-item').innerText = "Crop Map";
-// document.querySelector('a[href="#suitability-map"].dropdown-item').innerText = "Suitability Map";
-// document.querySelector('a[href="#ai-assistant"].nav-link').innerText = "AI Crop Assistant";
-
-// document.getElementsByClassName('nav-link')[0].innerText = "Dashboard";
-// document.getElementsByClassName('nav-link')[1].innerText = "Crop Map";
 
 // change log
 // 0.2.1-beta - 2025-04-28

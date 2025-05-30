@@ -16,8 +16,6 @@ async function getWeather(locationKey, displayName) {
         const visibility = data.visibility;
         const { icon, description } = data.weather[0];
 
-        console.log(`Weather in ${displayName}:`, data);
-
         document.getElementById("temp").innerText = `${temp}°C`;
         document.getElementById("weather-desc").innerText = description.toUpperCase();
         document.getElementById("weather-humidity").innerText = `${humidity}%`;

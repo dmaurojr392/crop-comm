@@ -1,3 +1,4 @@
+// Cache DOM elements
 const imessageContainer = document.getElementById("imessage");
 const firstAnswer = document.getElementById("first-answer");
 const secondAnswer = document.getElementById("second-answer");
@@ -6,276 +7,318 @@ const firstPromptLoader = document.getElementById("first-prompt-loader");
 const topCropButton = document.getElementById("ai-top-crop-btn");
 const secondCropButton = document.getElementById("ai-second-crop-btn");
 const thirdCropButton = document.getElementById("ai-third-crop-btn");
+const analysisBtn = document.getElementById("ai-crop-analysis-btn");
+const resetBtn = document.getElementById("ai-crop-reset-btn");
 
-firstPromptLoader.style.display = "none";
-firstAnswer.style.display = "none";
-secondAnswer.style.display = "none";
-thirdAnswer.style.display = "none";
+let selectedProvince;
+let selectedCrop;
 
-setTimeout(() => {
-    firstPromptLoader.style.display = "block";
-}, 3000); // Simulate a 2-second delay before showing the first prompt
-
-function getFirstPrompt(){
-    firstPromptLoader.style.display = "none";
-    document.getElementById("second-prompt").style.display = "block";
-    document.getElementById("first-prompt").classList.add("no-tail");
+// Helper functions
+function hideElements(selector) {
+    document.querySelectorAll(selector).forEach(item => {
+        item.style.display = "none";
+    });
 }
-setTimeout(getFirstPrompt, 6000); // Simulate a 2-second delay before showing the second prompt
 
-document.getElementById("second-prompt").style.display = "none";
-setTimeout(() => {
-    firstAnswer.style.display = "flex";
-}, 7000);
+function showElements(selector) {
+    document.querySelectorAll(selector).forEach(item => {
+        item.style.display = "block";
+    });
+}
 
-function auroraBtnOnClick(){
-    firstAnswer.style.display = "none";
+function scrollMessageToBottom() {
+    imessageContainer.scrollTo({
+        top: imessageContainer.scrollHeight,
+        behavior: 'smooth'
+    });
+}
 
-    // Create the new message element
+function createMessageElement(html) {
     const newMessage = document.createElement("div");
-    newMessage.className = "row";  // optional spacing
-
-    newMessage.innerHTML = `
-    <div class="col-12">
-        <div class="d-flex justify-content-end">
-            <p class="from-me animate__animated animate__zoomIn animate__faster">Aurora. </p>    
-        </div>
-    </div>
-
-    <div class="row" id="second-prompt-loader">
-        <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
-            <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
-        </div>
-        <div class="col">
-            <div class="from-them prompt-loader ms-2 animate__animated animate__fadeIn animate__faster">
-                <div class="iMessage-loader"></div>
-            </div>      
-        </div>
-    </div>
-    `;
-    // Append to container
+    newMessage.className = "row";
+    newMessage.innerHTML = html;
     imessageContainer.appendChild(newMessage);
+    scrollMessageToBottom();
+}
+
+// Initialize chat
+function initializeChat() {
+    hideElements(".first-prompt-loader");
+    hideElements("#second-prompt");
+    firstAnswer.style.display = "none";
+    secondAnswer.style.display = "none";
+    thirdAnswer.style.display = "none";
+
+    setTimeout(() => showElements(".first-prompt-loader"), 3000);
+    setTimeout(getFirstPrompt, 6000);
+    setTimeout(getFirstAnswer, 7000);
+}
+
+// Chat flow functions
+function getFirstPrompt() {
+    hideElements(".first-prompt-loader");
+    showElements("#second-prompt");
+    document.querySelectorAll(".first-prompt").forEach(item => {
+        item.classList.add("no-tail");
+    });
+    scrollMessageToBottom();
+}
+
+function getFirstAnswer() {
+    firstAnswer.style.display = "flex";
+}
+
+function auroraBtnOnClick(button) {
+    handleProvinceSelection(button, ["Coconut", "Corn", "Banana"]);
+}
+function bataanBtnOnClick(button) {
+    handleProvinceSelection(button, ["Corn", "Cashew", "Coconut"]);
+}
+function bulacanBtnOnClick(button) {
+    handleProvinceSelection(button, ["Banana", "Sitao", "Mango"]);
+}
+function nuevaEcijaBtnOnClick(button) {
+    handleProvinceSelection(button, ["Onion", "Corn", "Tomato"]);
+}
+function pampangaBtnOnClick(button) {
+    handleProvinceSelection(button, ["Sugarcane", "Corn", "Cassava"]);
+}
+function tarlacBtnOnClick(button) {
+    handleProvinceSelection(button, ["Corn", "Sugarcane", "Tomato"]);
+}
+function zambalesBtnOnClick(button) {
+    handleProvinceSelection(button, ["Mango", "Cogon", "Banana"]);
+}
+function handleProvinceSelection(button, crops) {
+    selectedProvince = button.innerHTML;
+    hideElements("#first-answer");
+
+    createMessageElement(`
+        <div class="col-12">
+            <div class="d-flex justify-content-end">
+                <p class="from-me animate__animated animate__zoomIn animate__faster">${selectedProvince}</p>    
+            </div>
+        </div>
+        <div class="row" id="second-prompt-loader">
+            <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+            </div>
+            <div class="col">
+                <div class="from-them prompt-loader ms-2 animate__animated animate__fadeIn animate__faster">
+                    <div class="iMessage-loader"></div>
+                </div>      
+            </div>
+        </div>
+    `);
 
     setTimeout(() => {
-        document.getElementById("second-prompt-loader").style.display = "none";
+        hideElements("#second-prompt-loader");
         getThirdPrompt();
         setTimeout(() => {
-            
             secondAnswer.style.display = "block";
-            topCropButton.innerText = "Coconut";
-            secondCropButton.innerText = "Corn";
-            thirdCropButton.innerText = "Banana";
+            topCropButton.innerText = crops[0];
+            secondCropButton.innerText = crops[1];
+            thirdCropButton.innerText = crops[2];
         }, 500);
     }, 3000);
 }
 
-function getThirdPrompt(){
-    // Create the new message element
-    const newMessage = document.createElement("div");
-    newMessage.className = "row";  // optional spacing
-
-    newMessage.innerHTML = `
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
-            <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
-                <!-- <img src="https://img.freepik.com/free-vector/wicked-old-witch-face-white-background_1308-74880.jpg?semt=ais_hybrid&w=740" width="65px" height="65px" alt=""> -->
-            </div>
-            <div class="col">
-            <div class="d-flex flex-column align-items-start">
-                <div class="">
-                <p id="third-prompt" class="from-them ms-2 animate__animated animate__zoomIn animate__faster">Aurora is a great choice. I listed the top 3 commodities below. Please pick one on the list.</p>
-                </div>        
-            </div>
-            </div>
-        </div>
-    </div>
-    `;
-
-    // Append to container
-    imessageContainer.appendChild(newMessage);
-}
-
-function topCropButtonOnClick(){
-    secondAnswer.style.display = "none";
-
-    // Create the new message element
-    const newMessage = document.createElement("div");
-    newMessage.className = "row";  // optional spacing
-
-    newMessage.innerHTML = `
-    <div class="col-12">
-        <div class="d-flex flex-column justify-content-end">
-            <p class="from-me animate__animated animate__zoomIn animate__faster">I'd like to pick the leading crop, ${topCropButton.innerText}. </p>
-        </div>
-
-        <div class="row" id="third-prompt-loader">
-            <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
-                <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
-            </div>
-            <div class="col">
-                <div class="from-them prompt-loader ms-2 animate__animated animate__fadeIn animate__faster">
-                    <div class="iMessage-loader"></div>
-                </div>      
-            </div>
-        </div>
-    </div>
-    `;
-    // <div class="col-1 d-flex justify-content-center align-items-end">
-    //     <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
-    // </div>
-    setTimeout(() => {
-        document.getElementById("third-prompt-loader").style.display = "none";
-        getFourthPrompt();
-        setTimeout(() => {
-        }, 500);
-    }, 3000);
-
-    // Append to container
-    imessageContainer.appendChild(newMessage);
-}
-
-function bestPracticesCropButtonOnClick(){
-    secondAnswer.style.display = "none";
-
-    // Create the new message element
-    const newMessage = document.createElement("div");
-    newMessage.className = "row";  // optional spacing
-
-    newMessage.innerHTML = `
-    <div class="col-12">
-        <div class="d-flex flex-column justify-content-end">
-            <p class="from-me animate__animated animate__zoomIn animate__faster">I'd like to pick the leading crop, ${topCropButton.innerText}. </p>
-        </div>
-
-        <div class="row" id="fourth-prompt-loader">
-            <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
-                <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
-            </div>
-            <div class="col">
-                <div class="from-them prompt-loader ms-2 animate__animated animate__fadeIn animate__faster">
-                    <div class="iMessage-loader"></div>
-                </div>      
-            </div>
-        </div>
-    </div>
-    `;
-    // <div class="col-1 d-flex justify-content-center align-items-end">
-    //     <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
-    // </div>
-    setTimeout(() => {
-        document.getElementById("fourth-prompt-loader").style.display = "none";
-        getFifthPrompt();
-        setTimeout(() => {
-        }, 500);
-    }, 3000);
-}
-
-function getFourthPrompt(){
-    // Create the new message element
-    const newMessage = document.createElement("div");
-    newMessage.className = "row";  // optional spacing
-
-    newMessage.innerHTML = `
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
-            <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
-                <!-- <img src="https://img.freepik.com/free-vector/wicked-old-witch-face-white-background_1308-74880.jpg?semt=ais_hybrid&w=740" width="65px" height="65px" alt=""> -->
-            </div>
-            <div class="col">
-                <div class="d-flex flex-column align-items-start">
-                    <div class="">
-                        <p id="fourth-prompt" class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
-                            <strong>Coconut Farming Best Practices in Aurora</strong><br><br>
-
-                            <strong>Crop-Specific Planting Guidelines:</strong><br>
-                            • Variety Selection: Tacunan Dwarf, MRD × WAT hybrids (PCA-recommended)<br>
-                            • Site: Below 600m elevation; well-drained sandy/clay loam; pH 5.0–7.0<br>
-                            • Spacing: 8m × 8m (156 trees/ha); triangular or square layout<br>
-                            • Pit Size: 1m × 1m × 1m with topsoil + compost<br>
-                            • Planting Season: Rainy months (May–October)<br><br>
-
-                            <strong>💧 Irrigation Management:</strong><br>
-                            • Use mulch (e.g., husks, leaves) to retain soil moisture<br>
-                            • Young trees (0–3 years): 40–60L/tree every 7–10 days (dry season)<br>
-                            • Mature trees: 80–100L/tree every 15–20 days<br>
-                            • Preferred Method: Drip irrigation; use basin/furrow if unavailable<br><br>
-
-                            <strong>🛡️ Disease & Pest Management:</strong><br>
-                            <em>Common Diseases:</em><br>
-                            • Bud Rot – Symptoms: Yellowing center leaves, bud decay | Control: Improve drainage, copper fungicide, remove infected trees<br>
-                            • Leaf Spot – Symptoms: Brown spots on leaves | Control: Sanitation, fungicide<br>
-                            • Stem Bleeding – Symptoms: Gum oozing, trunk rot | Control: Scrape + Bordeaux paste<br><br>
-
-                            <em>Common Pests:</em><br>
-                            • Rhinoceros Beetle – Bores into crown | Control: Pheromone traps, neem oil, Metarhizium fungus<br>
-                            • Coconut Scale Insect – Yellowing leaves | Control: Pruning, biological agents (parasitoids)<br>
-                            • Red Palm Weevil – Larvae burrow trunk | Control: Early removal, traps<br><br>
-
-                            <strong>Integrated Pest Management (IPM):</strong> Monitor pest population regularly, support beneficial insects, limit pesticide use<br><br>
-
-                            <strong>📊 Additional Best Practices:</strong><br>
-                            • Fertilization: 1–2kg 14-14-14/tree twice/year; supplement with compost<br>
-                            • Weeding: Manual or shallow tilling; avoid deep root damage<br>
-                            • Harvesting: Every 45–60 days; 11–12 months (copra), 6–7 months (fresh)<br>
-                            • Climate Resilience: Use windbreaks; intercrop with banana, cacao, pineapple<br><br>
-
-                            <strong>📚 Government Support:</strong><br>
-                            • Philippine Coconut Authority (PCA) – Aurora Office offers training and seedlings<br>
-                            • Register with NCFRS to access government support and aid<br><br>
-
-                            <em>&copy; 2025 Coconut Farming Advisory | Aurora, Philippines</em>
-                        </p>
-                    </div>        
+function getThirdPrompt() {
+    createMessageElement(`
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                    <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                </div>
+                <div class="col">
+                    <div class="d-flex flex-column align-items-start">
+                        <div class="">
+                            <p id="third-prompt" class="from-them ms-2 animate__animated animate__zoomIn animate__faster">
+                                ${selectedProvince} is a great choice. I listed the top 3 commodities below. Please pick one on the list.
+                            </p>
+                        </div>        
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    `;
+    `);
+}
 
-    // Append to container
-    imessageContainer.appendChild(newMessage);
+function topCropButtonOnClick() {
+    selectedCrop = topCropButton.innerText;
+    handleCropSelection();
+}
+
+function secondCropButtonOnClick() {
+    selectedCrop = secondCropButton.innerText;
+    handleCropSelection();
+}
+
+function thirdCropButtonOnClick() {
+    selectedCrop = thirdCropButton.innerText;
+    handleCropSelection();
+}
+
+function handleCropSelection() {
+    secondAnswer.style.display = "none";
+
+    createMessageElement(`
+        <div class="col-12">
+            <div class="d-flex flex-column justify-content-end">
+                <p class="from-me animate__animated animate__zoomIn animate__faster">I'd like to pick ${selectedCrop}. </p>
+            </div>
+            <div class="row third-prompt-loader">
+                <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                    <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                </div>
+                <div class="col">
+                    <div class="from-them prompt-loader ms-2 animate__animated animate__fadeIn animate__faster">
+                        <div class="iMessage-loader"></div>
+                    </div>      
+                </div>
+            </div>
+        </div>
+    `);
+
+    setTimeout(() => {
+        hideElements(".third-prompt-loader");
+        getFourthPrompt();
+    }, 3000);
+}
+
+function getFourthPrompt() {
+    createMessageElement(`
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                    <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                </div>
+                <div class="col">
+                    <div class="d-flex flex-column align-items-start">
+                        <div class="">
+                            <p id="fourth-prompt" class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
+                                <strong>${selectedCrop} Farming Best Practices in ${selectedProvince}</strong><br><br>
+                                <!-- Your original content here -->
+                                <strong>Crop-Specific Planting Guidelines:</strong><br>
+                                • Variety Selection: Tacunan Dwarf, MRD × WAT hybrids (PCA-recommended)<br>
+                                <!-- Rest of your original content -->
+                                <em>Want to know more about anything in particular?</em>
+                            </p>
+                        </div>        
+                    </div>
+                </div>
+            </div>
+        </div>
+    `);
 
     setTimeout(() => {
         thirdAnswer.style.display = "block";
     }, 500);
 }
 
-function getFifthPrompt(){
-    // Create the new message element
-    const newMessage = document.createElement("div");
-    newMessage.className = "row";  // optional spacing
+function analysisAndRecommendation() {
+    secondAnswer.style.display = "none";
 
-    newMessage.innerHTML = `
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
-            <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
-                <!-- <img src="https://img.freepik.com/free-vector/wicked-old-witch-face-white-background_1308-74880.jpg?semt=ais_hybrid&w=740" width="65px" height="65px" alt=""> -->
+    createMessageElement(`
+        <div class="col-12">
+            <div id="analysis-container" class="d-flex flex-column justify-content-end">
+                <p class="from-me animate__animated animate__zoomIn animate__faster">
+                    Analysis and Recommendations for ${selectedCrop} in ${selectedProvince}
+                </p>
             </div>
-            <div class="col">
-                <div class="d-flex flex-column align-items-start">
-                    <div class="">
-                        <p id="fifth-prompt" class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
-                            🛠️ Best Practices for Sustainable Coconut Farming
-                            1. Regular Maintenance: Ensure timely pruning, weeding, and pest control to maintain tree health.<br><br>
-
-                            2. Soil Fertility Management: Conduct soil testing and apply appropriate fertilizers to enhance productivity.<br><br>
-
-                            3. Diversification: Incorporate intercropping or livestock to maximize land use and income.<br><br>
-
-                            4. Capacity Building: Participate in training programs and workshops to stay updated on best practices and innovations.<br><br>
-
-                            5.  Community Engagement: Collaborate with local cooperatives and organizations for shared resources and knowledge exchange.
-                        </p>
-                    </div>        
+            <div class="row fourth-prompt-loader">
+                <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                    <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                </div>
+                <div class="col">
+                    <div class="from-them prompt-loader ms-2 animate__animated animate__fadeIn animate__faster">
+                        <div class="iMessage-loader"></div>
+                    </div>      
                 </div>
             </div>
         </div>
-    </div>
-    `;
+    `);
 
-    // Append to container
-    imessageContainer.appendChild(newMessage);
+    analysisBtn.classList.add("d-none");
+
+    setTimeout(() => {
+        const loaders = document.querySelectorAll(".fourth-prompt-loader");
+        if (loaders.length > 0) {
+            loaders[loaders.length - 1].style.display = "none";
+        }
+        getFifthPrompt();
+    }, 3000);
 }
+
+function getFifthPrompt() {
+    createMessageElement(`
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                    <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                </div>
+                <div class="col">
+                    <div class="d-flex flex-column align-items-start">
+                        <div class="">
+                            <p id="fifth-prompt" class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
+                                <strong>🛠️ Analysis and Recommendations for ${selectedCrop} in ${selectedProvince}</strong><br><br>
+                                1. Regular Maintenance: Ensure timely pruning, weeding, and pest control to maintain tree health.<br><br>
+                                <!-- Rest of your original content -->
+                            </p>
+                        </div>        
+                    </div>
+                </div>
+            </div>
+        </div>
+    `);
+}
+
+function reset() {
+    analysisBtn.classList.remove("d-none");
+    
+    createMessageElement(`
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                    <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                </div>
+                <div class="col">
+                    <div class="d-flex flex-column align-items-start">
+                        <div class="">
+                            <p id="dynamic-prompt" class="from-them ms-2 animate__animated animate__zoomIn animate__faster">
+                                Hi! I am Victor, your AI crop assistant. I can help you with crop advisories and recommendations.
+                            </p>
+                        </div>        
+                    </div>
+                    <div id="dynamic-prompt-loader" class="d-none from-them prompt-loader ms-2 animate__animated animate__zoomIn animate__faster">
+                        <div class="iMessage-loader"></div>
+                    </div>
+                    <p id="dynamic-prompt-2" class="d-none from-them ms-2 animate__animated animate__zoomIn animate__faster">
+                        Select a province that you wanted to explore.
+                    </p>
+                </div>
+            </div>
+        </div>
+    `);
+
+    document.querySelector('#dynamic-prompt-loader').classList.remove('d-none');
+    setTimeout(() => {
+        document.querySelector('#dynamic-prompt-loader').classList.add('d-none');
+        document.querySelector('#dynamic-prompt-2').classList.remove('d-none');
+    }, 3000);
+
+    thirdAnswer.style.display = "none";
+    setTimeout(getFirstAnswer, 4000);
+}
+
+// Event listeners
+analysisBtn.addEventListener("click", analysisAndRecommendation);
+resetBtn.addEventListener("click", function() {
+    reset();
+    getFirstPrompt();
+    thirdAnswer.style.display = "none";
+    setTimeout(getFirstAnswer, 4000);
+});
+
+// Initialize the chat
+initializeChat();

@@ -46,12 +46,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // });
 
         // Fix Leaflet Map Rendering Issue
-        // if (pageId === "crop-map" && typeof map == "undefined") {
-        //     getMap();
-        // } 
+        if (pageId === "crop-map" && typeof map == "undefined") {
+            // getMap();
+        } 
     }
-    mapCoconut.invalidateSize();
-    mapCorn.invalidateSize();
+    
     function handleNavigation() {
         // Get the hash (remove `#`) or default to "main"
         checkWidth();
@@ -61,10 +60,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (window.innerWidth <= 576) {
             document.getElementById("sidebar").classList.add("collapsed");
         }
-        mapCorn.invalidateSize();
-        mapCoconut.invalidateSize();
+        
     }
-
+    handleNavigation();
     // Listen for hash changes
     window.addEventListener("hashchange", handleNavigation);
 
@@ -235,7 +233,6 @@ function checkWidth() {
         const currWidthAiAssistant = aiAssistant.offsetWidth; // NOW it's the updated width
 
         const hash = window.location.hash;
-        console.log(hash);
         if(hash == "#main"){
             if (currWidthMain < 300) {
                 main.style.opacity = "0";
@@ -289,11 +286,7 @@ function checkWidth() {
                 
             }
         }
-        console.log(currWidthAiAssistant);
-        console.log(currWidthCropMap);
-        console.log(currWidthMain);
 
-        
     }, 251); // small delay, usually 50ms is enough
 }
 
