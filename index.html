@@ -5,18 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Central Luzon Agri-Analytics</title>
     <link rel="stylesheet" href="css/header.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet". href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link rel="shortcut icon" href="assets/icon/cropcomm-logo.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    <style>
+        .navbar-hidden {
+        opacity: 0;
+        transform: translateY(-100%);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1030;
+        }
+
+        .navbar-visible {
+        opacity: 1;
+        transform: translateY(0);
+        }
+    </style>
 </head>
-<body style="overflow-x: hidden; max-width: 100vw;">
+<body style="">
+    <!-- navbar -->
+     <!-- Navbar -->
+    <nav id="scrollNavbar" class="navbar navbar-expand-md navbar-light bg-light navbar-hidden shadow-sm">
+        <div class="container-fluid ">
+            <div class="d-flex align-items-center">
+                <img src="assets/icon/analytics.png" width="60px">
+                <a class="navbar-brand appName anton-regular ms-2" href="#" style="font-size: 18pt;"></a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard#ai-assistant" tabindex="-1">AI Crop Assistant</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Maps
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="dashboard#climapv2">Climate Maps</a></li>
+                        <li><a class="dropdown-item" href="dashboard#crop-map">Crop Maps</a></li>
+                        <li><a class="dropdown-item" href="dashboard#suitability-map-banana">Suitability Maps</a></li>
+                        <!-- <li><hr class="dropdown-divider"></li> -->
+                    </ul>
+                </li>
+            </ul>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+    
     <!-- header -->
     <div id="header">
-        <div class="container-fluid mt-2">
-            <div class="row h-25 d-flex justify-content-between px-2" style="max-width: 100vw;">
+        <div class="container-fluid h-25 mt-2">
+            <div class="row d-flex justify-content-between px-2" style="max-width: 100vw;">
                 <div class="col inter-font inter-font-sm mt-2">
                     <div class="d-none d-sm-flex align-items-center">
                         <label style="font-size: 8pt;">⚫</label>
@@ -32,7 +87,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex">
+        <div class="container-fluid h-75 d-flex">
             <div class="col d-flex flex-column align-items-center mt-4">
                 <div class="anton-regular mt-2 appName">
                     <!-- CROP COMMODITIES ANALYTICS -->
@@ -40,9 +95,9 @@
                 <div class="inter-font" style="margin-top: -8px;">
                     Smart, Sustainable, Data-Driven Agriculture
                 </div>
-                <div class="mt-3">
+                <!-- <div class="mt-3">
                     <a href="dashboard" class="btn btn-primary inter-font inter-font-sm text-light"><strong><i class="bi bi-window-sidebar me-2"></i>DASHBOARD</strong></a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -52,8 +107,49 @@
         <div class="container pb-2" data-aos="fade-right">
             <h1 class="my-2 anton-regular" style="font-size: 26pt;">Core Features</h1>
         </div>
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-4">
+        <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-4 overview-card">
+            <div class="col-12 col-sm card" data-aos="zoom-in">
+                <img src="https://milyonaryo.com.ph/wp-content/uploads/2023/05/Philippines-agriculture-sector-shows-modest-gains-fueled-by-crops-and-livestock.jpg" class="card-img-top" alt="..." width="">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="card-title">Dashboard</h5>
+                    <p class="card-text text-dark">Sustainable agriculture with data-driven solutions, empowering farmers through technology.</p>
+                    <a href="dashboard#main" class="btn btn-primary mt-2" style="font-size: 10pt; text-decoration: none;">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="bi bi-menu-button-wide-fill me-2"></i>
+                            dashboard
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-sm card" data-aos="zoom-in">
+                <img src="https://www.cabi.org/wp-content/uploads/IMG_9710-1024pxwide.jpg" class="card-img-top" alt="...">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="card-title">AI Integration</h5>
+                    <p class="card-text text-dark">Tailored crop advisories to optimize yield. Insights help farmers make data-driven decisions.</p>
+                    <a href="dashboard#ai-assistant" class="btn btn-primary mt-2" style="font-size: 10pt; text-decoration: none;">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="bi bi-stars me-2"></i>
+                            crop assistant
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-sm card" data-aos="zoom-in">
+                <img src="https://milyonaryo.com.ph/wp-content/uploads/2023/05/Philippines-agriculture-sector-shows-modest-gains-fueled-by-crops-and-livestock.jpg" class="card-img-top" alt="...">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="card-title">Maps</h5>
+                    <p class="card-text text-dark">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+                    <a href="dashboard#crop-map" class="btn btn-primary mt-2" style="font-size: 10pt; text-decoration: none;">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="bi bi-globe-central-south-asia me-2"></i>
+                            go to maps
+                        </div>
+                    </a>
+                </div>
+                </div>
+            </div>
+            
+            <!-- <div class="col-md-4">
                 <div id="card-start" class="card-container w-100 d-flex justify-content-start justify-content-md-end mb-3 mb-md-auto" data-aos="zoom-in">
                     <article class="card">
                         <img
@@ -127,12 +223,10 @@
                                     VIEW
                                 </div>
                             </a>
-                            <!-- <button class="card__button">Read more</button> -->
                         </div>
                     </article>
                 </div>
-            </div>
-            
+            </div> -->
         </div>
     </section>
 
@@ -243,8 +337,6 @@
         </div>
     </section>
 
-    
-
     <!-- contact us -->
     <section class="container-fluid pt-2 pb-4 secondary-color">
         <div class="container">
@@ -300,8 +392,28 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="javascripts/global.js"></script>
     <script>
+        const navbar = document.getElementById('scrollNavbar');
+
+        function handleNavbarVisibility() {
+            if (window.scrollY > 300) {
+            navbar.classList.add('navbar-visible');
+            } else {
+            navbar.classList.remove('navbar-visible');
+            }
+        }
+
+        // Run once on load
+        window.addEventListener('DOMContentLoaded', handleNavbarVisibility);
+
+        // Run on scroll
+        window.addEventListener('scroll', handleNavbarVisibility);
+    </script>
+
+    <script>
         AOS.init();
     </script>
-    
+    <!-- MDB -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="h  
 </body>
 </html>

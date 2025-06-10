@@ -1,76 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>CSV Merger</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MDB Example</title>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet"/>
 </head>
 <body>
-  <h2>CSV Merger Tool</h2>
-  <p>Select your CSV files:</p>
 
-  <label>Climate Data CSV:
-    <input type="file" id="climateInput" accept=".csv">
-  </label><br><br>
-  <label>Crop Data CSV:
-    <input type="file" id="cropInput" accept=".csv">
-  </label><br><br>
+  <div class="contianer">
+    <div class="card w-50">
+      <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+        <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="img-fluid"/>
+        <a href="#!">
+          <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+        </a>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text.</p>
+        <a href="#!" class="btn btn-primary">Button</a>
+      </div>
+    </div>
+  </div>
 
-  <button onclick="mergeCSVs()">Merge and Download</button>
-
-  <script>
-    function parseCSV(text) {
-      return text.trim().split('\n').map(line => line.split(','));
-    }
-
-    function downloadCSV(content, filename) {
-      const blob = new Blob([content], { type: 'text/csv' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = filename;
-      a.click();
-    }
-
-    async function mergeCSVs() {
-      const climateFile = document.getElementById('climateInput').files[0];
-      const cropFile = document.getElementById('cropInput').files[0];
-      if (!climateFile || !cropFile) {
-        alert("Please select both files.");
-        return;
-      }
-
-      const [climateText, cropText] = await Promise.all([
-        climateFile.text(),
-        cropFile.text()
-      ]);
-
-      const climateRows = parseCSV(climateText);
-      const cropRows = parseCSV(cropText);
-      const cropHeader = cropRows[0];
-      const cropData = cropRows.slice(1);
-
-      // Create climate data map: { year: { var: value } }
-      const climateMap = {};
-      const variablesSet = new Set();
-
-      climateRows.forEach(([variable, year, value]) => {
-        if (!climateMap[year]) climateMap[year] = {};
-        climateMap[year][variable] = value;
-        variablesSet.add(variable);
-      });
-
-      const variables = Array.from(variablesSet);
-      const mergedHeader = [...cropHeader, ...variables];
-      const mergedData = [mergedHeader.join(',')];
-
-      cropData.forEach(([crop, year, production]) => {
-        const climateForYear = climateMap[year] || {};
-        const climateValues = variables.map(v => climateForYear[v] || '');
-        const row = [crop, year, production, ...climateValues];
-        mergedData.push(row.join(','));
-      });
-
-      downloadCSV(mergedData.join('\n'), 'merged.csv');
-    }
-  </script>
+  <!-- MDB JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
 </body>
 </html>
