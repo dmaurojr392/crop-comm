@@ -46,8 +46,13 @@ document.addEventListener("DOMContentLoaded", function () {
         // });
 
         // Fix Leaflet Map Rendering Issue
-        if (pageId === "crop-map" && typeof map == "undefined") {
-            // getMap();
+        if (pageId === "ai-assistant") {
+            setTimeout(() => {
+                document.getElementById("ai-loader-init")?.classList.remove("d-flex");
+                document.getElementById("ai-loader-init")?.classList.add("d-none");
+                document.getElementById("ai-container")?.classList.remove("d-none");
+                document.getElementById("ai-container")?.classList.add("d-block");
+            }, 4000);
         } 
     }
     

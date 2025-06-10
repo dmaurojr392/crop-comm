@@ -59,7 +59,7 @@ font-size: 16pt;
     font-size: 53pt;
   }
 }
-@media  screen and (max-width: 768px) {
+@media  screen and (max-width: 860px) {
   #header{
     height: 400px;
   } 
@@ -79,7 +79,8 @@ font-size: 16pt;
     margin-left: -7rem;
   }
 }
-@media  screen and (max-width: 530px) {
+
+@media  screen and (max-width: 570px) {
   /* #department-logo{
     height: 75px;
   } */

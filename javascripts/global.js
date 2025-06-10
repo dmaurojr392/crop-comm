@@ -1,4 +1,4 @@
-const developmentEnvironment = "192.168.0.106"
+const developmentEnvironment = "localhost"
 document.documentElement.style.setProperty('--animate-duration', '.75s');
 document.querySelectorAll('.appName').forEach(element => {
     element.innerText = "CENTRAL LUZON AGRI-ANALYTICS";
@@ -7,7 +7,11 @@ document.querySelectorAll('.version').forEach(element => {
     element.innerText = "version 0.2.1-beta";
 });
 
-document.getElementsByClassName('menu-title')[1].innerText = "Maps";
+const menuTitles = document.getElementsByClassName('menu-title');
+if (menuTitles.length > 1) {
+  menuTitles[1].innerText = "Maps";
+}
+
 document.querySelectorAll('a[href="#main"] .menu-title').forEach(item => {
     item.innerText = "Dashboard";
   });
@@ -17,7 +21,7 @@ document.querySelectorAll('a[href="#ai-assistant"] .menu-title').forEach(item =>
 document.querySelectorAll('a[href="#crop-map"] .menu-title').forEach(item => {
     item.innerText = "Crop Map";
   });
-document.querySelector('a[href="#suitability-map-banana"] .menu-title').innerText = "Banana";
+// document.querySelector('a[href="#suitability-map-banana"] .menu-title').innerText = "Banana";
 
 let commodityColors = {
     "Banana": "#FFFFA3",

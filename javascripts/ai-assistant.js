@@ -11,7 +11,7 @@ const analysisBtn = document.getElementById("ai-crop-analysis-btn");
 const resetBtn = document.getElementById("ai-crop-reset-btn");
 
 let selectedProvince;
-let selectedCrop;
+let selectedCropForAI;
 
 // Helper functions
 function hideElements(selector) {
@@ -145,17 +145,17 @@ function getThirdPrompt() {
 }
 
 function topCropButtonOnClick() {
-    selectedCrop = topCropButton.innerText;
+    selectedCropForAI = topCropButton.innerText;
     handleCropSelection();
 }
 
 function secondCropButtonOnClick() {
-    selectedCrop = secondCropButton.innerText;
+    selectedCropForAI = secondCropButton.innerText;
     handleCropSelection();
 }
 
 function thirdCropButtonOnClick() {
-    selectedCrop = thirdCropButton.innerText;
+    selectedCropForAI = thirdCropButton.innerText;
     handleCropSelection();
 }
 
@@ -165,7 +165,7 @@ function handleCropSelection() {
     createMessageElement(`
         <div class="col-12">
             <div class="d-flex flex-column justify-content-end">
-                <p class="from-me animate__animated animate__zoomIn animate__faster">I'd like to pick ${selectedCrop}. </p>
+                <p class="from-me animate__animated animate__zoomIn animate__faster">I'd like to pick ${selectedCropForAI}. </p>
             </div>
             <div class="row third-prompt-loader">
                 <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
@@ -197,7 +197,7 @@ function getFourthPrompt() {
                     <div class="d-flex flex-column align-items-start">
                         <div class="">
                             <p id="fourth-prompt" class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
-                                <strong>${selectedCrop} Farming Best Practices in ${selectedProvince}</strong><br><br>
+                                <strong>${selectedCropForAI} Farming Best Practices in ${selectedProvince}</strong><br><br>
                                 <!-- Your original content here -->
                                 <strong>Crop-Specific Planting Guidelines:</strong><br>
                                 • Variety Selection: Tacunan Dwarf, MRD × WAT hybrids (PCA-recommended)<br>
@@ -223,7 +223,7 @@ function analysisAndRecommendation() {
         <div class="col-12">
             <div id="analysis-container" class="d-flex flex-column justify-content-end">
                 <p class="from-me animate__animated animate__zoomIn animate__faster">
-                    Analysis and Recommendations for ${selectedCrop} in ${selectedProvince}
+                    Analysis and Recommendations for ${selectedCropForAI} in ${selectedProvince}
                 </p>
             </div>
             <div class="row fourth-prompt-loader">
@@ -261,7 +261,7 @@ function getFifthPrompt() {
                     <div class="d-flex flex-column align-items-start">
                         <div class="">
                             <p id="fifth-prompt" class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
-                                <strong>🛠️ Analysis and Recommendations for ${selectedCrop} in ${selectedProvince}</strong><br><br>
+                                <strong>🛠️ Analysis and Recommendations for ${selectedCropForAI} in ${selectedProvince}</strong><br><br>
                                 1. Regular Maintenance: Ensure timely pruning, weeding, and pest control to maintain tree health.<br><br>
                                 <!-- Rest of your original content -->
                             </p>
@@ -290,10 +290,10 @@ function reset() {
                             </p>
                         </div>        
                     </div>
-                    <div id="dynamic-prompt-loader" class="d-none from-them prompt-loader ms-2 animate__animated animate__zoomIn animate__faster">
+                    <div id="" class="d-none from-them prompt-loader dynamic-prompt-loader ms-2 animate__animated animate__zoomIn animate__faster">
                         <div class="iMessage-loader"></div>
                     </div>
-                    <p id="dynamic-prompt-2" class="d-none from-them ms-2 animate__animated animate__zoomIn animate__faster">
+                    <p id="" class="d-none from-them dynamic-prompt-2 ms-2 animate__animated animate__zoomIn animate__faster">
                         Select a province that you wanted to explore.
                     </p>
                 </div>
@@ -301,10 +301,17 @@ function reset() {
         </div>
     `);
 
-    document.querySelector('#dynamic-prompt-loader').classList.remove('d-none');
+    document.querySelectorAll('.dynamic-prompt-loader').forEach(item => {
+        item.classList.remove('d-none');
+        console.log(item.classList.length);
+    });
     setTimeout(() => {
-        document.querySelector('#dynamic-prompt-loader').classList.add('d-none');
-        document.querySelector('#dynamic-prompt-2').classList.remove('d-none');
+        document.querySelectorAll('.dynamic-prompt-loader').forEach(item => {
+            item.classList.add('d-none');
+        })
+        document.querySelectorAll('.dynamic-prompt-2').forEach(item => {
+            item.classList.remove('d-none');
+        })
     }, 3000);
 
     thirdAnswer.style.display = "none";
