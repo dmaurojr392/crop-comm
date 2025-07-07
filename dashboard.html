@@ -34,7 +34,7 @@
 </head>
 <body>
   <div class="layout has-sidebar fixed-sidebar fixed-header">
-    <aside id="sidebar" class="sidebar d-none d-sm-block">
+    <aside id="sidebar" class="sidebar shadow d-none d-sm-block">
       <a id="btn-collapse" class="sidebar-collapser">
         <i class="bi bi-caret-left-fill d-none d-sm-flex" style="font-size: 8.5pt;"></i>
         <i class="bi bi-menu-button-wide d-sm-none"></i>
@@ -48,7 +48,7 @@
             <div>
               <img src="assets/icon/analytics.png" style="width: 100%;" class="rounded" alt="">
             </div>
-            <h5 class="anton-regular mt-2"><a href="index" class="appName" style="color: #9196b5;"></a></h5>
+            <h5 class="anton-regular mt-2"><a href="index" class="appName" style="color: #cfe1d6;"></a></h5>
           </div>
         </div>
         <div class="sidebar-content">
@@ -224,7 +224,7 @@
             <div>
               <img src="assets/icon/analytics.png" style="width: 100%;" class="rounded" alt="">
             </div>
-            <h5 class="anton-regular mt-2"><a href="index" class="appName" style="color: #9196b5;"></a></h5>
+            <h5 class="anton-regular mt-2"><a href="index" class="appName" style="color: #cfe1d6;"></a></h5>
           </div>
         </div>
         <div class="sidebar-content">
@@ -429,7 +429,7 @@
         <div id="main" class="page" >
           <div class="d-flex d-sm-none fixed-top primary-color align-items-center justify-content-center" style="height: 55px;">
             <div class="primary-color">
-              <h5 class="anton-regular mt-2"><a class="appName" style="color: #9196b5;"></a></h5>
+              <h5 class="anton-regular mt-2"><a class="appName" style="color: #cfe1d6;"></a></h5>
             </div>
           </div>
           <div id="main-nav" class="container-fluid py-1">
@@ -711,7 +711,7 @@
         <div id="crop-map" class="page collapse">
           <div class="d-flex d-sm-none fixed-top primary-color align-items-center justify-content-center" style="height: 55px;">
             <div class="primary-color">
-              <h5 class="anton-regular mt-2"><a class="appName" style="color: #9196b5;"></a></h5>
+              <h5 class="anton-regular mt-2"><a class="appName" style="color: #cfe1d6;"></a></h5>
             </div>
           </div>
           <div class="container-fluid">
@@ -916,7 +916,7 @@
                 <button class="btn btn-primary" style="font-size: 9pt;" onclick="downloadSuitMap()"><i class="bi bi-download me-2"></i>Download</button>
             </div>
             <div id="corn-map-view-container" class="d-flex align-items-center justify-content-center">
-              <div id="map-view" class="col-12">
+              <div class="map-view col-12">
                 <div class="map-size rounded shadow-sm" id="corn-map"></div>
               </div>
             </div>
@@ -977,7 +977,7 @@
         <div id="ai-assistant" class="page collapse">
           <div class="d-flex d-sm-none fixed-top primary-color align-items-center justify-content-center" style="height: 55px;">
             <div class="primary-color">
-              <h5 class="anton-regular mt-2"><a class="appName" style="color: #9196b5;"></a></h5>
+              <h5 class="anton-regular mt-2"><a class="appName" style="color: #cfe1d6;"></a></h5>
             </div>
           </div>
           <div id="ai-loader-init" style="width: 100%; height: 100vh;" class="d-flex align-items-center justify-content-center">
@@ -1055,8 +1055,8 @@
                                   What would you like to know more?
                                 </div> -->
                                 <div class="ms-2">
-                                  <button id="ai-crop-analysis-btn" class="ai-badge px-1" style="animation-delay: 0s;">Analysis & Recommendations</button>
-                                  <button id="ai-crop-reset-btn" class="ai-badge px-1" style="animation-delay: 0.1s;">Home</button>
+                                  <button id="ai-crop-analysis-btn" class="ai-badge px-1 d-none" style="animation-delay: 0s;">Analysis & Recommendations</button>
+                                  <button id="ai-crop-reset-btn" class="ai-badge px-1" style="animation-delay: 0.1s;">Select Another Province & Crops</button>
                                 </div>
                                 <!-- <button id="ai-third-crop-btn" class="ai-badge px-1" style="animation-delay: 0.2s;"></button> -->
                               </div>
@@ -1075,16 +1075,18 @@
         <div id="climapv2" class="page collapse">
           <div class="d-flex d-sm-none fixed-top primary-color align-items-center justify-content-center" style="height: 55px;">
             <div class="primary-color">
-              <h5 class="anton-regular mt-2"><a class="appName" style="color: #9196b5;"></a></h5>
+              <h5 class="anton-regular mt-2"><a class="appName" style="color: #cfe1d6;"></a></h5>
             </div>
           </div>
           <div class="container-fluid">
-            <div style="margin-bottom: -8px;" class="d-flex justify-content-between align-items-center pt-2">
+            <div class="d-flex justify-content-between align-items-center pt-2">
               <div>
-                <h5 style="margin-bottom: 8px;"><label for="" class="crop-name"></label>CLIMATE MAP BY PAGASA</h5>
+                <h4 class="pt-2" id="page-title">
+                  CLIMATE MAP BY PAGASA
+                </h4>
               </div>
             </div>
-            <iframe src="https://climapv2.pagasa.dost.gov.ph/" frameborder="0" style="width: 100%; height: 93vh;" scrolling="no" class="rounded"></iframe>
+            <iframe src="https://climapv2.pagasa.dost.gov.ph/" frameborder="0" style="width: 100%; height: 90vh;" scrolling="no" class="rounded"></iframe>
           </div>
         </div>
       </main>
@@ -1138,13 +1140,22 @@
             <div class="loader"></div>
           </div>
         </div>
-        <div id="crop-data" class="d-none animate__animated animate__fadeIn">
-          <div id="prediction" class="mt-2"></div>
+        <div id="crop-data" class="d-none rounded card shadow-sm mt-3 animate__animated animate__fadeIn">
+          <div id="prediction" class="mt-2 text-center"></div>
           <center>
             <div style="max-width: 95%;">
-              <canvas id="predictionChart" height="175px" class="rounded card shadow"></canvas>
+              <canvas id="predictionChart" height="175px" class=""></canvas>
             </div>
           </center>
+        </div>
+        <div id="crop-data-analyzer" class="mt-3 d-none animate__animated animate__fadeIn w-100 text-center">
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="loader"></div> 
+            <div class="ms-2 blink">Analyzing crop data...</div>
+          </div>
+        </div>
+        <div id="prediction-analysis" class="mt-4 d-none animate__animated animate__fadeIn">
+          
         </div>
     </div>
   </div>

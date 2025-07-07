@@ -159,13 +159,16 @@ function thirdCropButtonOnClick() {
     handleCropSelection();
 }
 
-function handleCropSelection() {
+// ... (keep all your existing DOM caching and helper functions)
+
+async function handleCropSelection() {
     secondAnswer.style.display = "none";
 
+    // Show loading message
     createMessageElement(`
         <div class="col-12">
             <div class="d-flex flex-column justify-content-end">
-                <p class="from-me animate__animated animate__zoomIn animate__faster">I'd like to pick ${selectedCropForAI}. </p>
+                <p class="from-me animate__animated animate__zoomIn animate__faster">I'd like to pick ${selectedCropForAI} </p>
             </div>
             <div class="row third-prompt-loader">
                 <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
@@ -180,13 +183,54 @@ function handleCropSelection() {
         </div>
     `);
 
-    setTimeout(() => {
+    try {
+        // Fetch data from the endpoint
+        const response = await fetch(`http://localhost:8000/gemini/farming-best-practices?crop=${encodeURIComponent(selectedCropForAI)}&region=${encodeURIComponent(selectedProvince)}`);  
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        
+        // Hide loader and show the data
         hideElements(".third-prompt-loader");
-        getFourthPrompt();
-    }, 3000);
+        showFourthPrompt(data);
+        
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle error - show error message
+        hideElements(".third-prompt-loader");
+        createMessageElement(`
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                        <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex flex-column align-items-start">
+                            <div class="">
+                                <p class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
+                                    Sorry, I couldn't fetch the data for ${selectedCropForAI}. Please try again later.
+                                </p>
+                            </div>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+        thirdAnswer.style.display = "block";
+    }
 }
 
-function getFourthPrompt() {
+function showFourthPrompt(data) {
+    // Use the data from the API response to populate your template
+    // Adjust this based on your actual API response structure
+    console.log(data);
+    const content = data.text || `
+        something went wrong, please try again later.
+    `;
+
     createMessageElement(`
         <div class="container-fluid">
             <div class="row">
@@ -197,12 +241,7 @@ function getFourthPrompt() {
                     <div class="d-flex flex-column align-items-start">
                         <div class="">
                             <p id="fourth-prompt" class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
-                                <strong>${selectedCropForAI} Farming Best Practices in ${selectedProvince}</strong><br><br>
-                                <!-- Your original content here -->
-                                <strong>Crop-Specific Planting Guidelines:</strong><br>
-                                • Variety Selection: Tacunan Dwarf, MRD × WAT hybrids (PCA-recommended)<br>
-                                <!-- Rest of your original content -->
-                                <em>Want to know more about anything in particular?</em>
+                                ${content}
                             </p>
                         </div>        
                     </div>
@@ -211,14 +250,17 @@ function getFourthPrompt() {
         </div>
     `);
 
-    setTimeout(() => {
-        thirdAnswer.style.display = "block";
-    }, 500);
+    thirdAnswer.style.display = "block";
 }
 
-function analysisAndRecommendation() {
+// ... (keep all your other existing functions)
+
+// Remove the old getFourthPrompt function since we're using showFourthPrompt now
+
+async function analysisAndRecommendation() {
     secondAnswer.style.display = "none";
 
+    // Show loading message
     createMessageElement(`
         <div class="col-12">
             <div id="analysis-container" class="d-flex flex-column justify-content-end">
@@ -241,16 +283,72 @@ function analysisAndRecommendation() {
 
     analysisBtn.classList.add("d-none");
 
-    setTimeout(() => {
+    try {
+        // Fetch analysis data from the endpoint
+        const response = await fetch(
+            `http://localhost:8000/gemini/recommendations-and-analysis?crop=${encodeURIComponent(selectedCropForAI)}&region=${encodeURIComponent(selectedProvince)}`
+        );
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        
+        // Hide loader and show the data
         const loaders = document.querySelectorAll(".fourth-prompt-loader");
         if (loaders.length > 0) {
             loaders[loaders.length - 1].style.display = "none";
         }
-        getFifthPrompt();
-    }, 3000);
+        showAnalysisResults(data);
+        
+    } catch (error) {
+        console.error('Error fetching analysis data:', error);
+        // Handle error - show error message
+        const loaders = document.querySelectorAll(".fourth-prompt-loader");
+        if (loaders.length > 0) {
+            loaders[loaders.length - 1].style.display = "none";
+        }
+        
+        createMessageElement(`
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                        <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex flex-column align-items-start">
+                            <div class="">
+                                <p class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
+                                    Sorry, I couldn't fetch the analysis for ${selectedCropForAI}. Please try again later.
+                                </p>
+                            </div>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
 }
 
-function getFifthPrompt() {
+function showAnalysisResults(data) {
+    // Format the recommendations from the API response
+    // Adjust this based on your actual API response structure
+    let recommendationsContent = '';
+    
+    if (data.recommendations && Array.isArray(data.recommendations)) {
+        recommendationsContent = data.recommendations
+            .map((rec, index) => `${index + 1}. ${rec}`)
+            .join('<br><br>');
+    } else {
+        // Fallback content if no recommendations are provided
+        recommendationsContent = `
+            1. Regular Maintenance: Ensure timely pruning, weeding, and pest control to maintain tree health.<br><br>
+            2. Soil Management: Conduct regular soil tests to determine nutrient needs.<br><br>
+            3. Irrigation: Implement proper water management based on seasonal requirements.
+        `;
+    }
+
     createMessageElement(`
         <div class="container-fluid">
             <div class="row">
@@ -262,8 +360,9 @@ function getFifthPrompt() {
                         <div class="">
                             <p id="fifth-prompt" class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
                                 <strong>🛠️ Analysis and Recommendations for ${selectedCropForAI} in ${selectedProvince}</strong><br><br>
-                                1. Regular Maintenance: Ensure timely pruning, weeding, and pest control to maintain tree health.<br><br>
-                                <!-- Rest of your original content -->
+                                ${data.text || '<strong>Analysis:</strong> Based on regional data and crop requirements...'}<br><br>
+                                <strong>Recommendations:</strong><br><br>
+                                ${recommendationsContent}
                             </p>
                         </div>        
                     </div>
@@ -272,6 +371,8 @@ function getFifthPrompt() {
         </div>
     `);
 }
+
+// Remove the old getFifthPrompt function since we're using showAnalysisResults now
 
 function reset() {
     analysisBtn.classList.remove("d-none");

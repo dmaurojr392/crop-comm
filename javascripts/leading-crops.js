@@ -1,6 +1,9 @@
 let map;
 let selectedCrop = null;
 let selectedYearFilter = localStorage.getItem("year-for-leading-crop-map") || "2023";
+let predictionChart = null; // Store chart instance globally
+let predictionData = null;
+let cropHistoricalData;
 
 function updateCropYearFilter(){
     selectedYearFilter = document.getElementById("year-for-leading-crop-map").value;
@@ -68,7 +71,7 @@ function getMap() {
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
-        maxZoom: 20
+        maxZoom: 9
     }).addTo(map);
 
     let legend = L.control({ position: "topright" });
@@ -95,21 +98,48 @@ function getMap() {
             },
             onEachFeature: function (feature, layer) {
                 layer.on({
-                    click: function () {
+                    click: function (e) { // Pass the event object 'e'
                         
                         document.getElementById("crop-data-loading").classList.remove("d-none");
                         document.getElementById("crop-data-loading").classList.add("d-flex");
                         document.getElementById("sideContentBodyContent").classList.add("d-none");
                         // document.getElementById("sideContentBodyContent").classList.add("d-flex");
                         document.getElementById("crop-data").classList.add("d-none");
+                        document.getElementById("prediction-analysis").classList.add("d-none");
                         sideContent(feature);
                         
 
                         // Zoom to the bounds of the selected layer
                         if (layer.getBounds) {
-                            map.fitBounds(layer.getBounds());
+                            // map.fitBounds(layer.getBounds()); // Original fitBounds
+
+                            // Modified zoom to left
+                            var currentZoom = map.getZoom();
+                            var newZoom = currentZoom + 1;
+                            var bounds = layer.getBounds();
+                            var centerLatLng = bounds.getCenter();
+
+                            var offsetX = 140; // Adjust this value
+                            var point = map.latLngToContainerPoint(centerLatLng);
+                            var newPoint = point.add([offsetX, 0]);
+                            var newLatLng = map.containerPointToLatLng(newPoint);
+
+                            map.setView(newLatLng, newZoom);
+
                         } else if (layer.getLatLng) {
-                            map.setView(layer.getLatLng(), map.getZoom() + 1);
+                            // map.setView(layer.getLatLng(), map.getZoom() + 1); // Original setView
+
+                            // Modified zoom to left
+                            var currentZoom = map.getZoom();
+                            var newZoom = currentZoom + 1;
+                            var centerLatLng = layer.getLatLng();
+
+                            var offsetX = -140; // Adjust this value
+                            var point = map.latLngToContainerPoint(centerLatLng);
+                            var newPoint = point.add([offsetX, 0]);
+                            var newLatLng = map.containerPointToLatLng(newPoint);
+
+                            map.setView(newLatLng, newZoom);
                         }
                     },
                     mouseover: function () {
@@ -131,6 +161,7 @@ function getMap() {
             
         }).addTo(map);
     });
+
 
     // Define configuration for each dataset
     initialize();
@@ -375,7 +406,9 @@ function sideContentClose() {
     sidebarContent.innerText = "";
     sidebarTitle.innerText = "";
 }
-let topCropData;
+
+let cropLabel = null;
+
 async function sideContent(feature){
     const offcanvas = new bootstrap.Offcanvas(document.getElementById('sideContentOffcanvas'),{backdrop: false});
     offcanvas.show();
@@ -406,8 +439,9 @@ async function sideContent(feature){
             topCropLatestRecord = topCropData.length > 2 ? Number(topCropData[topCropData.length - 1]).toLocaleString() : null;
             topCropLatestHarvestAreaRecord = topCropHarvestArea.length > 2 ? Number(topCropHarvestArea[topCropHarvestArea.length - 1]).toLocaleString() : null;
             topCropPreviousYearRecord = topCropData.length > 2 ? Number(topCropData[topCropData.length - 2]).toLocaleString() : null;
+            console.log("Latest Record", topCropData);
 
-            let secondCropData = firstDataSheet.values[3].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
+            secondCropData = firstDataSheet.values[3].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
             let secondCropHarvestArea = secondDataSheet.values[3].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
             secondCropLabel = firstDataSheet.values[3][0];
             secondCropLatestRecord = secondCropData.length > 2 ? Number(secondCropData[secondCropData.length - 1]).toLocaleString() : null;
@@ -415,7 +449,7 @@ async function sideContent(feature){
             secondCropPreviousYearRecord = secondCropData.length > 2 ? Number(secondCropData[secondCropData.length - 2]).toLocaleString() : null;
 
 
-            let thirdCropData = firstDataSheet.values[4].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
+            thirdCropData = firstDataSheet.values[4].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
             let thirdCropHarvestArea = secondDataSheet.values[4].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
             thirdCropLabel = firstDataSheet.values[4][0];
             thirdCropLatestRecord = thirdCropData.length > 2 ? Number(thirdCropData[thirdCropData.length - 1]).toLocaleString() : null;
@@ -423,25 +457,31 @@ async function sideContent(feature){
             thirdCropPreviousYearRecord = thirdCropData.length > 2 ? Number(thirdCropData[thirdCropData.length - 2]).toLocaleString() : null;
             // sidebarTitle.innerHTML = `<div class="animate__animated animate__fadeIn"> ${feature.properties.ADM2_EN} </div>` || "Not set";
             if(localStorage.getItem('rank-for-leading-crop-map') == "TopCrop"){
-            sidebarContent.innerHTML = `
-                <h4 class="animate__animated animate__fadeIn"> ${feature.properties.ADM2_EN.toUpperCase()} </h4>
-                <div class="animate__animated animate__fadeIn"><strong>Leading Crop:</strong> ${topCropLabel || "No data found"}</div>
+                cropLabel = topCropLabel;
+                cropHistoricalData = topCropData;
+                sidebarContent.innerHTML = `
+                <h4 class="animate__animated animate__fadeIn" style='margin-bottom: -.5rem;'> ${feature.properties.ADM2_EN.toUpperCase()} </h4><hr>
+                <div class="animate__animated animate__fadeIn" style='margin-top: -.5rem;'><strong>Leading Crop:</strong> ${topCropLabel || "No data found"}</div>
                 <div class="animate__animated animate__fadeIn"><strong>Production:</strong> ${topCropLatestRecord || "No data found"} Metric Tons</div>
                 <div class="animate__animated animate__fadeIn"><strong>Harvest Year: </strong>${datedYearData}</div>`;
             }
             
             if(localStorage.getItem('rank-for-leading-crop-map') == "SecondCrop"){
+                cropLabel = secondCropLabel;
+                cropHistoricalData = secondCropData;
                 sidebarContent.innerHTML = `
-                <h4 class="animate__animated animate__fadeIn"> ${feature.properties.ADM2_EN.toUpperCase()} </h4>
-                <div class="animate__animated animate__fadeIn"><strong>Leading Crop:</strong> ${secondCropLabel || "No data found"}</div>
+                <h4 class="animate__animated animate__fadeIn" style='margin-bottom: -.5rem;'> ${feature.properties.ADM2_EN.toUpperCase()} </h4><hr>
+                <div class="animate__animated animate__fadeIn" style='margin-top: -.5rem;'><strong>Leading Crop:</strong> ${secondCropLabel || "No data found"}</div>
                 <div class="animate__animated animate__fadeIn"><strong>Production:</strong> ${secondCropLatestRecord || "No data found"} Metric Tons</div>
                 <div class="animate__animated animate__fadeIn"><strong>Harvest Year: </strong>${datedYearData}</div>`;
             }
             
             if(localStorage.getItem('rank-for-leading-crop-map') == "ThirdCrop"){
+                cropLabel = thirdCropLabel;
+                cropHistoricalData = thirdCropData;
                 sidebarContent.innerHTML = `
-                <h4 class="animate__animated animate__fadeIn"> ${feature.properties.ADM2_EN.toUpperCase()} </h4>
-                <div class="animate__animated animate__fadeIn"><strong>Leading Crop:</strong> ${thirdCropLabel || "No data found"}</div>
+                <h4 class="animate__animated animate__fadeIn" style='margin-bottom: -.5rem;'> ${feature.properties.ADM2_EN.toUpperCase()} </h4><hr>
+                <div class="animate__animated animate__fadeIn" style='margin-top: -.5rem;'><strong>Leading Crop:</strong> ${thirdCropLabel || "No data found"}</div>
                 <div class="animate__animated animate__fadeIn"><strong>Production:</strong> ${thirdCropLatestRecord || "No data found"} Metric Tons</div>
                 <div class="animate__animated animate__fadeIn"><strong>Harvest Year: </strong>${datedYearData}</div>`;
             }
@@ -449,9 +489,27 @@ async function sideContent(feature){
             document.getElementById("sideContentBodyContent").classList.add("d-block");
             // document.getElementById("sideContentBodyContent").classList.add("d-none");
             fetchPredictions(feature);
+            
         } catch (error) {
             // console.error("Error fetching data:", error);
         }
+}
+
+async function predictionAnalysis(feature) {
+    document.getElementById("crop-data-analyzer").classList.remove("d-none");
+    const predictedDataStr = JSON.stringify(predictionData);
+    const url = `http://${developmentEnvironment}:8000/gemini/recommendations-and-analysis?region=${feature.properties.ADM2_EN}&crop=${cropLabel}&predictedData=${predictedDataStr}&historicalData=${cropHistoricalData}`;
+    try{
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log (data);
+        document.getElementById("crop-data-analyzer").classList.add("d-none");
+        document.getElementById("prediction-analysis").innerHTML = data.text;
+        document.getElementById("prediction-analysis").classList.remove("d-none");
+        
+    }catch{
+
+    }
 }
 
 function initialize() {
@@ -464,8 +522,6 @@ function updateCropFilter(){
     initialize();
     getMap();
 }
-
-let predictionChart = null; // Store chart instance globally
 
 async function fetchPredictions(feature) {
     try {
@@ -496,6 +552,7 @@ async function fetchPredictions(feature) {
             response = await fetch("http://" + developmentEnvironment + ":9000/predict/zambales");
         }
         const data = await response.json();
+        console.log("Predictted data", data.predictions[feature.properties.Top1_Commodities]);
         const prediction = document.getElementById("prediction");
         
         if (data.error) {
@@ -510,12 +567,15 @@ async function fetchPredictions(feature) {
         let result = null;
         if (localStorage.getItem('rank-for-leading-crop-map') == "TopCrop") {
             result = data.predictions[feature.properties.Top1_Commodities];
+            predictionData = data.predictions[feature.properties.Top1_Commodities];
             prediction.innerHTML = `<h6>PREDICTED YIELD FOR ${feature.properties.Top1_Commodities.toUpperCase() || "No data found"} (2024-2028)</h6>`;
         } else if (localStorage.getItem('rank-for-leading-crop-map') == "SecondCrop") {
             result = data.predictions[feature.properties.Top2_Commodities];
+            predictionData = data.predictions[feature.properties.Top2_Commodities];
             prediction.innerHTML = `<h6>PREDICTED YIELD FOR ${feature.properties.Top2_Commodities.toUpperCase() || "No data found"} (2024-2028)</h6>`;
         } else if (localStorage.getItem('rank-for-leading-crop-map') == "ThirdCrop") {
             result = data.predictions[feature.properties.Top3_Commodities];
+            predictionData = data.predictions[feature.properties.Top3_Commodities];
             prediction.innerHTML = `<h6>PREDICTED YIELD FOR ${feature.properties.Top3_Commodities.toUpperCase() || "No data found"} (2024-2028)</h6>`;
         }
 
@@ -526,9 +586,6 @@ async function fetchPredictions(feature) {
 
         const years = Object.keys(result);
         const values = Object.values(result);
-        console.log(values);
-        console.log(topCropData);
-        
 
         const canvas = document.getElementById('predictionChart');
         if (!canvas) {
@@ -581,7 +638,7 @@ async function fetchPredictions(feature) {
                 }
             }
         });
-
+        predictionAnalysis(feature);
     } catch (error) {
         document.getElementById("predictionChart").innerHTML = "<p style='color: red;'>Failed to fetch predictions.</p>";
     }
