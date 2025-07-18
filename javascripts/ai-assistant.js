@@ -10,7 +10,7 @@ const thirdCropButton = document.getElementById("ai-third-crop-btn");
 const analysisBtn = document.getElementById("ai-crop-analysis-btn");
 const resetBtn = document.getElementById("ai-crop-reset-btn");
 
-let selectedProvince;
+let selectedProvinceForAI;
 let selectedCropForAI;
 
 // Helper functions
@@ -52,6 +52,9 @@ function initializeChat() {
     setTimeout(() => showElements(".first-prompt-loader"), 3000);
     setTimeout(getFirstPrompt, 6000);
     setTimeout(getFirstAnswer, 7000);
+
+    localStorage.removeItem("selectedCropForAI");
+    localStorage.removeItem("selectedProvinceForAI");
 }
 
 // Chat flow functions
@@ -90,13 +93,13 @@ function zambalesBtnOnClick(button) {
     handleProvinceSelection(button, ["Mango", "Cogon", "Banana"]);
 }
 function handleProvinceSelection(button, crops) {
-    selectedProvince = button.innerHTML;
+    selectedProvinceForAI = button.innerHTML;
     hideElements("#first-answer");
 
     createMessageElement(`
         <div class="col-12">
             <div class="d-flex justify-content-end">
-                <p class="from-me animate__animated animate__zoomIn animate__faster">${selectedProvince}</p>    
+                <p class="from-me animate__animated animate__zoomIn animate__faster">${selectedProvinceForAI}</p>    
             </div>
         </div>
         <div class="row" id="second-prompt-loader">
@@ -134,7 +137,7 @@ function getThirdPrompt() {
                     <div class="d-flex flex-column align-items-start">
                         <div class="">
                             <p id="third-prompt" class="from-them ms-2 animate__animated animate__zoomIn animate__faster">
-                                ${selectedProvince} is a great choice. I listed the top 3 commodities below. Please pick one on the list.
+                                ${selectedProvinceForAI} is a great choice. I listed the top 3 commodities below. Please pick one on the list.
                             </p>
                         </div>        
                     </div>
@@ -163,6 +166,10 @@ function thirdCropButtonOnClick() {
 
 async function handleCropSelection() {
     secondAnswer.style.display = "none";
+    localStorage.setItem("selectedCropForAI", selectedCropForAI);
+    localStorage.setItem("selectedProvinceForAI", selectedProvinceForAI);
+    var selectedCropForAILocalStoage = localStorage.getItem("selectedCropForAI");
+    var selectedProvinceForAILocalStoage = localStorage.getItem("selectedProvinceForAI");
 
     // Show loading message
     createMessageElement(`
@@ -185,7 +192,7 @@ async function handleCropSelection() {
 
     try {
         // Fetch data from the endpoint
-        const response = await fetch(`http://localhost:8000/gemini/farming-best-practices?crop=${encodeURIComponent(selectedCropForAI)}&region=${encodeURIComponent(selectedProvince)}`);  
+        const response = await fetch(`http://localhost:8000/gemini/farming-best-practices?crop=${encodeURIComponent(selectedCropForAILocalStoage)}&region=${encodeURIComponent(selectedProvinceForAILocalStoage)}`);  
         
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -253,10 +260,6 @@ function showFourthPrompt(data) {
     thirdAnswer.style.display = "block";
 }
 
-// ... (keep all your other existing functions)
-
-// Remove the old getFourthPrompt function since we're using showFourthPrompt now
-
 async function analysisAndRecommendation() {
     secondAnswer.style.display = "none";
 
@@ -265,7 +268,7 @@ async function analysisAndRecommendation() {
         <div class="col-12">
             <div id="analysis-container" class="d-flex flex-column justify-content-end">
                 <p class="from-me animate__animated animate__zoomIn animate__faster">
-                    Analysis and Recommendations for ${selectedCropForAI} in ${selectedProvince}
+                    Analysis and Recommendations for ${selectedCropForAI} in ${selectedProvinceForAI}
                 </p>
             </div>
             <div class="row fourth-prompt-loader">
@@ -281,12 +284,86 @@ async function analysisAndRecommendation() {
         </div>
     `);
 
-    analysisBtn.classList.add("d-none");
+    // analysisBtn.classList.add("d-none");
 
     try {
         // Fetch analysis data from the endpoint
         const response = await fetch(
-            `http://localhost:8000/gemini/recommendations-and-analysis?crop=${encodeURIComponent(selectedCropForAI)}&region=${encodeURIComponent(selectedProvince)}`
+            `http://localhost:8000/gemini/recommendations-and-analysis?crop=${encodeURIComponent(selectedCropForAI)}&region=${encodeURIComponent(selectedProvinceForAI)}`
+        );
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        
+        // Hide loader and show the data
+        const loaders = document.querySelectorAll(".fourth-prompt-loader");
+        if (loaders.length > 0) {
+            loaders[loaders.length - 1].style.display = "none";
+        }
+        showAnalysisResults(data);
+        
+    } catch (error) {
+        console.error('Error fetching analysis data:', error);
+        // Handle error - show error message
+        const loaders = document.querySelectorAll(".fourth-prompt-loader");
+        if (loaders.length > 0) {
+            loaders[loaders.length - 1].style.display = "none";
+        }
+        
+        createMessageElement(`
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                        <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex flex-column align-items-start">
+                            <div class="">
+                                <p class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
+                                    Sorry, I couldn't fetch the analysis for ${selectedCropForAI}. Please try again later.
+                                </p>
+                            </div>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+}
+
+async function cropPlantingGuidelines() {
+    secondAnswer.style.display = "none";
+
+    // Show loading message
+    createMessageElement(`
+        <div class="col-12">
+            <div id="crop-guidelines-container" class="d-flex flex-column justify-content-end">
+                <p class="from-me animate__animated animate__zoomIn animate__faster">
+                    Crop Planting Guidelines for ${selectedCropForAI} in ${selectedProvinceForAI}
+                </p>
+            </div>
+            <div class="row fourth-prompt-loader">
+                <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                    <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                </div>
+                <div class="col">
+                    <div class="from-them prompt-loader ms-2 animate__animated animate__fadeIn animate__faster">
+                        <div class="iMessage-loader"></div>
+                    </div>      
+                </div>
+            </div>
+        </div>
+    `);
+
+    // analysisBtn.classList.add("d-none");
+
+    try {
+        // Fetch analysis data from the endpoint
+        const response = await fetch(
+            `http://localhost:8000/gemini/crop-planting-guidelines?crop=${encodeURIComponent(selectedCropForAI)}&region=${encodeURIComponent(selectedProvinceForAI)}`
         );
         
         if (!response.ok) {
@@ -359,7 +436,6 @@ function showAnalysisResults(data) {
                     <div class="d-flex flex-column align-items-start">
                         <div class="">
                             <p id="fifth-prompt" class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
-                                <strong>🛠️ Analysis and Recommendations for ${selectedCropForAI} in ${selectedProvince}</strong><br><br>
                                 ${data.text || '<strong>Analysis:</strong> Based on regional data and crop requirements...'}<br><br>
                                 <strong>Recommendations:</strong><br><br>
                                 ${recommendationsContent}
@@ -375,7 +451,7 @@ function showAnalysisResults(data) {
 // Remove the old getFifthPrompt function since we're using showAnalysisResults now
 
 function reset() {
-    analysisBtn.classList.remove("d-none");
+    // analysisBtn.classList.remove("d-none");
     
     createMessageElement(`
         <div class="container-fluid">
@@ -415,12 +491,14 @@ function reset() {
         })
     }, 3000);
 
+    localStorage.removeItem("selectedCropForAI");
+    localStorage.removeItem("selectedProvinceForAI");
     thirdAnswer.style.display = "none";
     setTimeout(getFirstAnswer, 4000);
 }
 
 // Event listeners
-analysisBtn.addEventListener("click", analysisAndRecommendation);
+// analysisBtn.addEventListener("click", analysisAndRecommendation);
 resetBtn.addEventListener("click", function() {
     reset();
     getFirstPrompt();
@@ -430,3 +508,8 @@ resetBtn.addEventListener("click", function() {
 
 // Initialize the chat
 initializeChat();
+
+document.getElementById("ai-crop-planting-guidelines-btn").addEventListener("click", () => cropPlantingGuidelines());
+document.getElementById("ai-top-crop-btn").addEventListener("click", () => topCropButtonOnClick());
+document.getElementById("ai-second-crop-btn").addEventListener("click", () => secondCropButtonOnClick());
+document.getElementById("ai-third-crop-btn").addEventListener("click", () => thirdCropButtonOnClick());
