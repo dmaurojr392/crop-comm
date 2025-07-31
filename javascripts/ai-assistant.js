@@ -408,23 +408,171 @@ async function cropPlantingGuidelines() {
     }
 }
 
+async function cropIrrigationManagement() {
+    secondAnswer.style.display = "none";
+
+    // Show loading message
+    createMessageElement(`
+        <div class="col-12">
+            <div id="crop-guidelines-container" class="d-flex flex-column justify-content-end">
+                <p class="from-me animate__animated animate__zoomIn animate__faster">
+                    Irrigation Management for ${selectedCropForAI} in ${selectedProvinceForAI}
+                </p>
+            </div>
+            <div class="row fourth-prompt-loader">
+                <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                    <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                </div>
+                <div class="col">
+                    <div class="from-them prompt-loader ms-2 animate__animated animate__fadeIn animate__faster">
+                        <div class="iMessage-loader"></div>
+                    </div>      
+                </div>
+            </div>
+        </div>
+    `);
+
+    // analysisBtn.classList.add("d-none");
+
+    try {
+        // Fetch analysis data from the endpoint
+        const response = await fetch(
+            `http://localhost:8000/gemini/irrigation-management?crop=${encodeURIComponent(selectedCropForAI)}&region=${encodeURIComponent(selectedProvinceForAI)}`
+        );
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        
+        // Hide loader and show the data
+        const loaders = document.querySelectorAll(".fourth-prompt-loader");
+        if (loaders.length > 0) {
+            loaders[loaders.length - 1].style.display = "none";
+        }
+        showAnalysisResults(data);
+        
+    } catch (error) {
+        console.error('Error fetching analysis data:', error);
+        // Handle error - show error message
+        const loaders = document.querySelectorAll(".fourth-prompt-loader");
+        if (loaders.length > 0) {
+            loaders[loaders.length - 1].style.display = "none";
+        }
+        
+        createMessageElement(`
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                        <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex flex-column align-items-start">
+                            <div class="">
+                                <p class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
+                                    Sorry, I couldn't fetch the analysis for ${selectedCropForAI}. Please try again later.
+                                </p>
+                            </div>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+}
+
+async function cropDiseasePrevention() {
+    secondAnswer.style.display = "none";
+
+    // Show loading message
+    createMessageElement(`
+        <div class="col-12">
+            <div id="crop-guidelines-container" class="d-flex flex-column justify-content-end">
+                <p class="from-me animate__animated animate__zoomIn animate__faster">
+                    Disease Prevention for ${selectedCropForAI} in ${selectedProvinceForAI}
+                </p>
+            </div>
+            <div class="row fourth-prompt-loader">
+                <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                    <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                </div>
+                <div class="col">
+                    <div class="from-them prompt-loader ms-2 animate__animated animate__fadeIn animate__faster">
+                        <div class="iMessage-loader"></div>
+                    </div>      
+                </div>
+            </div>
+        </div>
+    `);
+
+    // analysisBtn.classList.add("d-none");
+
+    try {
+        // Fetch analysis data from the endpoint
+        const response = await fetch(
+            `http://localhost:8000/gemini/disease-prevention?crop=${encodeURIComponent(selectedCropForAI)}&region=${encodeURIComponent(selectedProvinceForAI)}`
+        );
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        
+        // Hide loader and show the data
+        const loaders = document.querySelectorAll(".fourth-prompt-loader");
+        if (loaders.length > 0) {
+            loaders[loaders.length - 1].style.display = "none";
+        }
+        showAnalysisResults(data);
+        
+    } catch (error) {
+        console.error('Error fetching analysis data:', error);
+        // Handle error - show error message
+        const loaders = document.querySelectorAll(".fourth-prompt-loader");
+        if (loaders.length > 0) {
+            loaders[loaders.length - 1].style.display = "none";
+        }
+        
+        createMessageElement(`
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-1 d-flex justify-content-center align-items-end animate__animated animate__fadeIn animate__faster">
+                        <img src="assets/ai-logo/farmer.png" width="65px" height="65px" alt="">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex flex-column align-items-start">
+                            <div class="">
+                                <p class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
+                                    Sorry, I couldn't fetch the analysis for ${selectedCropForAI}. Please try again later.
+                                </p>
+                            </div>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+}
+
 function showAnalysisResults(data) {
     // Format the recommendations from the API response
     // Adjust this based on your actual API response structure
-    let recommendationsContent = '';
+    // let recommendationsContent = '';
     
-    if (data.recommendations && Array.isArray(data.recommendations)) {
-        recommendationsContent = data.recommendations
-            .map((rec, index) => `${index + 1}. ${rec}`)
-            .join('<br><br>');
-    } else {
-        // Fallback content if no recommendations are provided
-        recommendationsContent = `
-            1. Regular Maintenance: Ensure timely pruning, weeding, and pest control to maintain tree health.<br><br>
-            2. Soil Management: Conduct regular soil tests to determine nutrient needs.<br><br>
-            3. Irrigation: Implement proper water management based on seasonal requirements.
-        `;
-    }
+    // if (data.recommendations && Array.isArray(data.recommendations)) {
+    //     recommendationsContent = data.recommendations
+    //         .map((rec, index) => `${index + 1}. ${rec}`)
+    //         .join('<br><br>');
+    // } else {
+    //     // Fallback content if no recommendations are provided
+    //     recommendationsContent = `
+    //         1. Regular Maintenance: Ensure timely pruning, weeding, and pest control to maintain tree health.<br><br>
+    //         2. Soil Management: Conduct regular soil tests to determine nutrient needs.<br><br>
+    //         3. Irrigation: Implement proper water management based on seasonal requirements.
+    //     `;
+    // }
 
     createMessageElement(`
         <div class="container-fluid">
@@ -436,9 +584,7 @@ function showAnalysisResults(data) {
                     <div class="d-flex flex-column align-items-start">
                         <div class="">
                             <p id="fifth-prompt" class="from-them ms-2 text-justify animate__animated animate__zoomIn animate__faster">
-                                ${data.text || '<strong>Analysis:</strong> Based on regional data and crop requirements...'}<br><br>
-                                <strong>Recommendations:</strong><br><br>
-                                ${recommendationsContent}
+                                ${data.text || 'Fetch Failed. Please try again. If fails countinously, please contact the developer.'}
                             </p>
                         </div>        
                     </div>
@@ -510,6 +656,8 @@ resetBtn.addEventListener("click", function() {
 initializeChat();
 
 document.getElementById("ai-crop-planting-guidelines-btn").addEventListener("click", () => cropPlantingGuidelines());
+document.getElementById("ai-irrigation-management-btn").addEventListener("click", () => cropIrrigationManagement());
+document.getElementById("ai-disease-prevention-btn").addEventListener("click", () => cropDiseasePrevention());
 document.getElementById("ai-top-crop-btn").addEventListener("click", () => topCropButtonOnClick());
 document.getElementById("ai-second-crop-btn").addEventListener("click", () => secondCropButtonOnClick());
 document.getElementById("ai-third-crop-btn").addEventListener("click", () => thirdCropButtonOnClick());

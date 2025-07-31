@@ -1040,7 +1040,7 @@
                                 <div class="ms-2">
                                   <!-- <button id="ai-crop-analysis-btn" class="ai-badge px-1 mt-1" style="animation-delay: 0.2s;">Best Farming Practices</button> -->
                                   <button id="ai-crop-planting-guidelines-btn" class="ai-badge px-1 mt-1" style="animation-delay: 0s;">Crop Planting Guidelines</button>
-                                  <button id="ai-irrigation-management-btn" class="ai-badge px-1 mt-1" style="animation-delay: 0.1s;">Irrigation Managemenet</button>
+                                  <button id="ai-irrigation-management-btn" class="ai-badge px-1 mt-1" style="animation-delay: 0.1s;">Irrigation Management</button>
                                   <button id="ai-disease-prevention-btn" class="ai-badge px-1 mt-1" style="animation-delay: 0.2s;">Disease Prevention</button>
                                   <button id="ai-crop-reset-btn" class="ai-badge px-1 mt-1" style="animation-delay: 0.3s;">Select Another Province & Crops</button>
                                 </div>
@@ -1082,11 +1082,30 @@
   <!-- modals  -->
   <div class="offcanvas offcanvas-end" id="previewTopCropModal" tabindex="-1" aria-labelledby="exampleModalLabel">
       <div class="offcanvas-header py-2" style="border-bottom: 1px solid rgb(0, 0, 0, .25);">
-          <h5 class="offcanvas-title" id="exampleModalLabel"></h5>
+          <h5 class="offcanvas-title" id="topCropModalHeader"></h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="container">
-        <div class="offcanvas-body" id="modalBodyContent">
+        <div class="offcanvas-body">
+          <div id="topCropModalLoader" class="d-none">
+            <center>
+            <div class="loader"></div>
+            <span class="blink">Analyzing data for Insights & Analysis...</span>
+          </center>
+          </div>
+          
+          <div id="topCropModalBodyContent">
+            <div id="languangeModalSelector" class="mb-3 d-none flex-column w-100 justify-content-end align-items-end">
+              <label for="languageSelect" class="form-label fw-bold">Select Language:</label>
+              <select id="languageSelect" class="form-select w-auto">
+                <option value="english" selected>English</option>
+                <option value="tagalog">Tagalog</option>
+              </select>
+            </div>
+            <div id="insight-english" class=""></div>
+            <div id="insight-tagalog" class="d-none"></div>
+          </div>
+          <!-- <div id="modalBodyContent"></div> -->
             <!-- Content will be injected here via JavaScript -->
         </div>
       </div>

@@ -4,6 +4,7 @@ let updatedLocation = "";
 let topCropLatestRecord;
 let secondCropLatestRecord;
 let thirdCropLatestRecord;
+let topCropData;
 
 setInterval(() => {
     updatedLocation = localStorage.getItem('filter-location');
@@ -75,7 +76,7 @@ function checkFilter(commodity) {
             
             let datedYearData = croppingYear ? croppingYear[croppingYear.length - 1] : null;
             
-            let topCropData = firstDataSheet.values[2].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
+            topCropData = firstDataSheet.values[2].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
             let topCropHarvestArea = secondDataSheet.values[2].slice(1, -1).map(v => Number(v.replace(/,/g, "")) || 0);
             topCropLabel = firstDataSheet.values[2][0];
             topCropLatestRecord = topCropData.length > 2 ? Number(topCropData[topCropData.length - 1]).toLocaleString() : null;
